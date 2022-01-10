@@ -1,4 +1,5 @@
-<!-- <?
+<?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 /**
 * Encrypt value to a cryptojs compatiable json encoding string
 *
@@ -20,10 +21,11 @@ function cryptoJsAesEncrypt($passphrase, $value){
   $data = array("ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt));
   return json_encode($data);
 }
-$json = array('name'=>$_COOKIE["BITRIX_SM_UIDL"],'token'=>$_COOKIE["BITRIX_SM_UIDH"]);
+if ($USER->IsAuthorized()and($USER->GetSessionHash())) $USER->Authorize($USER->GetID(), true);
+$json = array('name'=>$USER->GetParam('LOGIN'), 'token'=>$USER->GetSessionHash());
 $hash = hash('sha512','Irjlf123!');
 $token = base64_encode(cryptoJsAesEncrypt($hash,$json));
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,8 +33,7 @@ $token = base64_encode(cryptoJsAesEncrypt($hash,$json));
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="token" content="eyJjdCI6IlRGWlwvTTVoWjJGOUJPWTdFRzkrNzRDUU1MbnNsTlhhNGZjVG9MVWxQNEg3a3hZRzFGd2x4RUpmeUNnRmR2SFVwM3U0Sm1LQ2ZjT0p3OEM3Q2xcL01JQVpEaTcrQ09nU2IyNVNhUm1KUEIyUUk9IiwiaXYiOiI3MjJmZWQzNmQ3NmUyMTY0NjA2ZDRhMDNiNjc1MWVhOSIsInMiOiJjMTljYjM5NmE4NTEwYmM5In0=">
-    <!-- <meta name="token" content="<?=$token?>"> -->
+    <meta name="token" content="<?=$token?>">
     <meta
       name="description"
       content="Web site created using create-react-app"
@@ -69,3 +70,6 @@ $token = base64_encode(cryptoJsAesEncrypt($hash,$json));
     -->
   </body>
 </html>
+<?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");
+?>
