@@ -22,21 +22,21 @@ export default function Main() {
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  });
   const Edit = (value) => {
-    EditCells(value, GetCookies()).then((Add)=>{
+    EditCells(value, GetCookies()).then((Add) => {
       setOpen(true)
       setVari(Add.Result)
       setComm(`Код ответа : ${Add.Code}, Сообщение: ${Add.Message}`)
-})
+    })
   }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-        return;
+      return;
     }
     setOpen(false);
-}
+  }
   const columns = [
     {
       field: 'date_post',
@@ -143,7 +143,7 @@ export default function Main() {
     },
   ];
   React.useEffect(() => {
-    getDatab(GetCookies(),filterModel, page, columns, pageSize, sortModel).then((res) => {
+    getDatab(GetCookies(), filterModel, page, columns, pageSize, sortModel).then((res) => {
       setedit(res.editor)
       setdata(res.rows)
       setLength(res.count);
@@ -172,10 +172,10 @@ export default function Main() {
         onCellEditCommit={Edit}
       />
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={vari} sx={{ width: '100%' }}>
-                    {comm}
-                </Alert>
-            </Snackbar>
+        <Alert onClose={handleClose} severity={vari} sx={{ width: '100%' }}>
+          {comm}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
