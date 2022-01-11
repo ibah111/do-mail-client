@@ -141,6 +141,14 @@ export default function Main() {
       sortable: true,
       width: 160,
     },
+    {
+      field: 'nal_skan',
+      headerName: 'Скан',
+      type: 'boolean',
+      editable,
+      sortable: true,
+      width: 160,
+    },
   ];
   React.useEffect(() => {
     getDatab(GetCookies(), filterModel, page, columns, pageSize, sortModel).then((res) => {
