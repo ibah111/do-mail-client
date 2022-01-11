@@ -1,8 +1,9 @@
 import axios from 'axios'
+import server from '../utils/server';
 
 export const EditCells = async(value, coockie) => {
     const Result = await axios({
-        url: 'https://apps.usb.ru:3001/edit', method: 'POST', data: {value, ...coockie}
+        url: server()+'/edit', method: 'POST', data: {value, ...coockie}
     })
     return Result.data
 }

@@ -1,7 +1,8 @@
 import { Button, TextField, Box } from "@mui/material";
 import { grey, blue, green } from '@mui/material/colors';
 import React from "react";
-import axios from 'axios'
+import axios from 'axios';
+import server from '../utils/server';
 
 export const Admin = ({setvalu}) => {
     const [user, setuser] = React.useState()
@@ -17,7 +18,7 @@ export const Admin = ({setvalu}) => {
             alert("Поле с редактором не заполнено")
         } else {
             axios({
-                url: 'https://apps.usb.ru:3001/neweditor', method: 'POST', data: { user: user }
+                url: server()+'/neweditor', method: 'POST', data: { user: user }
             }).then(resu => setvalu(resu.data))
         }
     }
@@ -27,7 +28,7 @@ export const Admin = ({setvalu}) => {
             alert("Поле с редактором не заполнено")
         } else {
             axios({
-                url: 'https://apps.usb.ru:3001/newadmin', method: 'POST', data: { user: admin }
+                url: server()+'/newadmin', method: 'POST', data: { user: admin }
             }).then(resu => setvalu(resu.data))
         }
     }

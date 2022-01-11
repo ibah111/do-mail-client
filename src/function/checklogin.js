@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {GetCookies} from './getcookies';
+import server from '../utils/server';
 
 
 const checklogin = async () => {
     const cookies = GetCookies();
     const result = await axios({
-        url: 'https://apps.usb.ru:3001/login', method: 'POST', data: {...cookies}
+        url: server()+'/login', method: 'POST', data: {...cookies}
     })
     return result.data
 }
