@@ -158,7 +158,7 @@ export default function Main() {
     })
   }, [filterModel, page, pageSize, sortModel]);
   return (
-    <div style={{ height: 900, width: '100%' }}>
+    <div style={{ height: '98vh', width: '99vw' }}>
       <DataGridPro
         page={page}
         rows={data}
