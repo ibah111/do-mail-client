@@ -1,10 +1,11 @@
 import { Button, TextField, Box } from "@mui/material";
-import { grey, blue, green } from '@mui/material/colors';
+import { grey, blue } from '@mui/material/colors';
+import { GetCookies } from "../function/getcookies"
 import React from "react";
 import axios from 'axios';
 import server from '../utils/server';
 
-export const Admin = ({setvalu}) => {
+export const Admin = ({setvalu, setadopen}) => {
     const [user, setuser] = React.useState()
     const [admin, setadmin] = React.useState()
     const NeawRed = (e) => {
@@ -18,7 +19,7 @@ export const Admin = ({setvalu}) => {
             alert("Поле с редактором не заполнено")
         } else {
             axios({
-                url: server()+'/neweditor', method: 'POST', data: { user: user }
+                url: server()+'/neweditor', method: 'POST', data: { user: user, ...GetCookies() }
             }).then(resu => setvalu(resu.data))
         }
     }
@@ -28,19 +29,20 @@ export const Admin = ({setvalu}) => {
             alert("Поле с редактором не заполнено")
         } else {
             axios({
-                url: server()+'/newadmin', method: 'POST', data: { user: admin }
+                url: server()+'/newadmin', method: 'POST', data: { user: admin, ...GetCookies() }
             }).then(resu => setvalu(resu.data))
         }
     }
 
     return (
-        <Box sx={{ backgroundColor: grey[300], padding: 1 }}>
+        <Box sx={{ backgroundColor: grey[300], padding: 1,  width: '98vw', height: '4vh' }}>
             <TextField label="Добавить редактора" size="small" onChange={NeawRed}></TextField>
             <Button variant="contained" sx={{ backgroundColor: blue[300] }} onClick={Add_edit}>Добавить</Button>
             <TextField label="Добавить администратора" size="small" onChange={NeawAdm}></TextField>
             <Button variant="contained" sx={{ backgroundColor: blue[300] }} onClick={Add_admin}>Добавить</Button>
-            <Button variant="contained" sx={{ backgroundColor: blue[300] }}>Удалить запись</Button>
-            <Button variant="contained" sx={{ backgroundColor: green[300] }}>Выгрузить в excel</Button>
+            {/* <Button variant="contained" sx={{ backgroundColor: blue[300] }}>Удалить запись</Button> */}
+            {/* <Button variant="contained" color="success">Выгрузить в excel</Button> */}
+            <Button variant="contained" size="small" color="error" onClick={()=> setadopen(0)}>Закрыть</Button>
         </Box>
     )
 }
