@@ -21,6 +21,7 @@ export default function Main({administ, editorist}) {
   const [comm, setComm] = React.useState("")
   const [valu, setvalu] = React.useState({})
   const [adopen, setadopen] = React.useState(0)
+  const [d,sd] = React.useState("date")
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -138,7 +139,7 @@ export default function Main({administ, editorist}) {
     },
     {
       field: 'kogda_otdano',
-      type: 'date',
+      type: d,
       headerName: 'Когда обработано',
       editable,
       sortable: true,
@@ -202,7 +203,7 @@ export default function Main({administ, editorist}) {
   }, [valu])
   return (
     <div style={{ height: '93vh', width: '99vw' }}>
-      { administ && <div>{adopen === 1 && <Admin setvalu={setvalu} adopen={adopen} setadopen={setadopen} />}
+      { administ && <div>{adopen === 1 && <Admin setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd}/>}
       {adopen === 0 && <Button color="success" variant="contained" onClick={()=>setadopen(1)}>Админка</Button>}</div>}
       <DataGridPro
         page={page}

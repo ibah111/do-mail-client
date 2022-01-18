@@ -5,9 +5,11 @@ import React from "react";
 import axios from 'axios';
 import server from '../utils/server';
 
-export const Admin = ({setvalu, setadopen}) => {
+export const Admin = ({setvalu, setadopen, sd}) => {
     const [user, setuser] = React.useState()
     const [admin, setadmin] = React.useState()
+    const [da,sda] = React.useState("Дата/Время")
+    const [com, setcom] = React.useState(0)
     const NeawRed = (e) => {
         setuser(e.target.value);
     }
@@ -42,6 +44,18 @@ export const Admin = ({setvalu, setadopen}) => {
             <Button variant="contained" sx={{ backgroundColor: blue[300] }} onClick={Add_admin}>Добавить</Button>
             {/* <Button variant="contained" sx={{ backgroundColor: blue[300] }}>Удалить запись</Button> */}
             {/* <Button variant="contained" color="success">Выгрузить в excel</Button> */}
+            <Button variant="contained" size="small" color="success" onClick={()=> {
+                if(com === 0) {
+                    sd("dateTime")
+                    sda("Дата")
+                    setcom(1)
+                } else {
+                    sd("date")
+                    sda("Дата/Время")
+                    setcom(0)
+                }
+
+            }}>{da}</Button>
             <Button variant="contained" size="small" color="error" onClick={()=> setadopen(0)}>Закрыть</Button>
         </Box>
     )
