@@ -141,7 +141,6 @@ export default function Main({administ, editorist}) {
       field: 'kogda_otdano',
       type: d,
       headerName: 'Когда обработано',
-      editable,
       sortable: true,
       width: 160,
       valueGetter: (params) => new Date(params.value)
@@ -149,7 +148,6 @@ export default function Main({administ, editorist}) {
     {
       field: 'kto_obrabotal',
       headerName: 'Кто обработал',
-      editable,
       sortable: true,
       width: 160,
     },
