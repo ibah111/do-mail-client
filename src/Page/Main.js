@@ -168,7 +168,7 @@ export default function Main({administ, editorist}) {
         if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
           const userID = params.row.id_ispol_zadach;
           const ID = params.row.id_zadach;
-          return `https://testbitrix.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`
+          return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`
         }
       },
       renderCell: (params) => (params.value &&
