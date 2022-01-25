@@ -2,13 +2,19 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 import { getDatab } from '../function/connect'
 import { GetCookies } from '../function/getcookies'
 import { EditCells } from '../function/editCells'
-import { Snackbar, Alert as MuiAlert, Button } from '@mui/material';
+import { Snackbar, Grid, Alert as MuiAlert, Button } from '@mui/material';
 import { Admin } from '../utils/AdminPanel'
 import React from 'react'
+import El_arhive from '../utils/El_arhive'
+import GenerateCol from '../function/generateCol'
+import { FormControl, InputLabel, Dialog, DialogContentText, TextField, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from "@mui/material";
+import Add_in_corob from '../function/add_in_corob'
 
 
 
-export default function Main({administ, editorist}) {
+
+export default function Main({ administ, el_arhive }) {
+  const [type, settype] = React.useState(1)
   const [data, setdata] = React.useState([]);
   const [filterModel, setFilterModel] = React.useState({ items: [] });
   const [sortModel, setSortModel] = React.useState([]);
@@ -16,16 +22,29 @@ export default function Main({administ, editorist}) {
   const [editable, setedit] = React.useState(false);
   const [pageSize, setPageSize] = React.useState(25)
   const [length, setLength] = React.useState(0);
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
+  const [openD, setOpenD] = React.useState(false);
   const [vari, setVari] = React.useState("info")
   const [comm, setComm] = React.useState("")
   const [valu, setvalu] = React.useState({})
   const [adopen, setadopen] = React.useState(0)
-  const [d,sd] = React.useState("date")
+  const [d, sd] = React.useState("date")
+  const [onChange, changes] = React.useState([]);
+  const [select, setSelectionModel] = React.useState([])
+  const prevSelectionModel = React.useRef(select);
+  const [Vkladka, setVkladka] = React.useState(0);
+  const [num, setNum] = React.useState(null)
+  const Refresh = () => {
+    changes([])
+  };
+
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+  const choose_type = (e) => {
+    settype(e.target.value)
+  }
   const Edit = (value) => {
     EditCells(value, GetCookies()).then((Add) => {
       setOpen(true)
@@ -40,158 +59,15 @@ export default function Main({administ, editorist}) {
     }
     setOpen(false);
   }
-  const columns = [
-    { field: 'id', headerName: '№', width: 90 },
-    {
-      field: 'date_post',
-      type: 'date',
-      headerName: 'Дата поступления',
-      width: 150,
-      editable,
-      sortable: true,
-      valueGetter: (params) => new Date(params.value)
-    },
-    {
-      field: 'convert',
-      headerName: 'Учёт конвертов',
-      type: 'boolean',
-      width: 150,
-      editable,
-      sortable: true,
-    },
-    {
-      field: 'pristavi',
-      headerName: 'Приставы',
-      type: 'boolean',
-      width: 150,
-      editable,
-      sortable: true,
-    },
-    {
-      field: 'adr_otp',
-      headerName: 'Адрес отправителя',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'otprav',
-      headerName: 'Отправитель',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'reestr',
-      headerName: 'Реестр',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'doc_name',
-      headerName: 'Название документа',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'st_pnkt',
-      headerName: 'Статья и пункт',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'gd',
-      headerName: 'ГД',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'fio_dol',
-      headerName: 'ФИО должника',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'kd',
-      headerName: 'КД',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'ispol_zadach',
-      headerName: 'Исполнитель задачи',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'vsisk',
-      headerName: 'Взыскатель',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'kogda_otdano',
-      type: d,
-      headerName: 'Когда обработано',
-      sortable: true,
-      width: 160,
-      valueGetter: (params) => new Date(params.value)
-    },
-    {
-      field: 'kto_obrabotal',
-      headerName: 'Кто обработал',
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'nal_skan',
-      headerName: 'Скан',
-      type: 'boolean',
-      editable,
-      sortable: true,
-      width: 160,
-    },
-    {
-      field: 'ssilka_na_zadachu',
-      headerName: 'Ссылка на задачу',
-      sortable: true,
-      width: 160,
-      valueGetter: (params) => {
-        if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
-          const userID = params.row.id_ispol_zadach;
-          const ID = params.row.id_zadach;
-          return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`
-        }
-      },
-      renderCell: (params) => (params.value &&
-        <strong>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            href={params.value}
-            target="_blank"
-          >
-            Открыть задачу
-          </Button>
-        </strong>)
-    }
-  ];
+  const columns = GenerateCol(Vkladka, editable, d)
   React.useEffect(() => {
-    getDatab(GetCookies(), filterModel, page, columns, pageSize, sortModel).then((res) => {
+    getDatab(GetCookies(), filterModel, page, columns, pageSize, sortModel, Vkladka, type).then((res) => {
       setedit(res.editor)
       setdata(res.rows)
       setLength(res.count);
-    })
-  }, [filterModel, page, pageSize, sortModel]);
+      setSelectionModel(prevSelectionModel.current);
+    });
+  }, [filterModel, page, pageSize, sortModel, Vkladka, onChange, type]);
   React.useEffect(() => {
     if (Object.keys(valu).length > 0) {
       setOpen(true)
@@ -199,29 +75,86 @@ export default function Main({administ, editorist}) {
       setComm(`Код ответа : ${valu.Code}, Сообщение: ${valu.Message}`)
     }
   }, [valu])
+
   return (
     <div style={{ height: '93vh', width: '99vw' }}>
-      { administ && <div>{adopen === 1 && <Admin setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd}/>}
-      {adopen === 0 && <Button color="success" variant="contained" onClick={()=>setadopen(1)}>Админка</Button>}</div>}
+      <Grid container justifyContent="space-between">
+        <Grid item xs={"auto"}>
+          {administ && <React.Fragment>{adopen === 1 && <Admin Refresh={Refresh} setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd} select={select} />}
+            {adopen === 0 && <Button color="success" variant="contained" onClick={() => setadopen(1)}>Админка</Button>}</React.Fragment>}</Grid><Grid item xs={"auto"}>
+          {el_arhive && <React.Fragment>
+            <FormControl size="small" sx={{ width: '13vh' }} color="secondary">
+              <InputLabel id="age-label">Тип</InputLabel>
+              <Select labelId="age-label" id="age" label="Тип" value={type} onChange={choose_type}>
+                <MenuItem value={1}>Обычные</MenuItem>
+                <MenuItem value={2}>ИД</MenuItem>
+              </Select>
+            </FormControl>
+            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment> <Button color="secondary" onClick={() => {
+              if (select.length > 0)
+              setOpenD(true)
+              else
+              alert("Ни одна строка не выбрана")
+            }
+              } variant="contained">Внесение в короб</Button> </React.Fragment>}
+            <Button color="secondary" variant="outlined" onClick={Vkladka === 0 ? () => setVkladka(1) : () => setVkladka(0)}>{Vkladka === 0 ? "Перейти в архив" : "Вернуться в Почту"}</Button>
+          </React.Fragment>
+          }</Grid>
+      </Grid>
+      <Dialog open={openD} onClose={() => setOpenD(false)}>
+        <DialogTitle>Внесение</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Впишите номер короба</DialogContentText>
+          <TextField
+            onChange={(e) => { setNum(e.target.value) }}
+            autoFocus
+            label="№ Короба"
+            type="number"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenD(false)} color="error">Закрыть</Button>
+          <Button onClick={() => Add_in_corob(select, num, setvalu, Refresh)} color="success">Сохранить</Button>
+        </DialogActions>
+      </Dialog>
       <DataGridPro
         page={page}
         rows={data}
         columns={columns}
         rowCount={length}
         pageSize={pageSize}
-        onFilterModelChange={setFilterModel}
+        onFilterModelChange={(newFilterModel) => {
+          prevSelectionModel.current = select;
+          setFilterModel(newFilterModel)
+        }
+        }
         pagination
         paginationMode="server"
         onPageChange={(newPage) => {
+          prevSelectionModel.current = select;
           setPage(newPage)
         }}
         sortingMode="server"
-        onSortModelChange={setSortModel}
-        onPageSizeChange={setPageSize}
+        onSortModelChange={(newSortModel) => {
+          prevSelectionModel.current = select;
+          setSortModel(newSortModel)
+        }
+        }
+        onPageSizeChange={(newPageSize) => {
+          prevSelectionModel.current = select;
+          setPageSize(newPageSize)
+        }
+        }
         filterMode="server"
         checkboxSelection
         disableSelectionOnClick
         onCellEditCommit={Edit}
+        onSelectionModelChange={(newSelectionModel) => {
+          setSelectionModel(newSelectionModel);
+        }}
+        selectionModel={select}
       />
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={vari} sx={{ width: '100%' }}>

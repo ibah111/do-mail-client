@@ -7,20 +7,19 @@ license()
 function App() {
   const [accept, setaccept] = React.useState({});
   const [administ, setadminist] = React.useState(false);
-  const [editorist, seteditorist] = React.useState(false);
+  const [el_arhive, setel_arhive] = React.useState(false);
   React.useEffect(() => {
     checklogin().then((res) => {
       if (res.login_result) {
         setaccept(res)
-        seteditorist(res.editors)
-        setadminist(res.admins)
-        console.log(res)
+        setadminist(res.admin)
+        setel_arhive(res.el_arhive)
       }
     })
   }, [])
   return (
     <div>
-      {accept.login_result ? <Main administ={administ} editorist={editorist}/>: <React.Fragment>{"Вы не вошли, обратитесь к Администратору"}</React.Fragment>}
+      {accept.login_result ? <Main administ={administ} el_arhive={el_arhive}/>: <React.Fragment>{"Вы не вошли, обратитесь к Администратору"}</React.Fragment>}
     </div>
   );
 }
