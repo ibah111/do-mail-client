@@ -81,6 +81,9 @@ export default function Main({ administ, el_arhive, editable }) {
       sort: 'asc',
     }])
   },[])
+  React.useEffect(()=>{
+    setColumns(GenerateCol(Vkladka, editable, d));
+  },[Vkladka, d])
   const setVkladka = (val) => {
     if (val === 1) {
       setTab(1+type)
@@ -88,7 +91,6 @@ export default function Main({ administ, el_arhive, editable }) {
     if (val === 0) {
       setTab(1)
     }
-    setColumns(GenerateCol(Vkladka, editable, d));
     setVkl(val)
   }
   React.useEffect(() => {
