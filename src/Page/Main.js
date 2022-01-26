@@ -40,15 +40,16 @@ export default function Main({ administ, el_arhive, editable }) {
   const [adopen, setadopen] = React.useState(0)
   const [d, sd] = React.useState("date")
   const [onChange, changes] = React.useState([]);
-  const [select, setSelectionModel] = React.useState([])
-  const prevSelectionModel = React.useRef(select);
+  const select = createDictUseState(React.useState, 3, []);
   const [Vkladka, setVkl] = React.useState(0);
   const [num, setNum] = React.useState(null)
+  const prevSelectionModel = React.useRef(select);
   const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d));
   const Refresh = () => {
     changes([])
   };
   const choose_type = (e) => {
+    prevSelectionModel.current = select;
     if (Vkladka === 1) {
       setTab(1+e.target.value)
     }
@@ -85,6 +86,7 @@ export default function Main({ administ, el_arhive, editable }) {
     setColumns(GenerateCol(Vkladka, editable, d));
   },[Vkladka, d])
   const setVkladka = (val) => {
+    prevSelectionModel.current = select;
     if (val === 1) {
       setTab(1+type)
     }
@@ -97,7 +99,7 @@ export default function Main({ administ, el_arhive, editable }) {
     getDatab(GetCookies(), filter[currentTab].value, page[currentTab].value, columns, pageSize, sort[currentTab].value, Vkladka, type).then((res) => {
       setdata(res.rows)
       setLength(res.count);
-      setSelectionModel(prevSelectionModel.current);
+      select[currentTab].setValue(prevSelectionModel.current[currentTab].value);
     });
   }, [filter[currentTab].value, page[currentTab].value, pageSize, sort[currentTab].value, Vkladka, onChange, type]);
   React.useEffect(() => {
@@ -187,11 +189,11 @@ export default function Main({ administ, el_arhive, editable }) {
         filterMode="server"
         checkboxSelection
         disableSelectionOnClick
+        selectionModel={select[currentTab].value}
         onCellEditCommit={Edit}
         onSelectionModelChange={(newSelectionModel) => {
-          setSelectionModel(newSelectionModel);
+          select[currentTab].setValue(newSelectionModel);
         }}
-        selectionModel={select}
       />
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={vari} sx={{ width: '100%' }}>
