@@ -9,14 +9,22 @@ import El_arhive from '../utils/El_arhive'
 import GenerateCol from '../function/generateCol'
 import { FormControl, InputLabel, Dialog, DialogContentText, TextField, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from "@mui/material";
 import Add_in_corob from '../function/add_in_corob'
+import Delete_from_arhive from '../function/delete_from_arhive'
 
 
-
-
+const createDictUseState=(hook, count, init)=>{
+  let result = {}
+  for (let i = 1; i<=count; i++) {
+    const [value, setValue] = hook(init);
+    result[i]={value, setValue}
+  }
+  return result;
+}
 export default function Main({ administ, el_arhive }) {
   const [type, settype] = React.useState(1)
   const [data, setdata] = React.useState([]);
-  const [filterModel, setFilterModel] = React.useState({ items: [] });
+  const filter = createDictUseState(React.useState, 3, { items: [] });
+  const [currentFilter,setFilter]=React.useState(1);
   const [sortModel, setSortModel] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [editable, setedit] = React.useState(false);
@@ -61,13 +69,19 @@ export default function Main({ administ, el_arhive }) {
   }
   const columns = GenerateCol(Vkladka, editable, d)
   React.useEffect(() => {
-    getDatab(GetCookies(), filterModel, page, columns, pageSize, sortModel, Vkladka, type).then((res) => {
+    getDatab(GetCookies(), filter[currentFilter].value, page, columns, pageSize, sortModel, Vkladka, type).then((res) => {
       setedit(res.editor)
       setdata(res.rows)
       setLength(res.count);
       setSelectionModel(prevSelectionModel.current);
     });
-  }, [filterModel, page, pageSize, sortModel, Vkladka, onChange, type]);
+    if (Vkladka === 1) {
+      setFilter(1+type)
+    }
+    if (Vkladka === 0) {
+      setFilter(1)
+    }
+  }, [filter[currentFilter].value, page, pageSize, sortModel, Vkladka, onChange, type]);
   React.useEffect(() => {
     if (Object.keys(valu).length > 0) {
       setOpen(true)
@@ -89,14 +103,17 @@ export default function Main({ administ, el_arhive }) {
                 <MenuItem value={1}>Обычные</MenuItem>
                 <MenuItem value={2}>ИД</MenuItem>
               </Select>
-            </FormControl>
-            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment> <Button color="secondary" onClick={() => {
+            </FormControl> 
+            
+            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
               if (select.length > 0)
               setOpenD(true)
               else
               alert("Ни одна строка не выбрана")
             }
-              } variant="contained">Внесение в короб</Button> </React.Fragment>}
+              } variant="contained">Внесение в короб</Button> </React.Fragment> <React.Fragment>
+              <Button color="secondary" variant="contained" onClick={()=>Delete_from_arhive(select, setvalu, Refresh)}>Убрать из архива</Button>
+               </React.Fragment> </React.Fragment>}
             <Button color="secondary" variant="outlined" onClick={Vkladka === 0 ? () => setVkladka(1) : () => setVkladka(0)}>{Vkladka === 0 ? "Перейти в архив" : "Вернуться в Почту"}</Button>
           </React.Fragment>
           }</Grid>
@@ -125,9 +142,9 @@ export default function Main({ administ, el_arhive }) {
         columns={columns}
         rowCount={length}
         pageSize={pageSize}
-        onFilterModelChange={(newFilterModel) => {
+        onFilterModelChange={(value) => {
           prevSelectionModel.current = select;
-          setFilterModel(newFilterModel)
+          filter[currentFilter].setValue(value)
         }
         }
         pagination
@@ -136,6 +153,7 @@ export default function Main({ administ, el_arhive }) {
           prevSelectionModel.current = select;
           setPage(newPage)
         }}
+        filterModel={filter[currentFilter].value}
         sortingMode="server"
         onSortModelChange={(newSortModel) => {
           prevSelectionModel.current = select;
