@@ -20,14 +20,16 @@ const createDictUseState=(hook, count, init)=>{
   }
   return result;
 }
-export default function Main({ administ, el_arhive }) {
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+export default function Main({ administ, el_arhive, editable }) {
   const [type, settype] = React.useState(1)
   const [data, setdata] = React.useState([]);
   const filter = createDictUseState(React.useState, 3, { items: [] });
-  const [currentFilter,setFilter]=React.useState(1);
-  const [sortModel, setSortModel] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [editable, setedit] = React.useState(false);
+  const [currentTab,setTab]=React.useState(1);
+  const sort = createDictUseState(React.useState, 3, []);
+  const page = createDictUseState(React.useState, 3, 0);
   const [pageSize, setPageSize] = React.useState(25)
   const [length, setLength] = React.useState(0);
   const [open, setOpen] = React.useState(false);
@@ -40,17 +42,19 @@ export default function Main({ administ, el_arhive }) {
   const [onChange, changes] = React.useState([]);
   const [select, setSelectionModel] = React.useState([])
   const prevSelectionModel = React.useRef(select);
-  const [Vkladka, setVkladka] = React.useState(0);
+  const [Vkladka, setVkl] = React.useState(0);
   const [num, setNum] = React.useState(null)
+  const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d));
   const Refresh = () => {
     changes([])
   };
-
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
   const choose_type = (e) => {
+    if (Vkladka === 1) {
+      setTab(1+e.target.value)
+    }
+    if (Vkladka === 0) {
+      setTab(1)
+    }
     settype(e.target.value)
   }
   const Edit = (value) => {
@@ -67,21 +71,33 @@ export default function Main({ administ, el_arhive }) {
     }
     setOpen(false);
   }
-  const columns = GenerateCol(Vkladka, editable, d)
+  React.useEffect(()=>{
+    sort[2].setValue([{
+      field: 'data_obrabotki_arhive',
+      sort: 'asc',
+    }])
+    sort[3].setValue([{
+      field: 'data_obrabotki_arhive',
+      sort: 'asc',
+    }])
+  },[])
+  const setVkladka = (val) => {
+    if (val === 1) {
+      setTab(1+type)
+    }
+    if (val === 0) {
+      setTab(1)
+    }
+    setColumns(GenerateCol(Vkladka, editable, d));
+    setVkl(val)
+  }
   React.useEffect(() => {
-    getDatab(GetCookies(), filter[currentFilter].value, page, columns, pageSize, sortModel, Vkladka, type).then((res) => {
-      setedit(res.editor)
+    getDatab(GetCookies(), filter[currentTab].value, page[currentTab].value, columns, pageSize, sort[currentTab].value, Vkladka, type).then((res) => {
       setdata(res.rows)
       setLength(res.count);
       setSelectionModel(prevSelectionModel.current);
     });
-    if (Vkladka === 1) {
-      setFilter(1+type)
-    }
-    if (Vkladka === 0) {
-      setFilter(1)
-    }
-  }, [filter[currentFilter].value, page, pageSize, sortModel, Vkladka, onChange, type]);
+  }, [filter[currentTab].value, page[currentTab].value, pageSize, sort[currentTab].value, Vkladka, onChange, type]);
   React.useEffect(() => {
     if (Object.keys(valu).length > 0) {
       setOpen(true)
@@ -137,27 +153,28 @@ export default function Main({ administ, el_arhive }) {
         </DialogActions>
       </Dialog>
       <DataGridPro
-        page={page}
+        page={page[currentTab].value}
         rows={data}
         columns={columns}
         rowCount={length}
         pageSize={pageSize}
         onFilterModelChange={(value) => {
           prevSelectionModel.current = select;
-          filter[currentFilter].setValue(value)
+          filter[currentTab].setValue(value)
         }
         }
         pagination
         paginationMode="server"
         onPageChange={(newPage) => {
           prevSelectionModel.current = select;
-          setPage(newPage)
+          page[currentTab].setValue(newPage)
         }}
-        filterModel={filter[currentFilter].value}
+        filterModel={filter[currentTab].value}
         sortingMode="server"
+        sortModel={sort[currentTab].value}
         onSortModelChange={(newSortModel) => {
           prevSelectionModel.current = select;
-          setSortModel(newSortModel)
+          sort[currentTab].setValue(newSortModel)
         }
         }
         onPageSizeChange={(newPageSize) => {
