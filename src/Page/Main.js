@@ -114,6 +114,7 @@ export default function Main({ administ, el_arhive, editable }) {
     <div style={{ height: '93vh', width: '99vw' }}>
       <Grid container justifyContent="space-between">
         <Grid item xs={"auto"}>
+        <React.Fragment><Button onClick={() =>Refresh()} variant="outlined">Обновить</Button> </React.Fragment>
           {administ && <React.Fragment>{adopen === 1 && <Admin Refresh={Refresh} setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd} select={select[currentTab].value} />}
             {adopen === 0 && <Button color="success" variant="contained" onClick={() => setadopen(1)}>Админка</Button>}</React.Fragment>}</Grid><Grid item xs={"auto"}>
           {el_arhive && <React.Fragment>
