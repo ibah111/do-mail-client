@@ -114,7 +114,7 @@ export default function Main({ administ, el_arhive, editable }) {
     <div style={{ height: '93vh', width: '99vw' }}>
       <Grid container justifyContent="space-between">
         <Grid item xs={"auto"}>
-          {administ && <React.Fragment>{adopen === 1 && <Admin Refresh={Refresh} setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd} select={select} />}
+          {administ && <React.Fragment>{adopen === 1 && <Admin Refresh={Refresh} setvalu={setvalu} adopen={adopen} setadopen={setadopen} sd={sd} select={select[currentTab].value} />}
             {adopen === 0 && <Button color="success" variant="contained" onClick={() => setadopen(1)}>Админка</Button>}</React.Fragment>}</Grid><Grid item xs={"auto"}>
           {el_arhive && <React.Fragment>
             <FormControl size="small" sx={{ width: '13vh' }} color="secondary">
@@ -125,14 +125,14 @@ export default function Main({ administ, el_arhive, editable }) {
               </Select>
             </FormControl> 
             
-            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
+            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select[currentTab].value} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
               if (select.length > 0)
               setOpenD(true)
               else
               alert("Ни одна строка не выбрана")
             }
               } variant="contained">Внесение в короб</Button> </React.Fragment> <React.Fragment>
-              <Button color="secondary" variant="contained" onClick={()=>Delete_from_arhive(select, setvalu, Refresh)}>Убрать из архива</Button>
+              <Button color="secondary" variant="contained" onClick={()=>Delete_from_arhive(select[currentTab].value, setvalu, Refresh)}>Убрать из архива</Button>
                </React.Fragment> </React.Fragment>}
             <Button color="secondary" variant="outlined" onClick={Vkladka === 0 ? () => setVkladka(1) : () => setVkladka(0)}>{Vkladka === 0 ? "Перейти в архив" : "Вернуться в Почту"}</Button>
           </React.Fragment>
@@ -153,7 +153,7 @@ export default function Main({ administ, el_arhive, editable }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenD(false)} color="error">Закрыть</Button>
-          <Button onClick={() => Add_in_corob(select, num, setvalu, Refresh)} color="success">Сохранить</Button>
+          <Button onClick={() => Add_in_corob(select[currentTab].value, num, setvalu, Refresh)} color="success">Сохранить</Button>
         </DialogActions>
       </Dialog>
       <DataGridPro
