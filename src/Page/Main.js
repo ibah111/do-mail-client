@@ -1,4 +1,4 @@
-import { DataGridPro } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridToolbarContainer, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid-pro';
 import { getDatab } from '../function/connect'
 import { GetCookies } from '../function/getcookies'
 import { EditCells } from '../function/editCells'
@@ -7,6 +7,7 @@ import { Admin } from '../utils/AdminPanel'
 import React from 'react'
 import El_arhive from '../utils/El_arhive'
 import GenerateCol from '../function/generateCol'
+import pagination from '../utils/pagination';
 import { FormControl, InputLabel, Dialog, DialogContentText, TextField, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from "@mui/material";
 import Add_in_corob from '../function/add_in_corob'
 import Delete_from_arhive from '../function/delete_from_arhive'
@@ -23,7 +24,7 @@ const createDictUseState=(hook, count, init)=>{
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function Main({ administ, el_arhive, editable }) {
+export default function Main({ administ, el_arhive, editable, dep }) {
   const [type, settype] = React.useState(1)
   const [data, setdata] = React.useState([]);
   const filter = createDictUseState(React.useState, 3, { items: [] });
@@ -44,10 +45,20 @@ export default function Main({ administ, el_arhive, editable }) {
   const [Vkladka, setVkl] = React.useState(0);
   const [num, setNum] = React.useState(null)
   const prevSelectionModel = React.useRef(select);
-  const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d));
+  const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d, dep, administ));
   const Refresh = () => {
     changes([])
   };
+
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarFilterButton />
+        <GridToolbarColumnsButton />
+        <GridToolbarDensitySelector />
+      </GridToolbarContainer>
+    );
+  } 
   const choose_type = (e) => {
     prevSelectionModel.current = select;
     if (Vkladka === 1) {
@@ -83,7 +94,7 @@ export default function Main({ administ, el_arhive, editable }) {
     }])
   },[])
   React.useEffect(()=>{
-    setColumns(GenerateCol(Vkladka, editable, d));
+    setColumns(GenerateCol(Vkladka, editable, d, dep, administ));
   },[Vkladka, d])
   const setVkladka = (val) => {
     prevSelectionModel.current = select;
@@ -99,6 +110,7 @@ export default function Main({ administ, el_arhive, editable }) {
     getDatab(GetCookies(), filter[currentTab].value, page[currentTab].value, columns, pageSize, sort[currentTab].value, Vkladka, type).then((res) => {
       setdata(res.rows)
       setLength(res.count);
+      setColumns(GenerateCol(Vkladka, editable, d, dep, administ));
       select[currentTab].setValue(prevSelectionModel.current[currentTab].value);
     });
   }, [filter[currentTab].value, page[currentTab].value, pageSize, sort[currentTab].value, Vkladka, onChange, type]);
@@ -194,6 +206,10 @@ export default function Main({ administ, el_arhive, editable }) {
         onCellEditCommit={Edit}
         onSelectionModelChange={(newSelectionModel) => {
           select[currentTab].setValue(newSelectionModel);
+        }}
+        components={{
+          Pagination: pagination,
+          Toolbar: CustomToolbar
         }}
       />
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

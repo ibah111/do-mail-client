@@ -8,12 +8,14 @@ function App() {
   const [administ, setadminist] = React.useState(false);
   const [el_arhive, setel_arhive] = React.useState(false);
   const [editable, setedit] = React.useState(false);
+  const [dep, setdep] = React.useState(false);
   React.useEffect(() => {
     checklogin().then((res) => {
       if (res.login_result) {
         setadminist(res.admin)
         setedit(res.editor)
         setel_arhive(res.el_arhive)
+        setdep(res.department)
         setaccept(res)
       }
     })
@@ -21,7 +23,7 @@ function App() {
   }, [])
   return (
     <div>
-      {accept.login_result ? <Main administ={administ} el_arhive={el_arhive} editable={editable}/>: <React.Fragment>{"Вы не вошли, обратитесь к Администратору"}</React.Fragment>}
+      {accept.login_result ? <Main administ={administ} el_arhive={el_arhive} editable={editable} dep={dep}/>: <React.Fragment>{"Вы не вошли, обратитесь к Администратору"}</React.Fragment>}
     </div>
   );
 }

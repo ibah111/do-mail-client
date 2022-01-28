@@ -1,7 +1,8 @@
 import { Button } from '@mui/material';
 import React from 'react';
+// import {containsFilter} from '../utils/filter'
 
-export default function (mode, editable, d) {
+export default function (mode, editable, d, dep, admin, selects) {
     const columns = [
         { field: 'id', headerName: '№', width: 90 },
         {
@@ -74,7 +75,9 @@ export default function (mode, editable, d) {
         {
             field: 'fio_dol',
             headerName: 'ФИО должника',
+            //filterOperators: containsFilter(selects.fio_dol),
             editable,
+            //filter_for: "list",
             sortable: true,
             width: 160,
         },
@@ -147,6 +150,23 @@ export default function (mode, editable, d) {
                 </strong>)
         }
     ];
+    if (dep === "Отдел взыскания " || admin) 
+    {
+        columns.push({
+            field: 'check_vsisk',
+            headerName: 'Проверено взыскателем',
+            type: 'boolean',
+            editable: true,
+            sortable: true,
+            width: 80,
+        })
+        columns.push({
+            field: 'check_vsisk_name',
+            headerName: 'Кем проверено',
+            sortable: true,
+            width: 250,
+        })
+    }
     if (mode === 1 || mode ) {
         columns.map((value) => {
             if (value.field === "doc_name") {
