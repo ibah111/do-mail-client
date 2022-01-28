@@ -127,7 +127,7 @@ export default function Main({ administ, el_arhive, editable }) {
             </FormControl> 
             
             {Vkladka === 0 ? <React.Fragment> <El_arhive select={select[currentTab].value} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
-              if (select.length > 0)
+              if (select[currentTab].value.length > 0)
               setOpenD(true)
               else
               alert("Ни одна строка не выбрана")
