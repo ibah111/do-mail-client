@@ -150,7 +150,7 @@ export default function (mode, editable, d, dep, admin, selects) {
                 </strong>)
         }
     ];
-    if (dep === "Отдел взыскания " || admin) 
+    if (dep === "Отдел взыскания ") 
     {
         columns.push({
             field: 'check_vsisk',
@@ -164,6 +164,24 @@ export default function (mode, editable, d, dep, admin, selects) {
             field: 'check_vsisk_name',
             headerName: 'Кем проверено',
             sortable: true,
+            width: 250,
+        })
+    }
+    if (admin) 
+    {
+        columns.push({
+            field: 'check_vsisk',
+            headerName: 'Проверено взыскателем',
+            type: 'boolean',
+            editable: true,
+            sortable: true,
+            width: 80,
+        })
+        columns.push({
+            field: 'check_vsisk_name',
+            headerName: 'Кем проверено',
+            sortable: true,
+            editable: true,
             width: 250,
         })
     }
