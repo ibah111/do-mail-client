@@ -5,7 +5,7 @@ import { EditCells } from '../function/editCells'
 import { Snackbar, Grid, Alert as MuiAlert, Button } from '@mui/material';
 import { Admin } from '../utils/AdminPanel'
 import React from 'react'
-import El_arhive from '../utils/El_arhive'
+import ElArhive from '../utils/ElArhive'
 import GenerateCol from '../function/generateCol'
 import pagination from '../utils/pagination';
 import { FormControl, InputLabel, Dialog, DialogContentText, TextField, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from "@mui/material";
@@ -138,7 +138,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
               </Select>
             </FormControl> 
             
-            {Vkladka === 0 ? <React.Fragment> <El_arhive select={select[currentTab].value} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
+            {Vkladka === 0 ? <React.Fragment> <ElArhive select={select[currentTab].value} setvalu={setvalu} type={type} /> </React.Fragment> : <React.Fragment><React.Fragment> <Button color="secondary" onClick={() => {
               if (select[currentTab].value.length > 0)
               setOpenD(true)
               else

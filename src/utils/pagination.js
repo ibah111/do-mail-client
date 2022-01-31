@@ -34,6 +34,11 @@ export default function CustomPagination() {
         page={page + 1}
         renderItem={(item) => {
           switch (item.type) {
+            case "start-ellipsis":
+              return <IconButton size="small" onClick={(value) => {
+                const newPage = Number(prompt("Введите номер страницы:"));
+                if (newPage) apiRef.current.setPage(newPage - 1);
+              }}>...</IconButton>
             case "end-ellipsis":
               return <IconButton size="small" onClick={(value) => {
                 const newPage = Number(prompt("Введите номер страницы:"));
