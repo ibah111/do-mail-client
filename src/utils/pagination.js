@@ -24,7 +24,7 @@ export default function CustomPagination() {
         value={pageSize}
         onChange={(e) => { apiRef.current.setPageSize(e.target.value) }}
       >
-        {listRange.map(value => <MenuItem value={value}>{value}</MenuItem>)}
+        {listRange.map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
       </Select>
       <Typography sx={{ mx: 2, ml:4 }}>Всего:</Typography>
       <Typography sx={{ mr: 2 }}>{state.rowCount}</Typography>
@@ -33,18 +33,13 @@ export default function CustomPagination() {
         count={pageCount}
         page={page + 1}
         renderItem={(item) => {
-          console.log(item)
           switch (item.type) {
-            case "previous":
-              return <><PaginationItem {...item} /></>
-            case "page":
-              return <PaginationItem {...item} />
             case "end-ellipsis":
               return <IconButton size="small" onClick={(value) => {
                 const newPage = Number(prompt("Введите номер страницы:"));
                 if (newPage) apiRef.current.setPage(newPage - 1);
               }}>...</IconButton>
-            case "next":
+            default:
               return <PaginationItem {...item} />
           }
         }}
