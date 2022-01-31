@@ -95,7 +95,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
   },[])
   React.useEffect(()=>{
     setColumns(GenerateCol(Vkladka, editable, d, dep, administ));
-  },[Vkladka, d])
+  },[Vkladka, editable, d, dep, administ])
   const setVkladka = (val) => {
     prevSelectionModel.current = select;
     if (val === 1) {
@@ -110,7 +110,6 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     getDatab(GetCookies(), filter[currentTab].value, page[currentTab].value, columns, pageSize, sort[currentTab].value, Vkladka, type).then((res) => {
       setdata(res.rows)
       setLength(res.count);
-      setColumns(GenerateCol(Vkladka, editable, d, dep, administ));
       select[currentTab].setValue(prevSelectionModel.current[currentTab].value);
     });
   }, [filter[currentTab].value, page[currentTab].value, pageSize, sort[currentTab].value, Vkladka, onChange, type]);
