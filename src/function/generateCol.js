@@ -1,8 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import {containsFilter} from '../utils/filter'
 
-export default function (mode, editable, d, dep, admin, type) {
+export default function generateCol (mode, editable, d, dep, admin, type) {
     const columns = [
         { field: 'id', headerName: '№', width: 90 },
         {
