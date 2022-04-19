@@ -1,8 +1,8 @@
 import { Button } from '@mui/material';
 import React from 'react';
-// import {containsFilter} from '../utils/filter'
+import {containsFilter} from '../utils/filter'
 
-export default function (mode, editable, d, dep, admin, selects) {
+export default function (mode, editable, d, dep, admin, type) {
     const columns = [
         { field: 'id', headerName: '№', width: 90 },
         {
@@ -75,7 +75,7 @@ export default function (mode, editable, d, dep, admin, selects) {
         {
             field: 'fio_dol',
             headerName: 'ФИО должника',
-            //filterOperators: containsFilter(selects.fio_dol),
+            // filterOperators: containsFilter(),
             editable,
             //filter_for: "list",
             sortable: true,
@@ -186,6 +186,7 @@ export default function (mode, editable, d, dep, admin, selects) {
         })
     }
     if (mode === 1 || mode ) {
+        if (type === 1) {
         columns.map((value) => {
             if (value.field === "doc_name") {
                 value.field = 'doc_name_arhive'
@@ -206,6 +207,30 @@ export default function (mode, editable, d, dep, admin, selects) {
             sortable: true,
             width: 80,
         })
+    }
+        if (type === 2) {
+            columns.map((value) => {
+                if (value.field === "doc_name") {
+                    value.field = 'doc_name_arhive_id'
+                    value.editable = true
+                    value.valueGetter = (params) => {
+                        if (params.value === null)
+                            return params.row.doc_name
+                        else
+                            return params.value
+                    }
+                }
+            })
+            columns.push({
+                field: 'korob_arhive_id',
+                headerName: 'Короб',
+                type: 'number',
+                editable: true,
+                sortable: true,
+                width: 80,
+            })
+        }
+        
         columns.push({
             field: 'data_obrabotki_arhive',
             headerName: 'Когда переведено в архив',

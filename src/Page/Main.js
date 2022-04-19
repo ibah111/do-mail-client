@@ -2,7 +2,7 @@ import { DataGridPro, GridToolbarContainer, GridToolbarColumnsButton, GridToolba
 import { getDatab } from '../function/connect'
 import { GetCookies } from '../function/getcookies'
 import { EditCells } from '../function/editCells'
-import { Snackbar, Grid, Alert as MuiAlert, Button } from '@mui/material';
+import { Snackbar, Grid, Alert as MuiAlert, Button, Tab } from '@mui/material';
 import { Admin } from '../utils/AdminPanel'
 import React from 'react'
 import ElArhive from '../utils/ElArhive'
@@ -45,7 +45,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
   const [Vkladka, setVkl] = React.useState(0);
   const [num, setNum] = React.useState(null)
   const prevSelectionModel = React.useRef(select);
-  const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d, dep, administ));
+  const [columns,setColumns] = React.useState(GenerateCol(Vkladka, editable, d, dep, administ, type));
   const Refresh = () => {
     changes([])
   };
@@ -70,7 +70,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     settype(e.target.value)
   }
   const Edit = (value) => {
-    EditCells(value, GetCookies()).then((Add) => {
+    EditCells(value, GetCookies(), columns).then((Add) => {
       setOpen(true)
       setVari(Add.Result)
       setComm(`Код ответа : ${Add.Code}, Сообщение: ${Add.Message}`)
@@ -94,8 +94,9 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     }])
   },[])
   React.useEffect(()=>{
-    setColumns(GenerateCol(Vkladka, editable, d, dep, administ));
-  },[Vkladka, editable, d, dep, administ])
+    setColumns(GenerateCol(Vkladka, editable, d, dep, administ, type));
+    console.log(type)
+  },[Vkladka, editable, d, dep, administ, type])
   const setVkladka = (val) => {
     prevSelectionModel.current = select;
     if (val === 1) {
@@ -144,7 +145,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
               alert("Ни одна строка не выбрана")
             }
               } variant="contained">Внесение в короб</Button> </React.Fragment> <React.Fragment>
-              <Button color="secondary" variant="contained" onClick={()=>Delete_from_arhive(select[currentTab].value, setvalu, Refresh)}>Убрать из архива</Button>
+              <Button color="secondary" variant="contained" onClick={()=>Delete_from_arhive(select[currentTab].value, setvalu, Refresh, type)}>Убрать из архива</Button>
                </React.Fragment> </React.Fragment>}
             <Button color="secondary" variant="outlined" onClick={Vkladka === 0 ? () => setVkladka(1) : () => setVkladka(0)}>{Vkladka === 0 ? "Перейти в архив" : "Вернуться в Почту"}</Button>
           </React.Fragment>
@@ -165,7 +166,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenD(false)} color="error">Закрыть</Button>
-          <Button onClick={() => Add_in_corob(select[currentTab].value, num, setvalu, Refresh)} color="success">Сохранить</Button>
+          <Button onClick={() => Add_in_corob(select[currentTab].value, num, setvalu, Refresh, type, setOpenD)} color="success">Сохранить</Button>
         </DialogActions>
       </Dialog>
       <DataGridPro
