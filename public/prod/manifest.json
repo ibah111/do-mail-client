@@ -1,0 +1,9 @@
+{
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+    "name": "Входящая почта",
+    "short_name": "Входяшка",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "Просмотр и редактирование входящей почты"
+  }

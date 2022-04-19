@@ -18,9 +18,9 @@
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start": "cross-env react-scripts start",
-    "build": "cross-env react-scripts build",
-    "test": "cross-env react-scripts test",
+    "start": "cross-env react-app-rewired start",
+    "build": "cross-env react-app-rewired build",
+    "test": "cross-env react-app-rewired test",
     "eject": "cross-env react-scripts eject"
   },
   "eslintConfig": {
@@ -41,5 +41,8 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "react-app-rewired": "^2.2.1"
+  }
 }
