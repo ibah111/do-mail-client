@@ -5,19 +5,17 @@
   "author": "Zalarast",
   "homepage": ".",
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.4.1",
-    "@mui/material": "^5.4.1",
-    "@mui/styles": "^5.4.1",
-    "@mui/x-data-grid-pro": "^5.5.1",
-    "axios": "^0.25.0",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.2",
+    "@mui/styles": "^5.6.2",
+    "@mui/x-data-grid-pro": "^5.9.0",
+    "axios": "^0.26.1",
     "cross-env": "^7.0.3",
-    "js-cookie": "^3.0.1",
-    "react": "^17.0.2",
-    "react-cookie": "^4.1.1",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "cross-env react-scripts start",
@@ -42,5 +40,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
