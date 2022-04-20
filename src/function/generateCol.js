@@ -206,6 +206,20 @@ export default function generateCol (mode, editable, d, dep, admin, type) {
             sortable: true,
             width: 80,
         })
+        columns.push({
+            field: 'data_obrabotki_arhive',
+            headerName: 'Когда переведено в архив',
+            type: d,
+            sortable: true,
+            width: 160,
+            valueGetter: (params) => new Date(params.value)
+        })
+        columns.push({
+            field: 'kto_obrabotal_arhive',
+            headerName: 'Кто перевёл в архив',
+            sortable: true,
+            width: 160,
+        })
     }
         if (type === 2) {
             columns.map((value) => {
@@ -228,22 +242,21 @@ export default function generateCol (mode, editable, d, dep, admin, type) {
                 sortable: true,
                 width: 80,
             })
+            columns.push({
+                field: 'data_obrabotki_arhive_id',
+                headerName: 'Когда переведено в архив',
+                type: d,
+                sortable: true,
+                width: 160,
+                valueGetter: (params) => new Date(params.value)
+            })
+            columns.push({
+                field: 'kto_obrabotal_arhive_id',
+                headerName: 'Кто перевёл в архив',
+                sortable: true,
+                width: 160,
+            })
         }
-        
-        columns.push({
-            field: 'data_obrabotki_arhive',
-            headerName: 'Когда переведено в архив',
-            type: d,
-            sortable: true,
-            width: 160,
-            valueGetter: (params) => new Date(params.value)
-        })
-        columns.push({
-            field: 'kto_obrabotal_arhive',
-            headerName: 'Кто перевёл в архив',
-            sortable: true,
-            width: 160,
-        })
     }
 
     return columns
