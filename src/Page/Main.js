@@ -95,7 +95,6 @@ export default function Main({ administ, el_arhive, editable, dep }) {
   },[])
   React.useEffect(()=>{
     setColumns(GenerateCol(Vkladka, editable, d, dep, administ, type));
-    console.log(type)
   },[Vkladka, editable, d, dep, administ, type])
   const setVkladka = (val) => {
     prevSelectionModel.current = select;
@@ -111,7 +110,9 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     getDatab(GetCookies(), filter[currentTab].value, page[currentTab].value, columns, pageSize, sort[currentTab].value, Vkladka, type).then((res) => {
       setdata(res.rows)
       setLength(res.count);
-      select[currentTab].setValue(prevSelectionModel.current[currentTab].value);
+      setTimeout(() =>{
+        select[currentTab].setValue(prevSelectionModel.current[currentTab].value);
+      })
     });
   }, [filter[currentTab].value, page[currentTab].value, pageSize, sort[currentTab].value, Vkladka, onChange, type]);
   React.useEffect(() => {
