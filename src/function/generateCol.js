@@ -124,6 +124,22 @@ export default function generateCol (mode, editable, d, dep, admin, type) {
             width: 160,
         },
         {
+            field: 'mode',
+            headerName: 'Тип документа',
+            editable,
+            sortable: true,
+            width: 160,
+            valueGetter: (params) => {
+                switch (params.value) {
+                    case 1: return 'Входящая почта';
+                    case 2: return 'Госпочта';
+                    case 3: return 'Мейл(Суд+ФССП)';
+                    case 4: return 'Мейл(INFO)';
+                    default: return 'Входящая почта';
+                }
+            }
+        },
+        {
             field: 'ssilka_na_zadachu',
             headerName: 'Ссылка на задачу',
             sortable: true,
