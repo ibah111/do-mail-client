@@ -69,7 +69,6 @@ export default function Main({ administ, el_arhive, editable, dep }) {
   const Refresh = () => {
     changes([]);
   };
-  
 
   function CustomToolbar() {
     return (
@@ -284,7 +283,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
           <DialogContentText>Впишите номер короба</DialogContentText>
           <TextField
             onChange={(e) => {
-              setNum(e.target.value);
+              setNum(Number(e.target.value));
             }}
             autoFocus
             label="№ Короба"
