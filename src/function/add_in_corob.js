@@ -10,7 +10,7 @@ export default function add_in_corob(select, number, setvalu, Refresh, type, set
                 setvalu(res.data)
                 Refresh()
                 setOpenD(false);
-            }).catch(() => { setvalu({ Result: "error", Code: "109", Message: "При отправке произошёл сбой" }) })
+            }).catch((e) => { setvalu(e.response.data) })
         } else
             alert("Номер короба не указан")
 }

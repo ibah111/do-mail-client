@@ -22,6 +22,8 @@ export const Admin = ({select, setvalu, setadopen, sd, Refresh }) => {
                 url: server() + '/newUser', method: 'POST', data: { user, role, ...GetCookies() }
             }).then((resu) => {
                 setvalu(resu.data)
+            }).catch((resu)=>{
+                setvalu(resu.response.data)
             })
         } else {
             alert('Поле с логином не заполнено')

@@ -13,8 +13,8 @@ export default function El_arhive({ select, setvalu, type }) {
         url: server() + '/Add_Arhive', method: 'POST', data: { select: select, ...GetCookies(), type: type, action: "add"}
       }).then((resu) => {
         setvalu(resu.data)
-      }).catch(() => {
-        setvalu({ Result: "error", Code: "109", Message: "При отправке произошёл сбой" })
+      }).catch((e) => {
+        setvalu(e.response.data)
       })
     } else
       alert("Ни одна строка не выбрана")

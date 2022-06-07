@@ -9,7 +9,9 @@ export default function delete_from_arhive(select, setvalu, Refresh, type) {
             }).then((res) => {
                 setvalu(res.data)
                 Refresh()
-            }).catch(() => { setvalu({ Result: "error", Code: "109", Message: "При отправке произошёл сбой" }) })
+            }).catch((e) => {
+                setvalu(e.response.data);
+              });
         } else 
             alert("Ни одна строка не выбрана")
             
