@@ -193,7 +193,7 @@ export default function generateCol(
     }
     default: {
       let tmp = {
-        2: {
+        3: {
           field: "convert",
           headerName: "Учёт конвертов",
           type: "boolean",
@@ -201,7 +201,7 @@ export default function generateCol(
           editable,
           sortable: true,
         },
-        3: {
+        4: {
           field: "pristavi",
           headerName: "Приставы",
           type: "boolean",
