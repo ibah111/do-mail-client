@@ -5641,9 +5641,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"do3@workspace:.":
+"do-mail-client@workspace:.":
   version: 0.0.0-use.local
-  resolution: "do3@workspace:."
+  resolution: "do-mail-client@workspace:."
   dependencies:
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
