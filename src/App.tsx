@@ -1,40 +1,36 @@
 import React from "react";
+import { Connect } from "./Components/Connect";
+import { Login } from "./Components/Login";
 import Main from "./Page/Main";
+import { useAppSelector } from "./Reducer";
 import license from "./utils/crack";
-import checklogin from "./function/checklogin";
-
+license();
 function App() {
-  const [accept, setaccept] = React.useState<any>({});
   const [administ, setadminist] = React.useState(false);
   const [el_arhive, setel_arhive] = React.useState(false);
   const [editable, setedit] = React.useState(false);
   const [dep, setdep] = React.useState("");
+  const User = useAppSelector((state) => state.User);
   React.useEffect(() => {
-    checklogin().then((res) => {
-      if (res.login_result) {
-        setadminist(res.admin);
-        setedit(res.editor);
-        setel_arhive(res.el_arhive);
-        setdep(res.department);
-        setaccept(res);
-      }
-    });
-    license();
-  }, []);
+    if (User) {
+      setadminist(User.roles.includes("admin"));
+      setedit(User.roles.includes("editor"));
+      setel_arhive(User.roles.includes("el_arhive"));
+      setdep(User.department);
+    }
+  }, [User]);
   return (
     <div>
-      {accept.login_result ? (
-        <Main
-          administ={administ}
-          el_arhive={el_arhive}
-          editable={editable}
-          department={dep}
-        />
-      ) : (
-        <React.Fragment>
-          {"Вы не вошли, обратитесь к Администратору"}
-        </React.Fragment>
-      )}
+      <Connect>
+        <Login>
+          <Main
+            administ={administ}
+            el_arhive={el_arhive}
+            editable={editable}
+            department={dep}
+          />
+        </Login>
+      </Connect>
     </div>
   );
 }

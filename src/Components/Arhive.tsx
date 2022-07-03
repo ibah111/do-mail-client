@@ -1,11 +1,11 @@
 import React from "react";
 import SaveIcon from "@mui/icons-material/Save";
-import server from "./server";
+import server from "../utils/server";
 import axios from "axios";
-import { GetCookies } from "../function/getcookies";
 import { Button } from "@mui/material";
 import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import { Result } from "../Page/Main";
+import { getToken } from "../utils/getToken";
 interface ArhiveProps {
   select: GridSelectionModel;
   setResult: React.Dispatch<React.SetStateAction<Result>>;
@@ -20,7 +20,7 @@ export default function Arhive({ select, setResult, typeArhive }: ArhiveProps) {
         method: "POST",
         data: {
           select: select,
-          ...GetCookies(),
+          ...getToken(),
           type: typeArhive,
           action: "add",
         },

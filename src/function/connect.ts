@@ -4,11 +4,10 @@ import {
   GridSortModel,
 } from "@mui/x-data-grid-premium";
 import axios from "axios";
+import { getToken } from "../utils/getToken";
 import server from "../utils/server";
-import { Token } from "./getcookies";
 
 export const getDatab = async (
-  token: Token,
   filter: GridFilterModel,
   page: number,
   columns: GridColumns,
@@ -22,7 +21,7 @@ export const getDatab = async (
     url: server() + "/data",
     method: "POST",
     data: {
-      ...token,
+      ...getToken(),
       filter,
       page,
       columns,

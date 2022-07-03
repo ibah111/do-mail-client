@@ -1,11 +1,16 @@
-import config from "../config";
+import config from "../config/server.json";
 export default function server() {
+  let prot;
   switch (config.protocol) {
-    case "ssl":
-      return "https://" + config.server + ":" + config.port;
     case "http":
-      return "http://" + config.server + ":" + config.port;
+      prot = "http";
+      break;
+    case "ssl":
+      prot = "https";
+      break;
     default:
-      return "";
+      prot = "http";
+      break;
   }
+  return `${prot}://${config.server}:${config.port}`;
 }

@@ -7,7 +7,6 @@ import {
   GridCellEditCommitParams,
 } from "@mui/x-data-grid-premium";
 import { getDatab } from "../function/connect";
-import { GetCookies } from "../function/getcookies";
 import { EditCells } from "../function/editCells";
 import {
   Snackbar,
@@ -19,11 +18,11 @@ import {
   AlertProps,
   AlertColor,
 } from "@mui/material";
-import AdminPanel from "../utils/AdminPanel";
+import AdminPanel from "../Components/AdminPanel";
 import React from "react";
-import Arhive from "../utils/Arhive";
-import GenerateCol from "../function/generateCol";
-import CustomPagination from "../utils/pagination";
+import Arhive from "../Components/Arhive";
+import GenerateCol from "../Components/generateCol";
+import CustomPagination from "../Components/pagination";
 import {
   FormControl,
   InputLabel,
@@ -124,7 +123,7 @@ export default function Main({
     setType(Number(e.target.value));
   };
   const Edit = (value: GridCellEditCommitParams) => {
-    EditCells(value, GetCookies(), columns).then((Add) => {
+    EditCells(value, columns).then((Add) => {
       setOpen(true);
       setSeverity(Add.Result);
       setComm(`Код ответа : ${Add.Code}, Сообщение: ${Add.Message}`);
@@ -192,7 +191,6 @@ export default function Main({
   };
   React.useEffect(() => {
     getDatab(
-      GetCookies(),
       filter[currentTab],
       page[currentTab],
       columns,

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { GetCookies } from "./getcookies";
 import server from "../utils/server";
 import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import React from "react";
 import { Result } from "../Page/Main";
+import { getToken } from "../utils/getToken";
 
 export default function delete_from_arhive(
   select: GridSelectionModel,
@@ -15,7 +15,7 @@ export default function delete_from_arhive(
     axios({
       url: server() + "/Add_Arhive",
       method: "POST",
-      data: { select: select, ...GetCookies(), action: "delete", type: type },
+      data: { select: select, ...getToken(), action: "delete", type: type },
     })
       .then((res) => {
         setResult(res.data);

@@ -4,6 +4,7 @@ import filterModel from "./filterModel";
 import pageModel from "./pageModel";
 import selectionModel from "./selectionModel";
 import sortModel from "./sortModel";
+import User from "./User";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     pageModel,
     selectionModel,
     sortModel,
+    User,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

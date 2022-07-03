@@ -1,8 +1,8 @@
 import axios from "axios";
-import { GetCookies } from "./getcookies";
 import server from "../utils/server";
 import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import { Result } from "../Page/Main";
+import { getToken } from "../utils/getToken";
 
 export default function add_in_corob(
   select: GridSelectionModel,
@@ -18,7 +18,7 @@ export default function add_in_corob(
       method: "POST",
       data: {
         select: select,
-        ...GetCookies(),
+        ...getToken(),
         action: "corob",
         number: number,
         type: type,

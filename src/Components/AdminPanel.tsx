@@ -8,12 +8,12 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { GetCookies } from "../function/getcookies";
 import React from "react";
 import axios from "axios";
-import server from "./server";
+import server from "../utils/server";
 import { Result } from "../Page/Main";
 import { GridSelectionModel } from "@mui/x-data-grid-premium";
+import { getToken } from "../utils/getToken";
 interface AdminProps {
   select: GridSelectionModel;
   setResult: React.Dispatch<React.SetStateAction<Result>>;
@@ -43,7 +43,7 @@ export default function AdminPanel({
       axios({
         url: server() + "/newUser",
         method: "POST",
-        data: { user, role, ...GetCookies() },
+        data: { user, role, ...getToken() },
       })
         .then((resu) => {
           setResult(resu.data);
@@ -60,7 +60,7 @@ export default function AdminPanel({
       axios({
         url: server() + "/Delete",
         method: "POST",
-        data: { select: select, ...GetCookies() },
+        data: { select: select, ...getToken() },
       })
         .then((resu) => {
           setResult(resu.data);
