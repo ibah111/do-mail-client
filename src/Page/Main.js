@@ -1,10 +1,10 @@
 import {
-  DataGridPro,
+  DataGridPremium,
   GridToolbarContainer,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
-} from "@mui/x-data-grid-pro";
+} from "@mui/x-data-grid-premium";
 import { getDatab } from "../function/connect";
 import { GetCookies } from "../function/getcookies";
 import { EditCells } from "../function/editCells";
@@ -118,7 +118,9 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     ]);
   }, []);
   React.useEffect(() => {
-    setColumns(GenerateCol(Vkladka, editable, d, dep, administ, type, activBtn));
+    setColumns(
+      GenerateCol(Vkladka, editable, d, dep, administ, type, activBtn)
+    );
   }, [Vkladka, editable, d, dep, administ, type, activBtn]);
   const setVkladka = (val) => {
     prevSelectionModel.current = select;
@@ -158,7 +160,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     Vkladka,
     onChange,
     type,
-    activBtn
+    activBtn,
   ]);
   React.useEffect(() => {
     if (Object.keys(valu).length > 0) {
@@ -313,7 +315,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
           </Button>
         </DialogActions>
       </Dialog>
-      <DataGridPro
+      <DataGridPremium
         page={page[currentTab].value}
         rows={data}
         columns={columns}

@@ -5,6 +5,7 @@ export default function license() {
   const validLicense = generateLicense({
     expiryDate: new Date(new Date().getTime() + oneYear),
     orderNumber: "MUI-45675676",
+    scope: "premium",
   });
   LicenseInfo.setLicenseKey(validLicense);
 }
