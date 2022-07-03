@@ -1,16 +1,17 @@
 import { Button } from "@mui/material";
+import { GridColDef, GridColumns } from "@mui/x-data-grid-premium";
 import React from "react";
 
 export default function generateCol(
-  mode,
-  editable,
-  d,
-  dep,
-  admin,
-  type,
-  activBtn
+  mode: number,
+  editable: boolean,
+  typeDate: string,
+  depart: string,
+  admin: boolean,
+  type: number,
+  activBtn: number
 ) {
-  const columns = [
+  const columns: GridColumns = [
     { field: "id", headerName: "№", width: 90 },
     {
       field: "date_post",
@@ -74,7 +75,7 @@ export default function generateCol(
     },
     {
       field: "kogda_otdano",
-      type: d,
+      type: typeDate,
       headerName: "Когда обработано",
       sortable: true,
       width: 160,
@@ -111,7 +112,7 @@ export default function generateCol(
   ];
   switch (activBtn) {
     case 2: {
-      let tmp = [
+      let tmp: GridColumns = [
         {
           field: "ist",
           headerName: "Истец, взыскатель",
@@ -122,7 +123,7 @@ export default function generateCol(
         {
           field: "dateDoc",
           headerName: "Дата вынесения документа",
-          type: d,
+          type: typeDate,
           editable,
           sortable: true,
           width: 160,
@@ -141,7 +142,7 @@ export default function generateCol(
     }
 
     case 3: {
-      let tmp = [
+      let tmp: GridColumns = [
         {
           field: "adres",
           headerName: "Адрес(mail)",
@@ -152,7 +153,7 @@ export default function generateCol(
         {
           field: "dateDoc",
           headerName: "Дата вынесения документа",
-          type: d,
+          type: typeDate,
           editable,
           sortable: true,
           width: 160,
@@ -170,7 +171,7 @@ export default function generateCol(
       break;
     }
     case 4: {
-      let tmp = [
+      let tmp: GridColumns = [
         {
           field: "adres",
           headerName: "Адрес(mail)",
@@ -181,7 +182,7 @@ export default function generateCol(
         {
           field: "dateDoc",
           headerName: "Дата вынесения документа",
-          type: d,
+          type: typeDate,
           editable,
           sortable: true,
           width: 160,
@@ -192,7 +193,10 @@ export default function generateCol(
       break;
     }
     default: {
-      let tmp = {
+      interface Tmp {
+        [index: number]: GridColDef;
+      }
+      let tmp: Tmp = {
         3: {
           field: "convert",
           headerName: "Учёт конвертов",
@@ -239,11 +243,11 @@ export default function generateCol(
           width: 160,
         },
       };
-      for (const v in tmp) columns.splice(v, 0, tmp[v]);
+      for (const v in tmp) columns.splice(Number(v), 0, tmp[v]);
       break;
     }
   }
-  if (dep === "Отдел взыскания ") {
+  if (depart === "Отдел взыскания ") {
     columns.push({
       field: "check_vsisk",
       headerName: "Проверено взыскателем",
@@ -270,20 +274,19 @@ export default function generateCol(
         const ID = params.row.id_zadach;
         return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`;
       }
+      return "";
     },
     renderCell: (params) =>
       params.value && (
-        <strong>
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            href={params.value}
-            target="_blank"
-          >
-            Открыть задачу
-          </Button>
-        </strong>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={params.value}
+          target="_blank"
+        >
+          Открыть задачу
+        </Button>
       ),
   });
   if (admin) {
@@ -326,7 +329,7 @@ export default function generateCol(
       columns.push({
         field: "data_obrabotki_arhive",
         headerName: "Когда переведено в архив",
-        type: d,
+        type: typeDate,
         sortable: true,
         width: 160,
         valueGetter: (params) => new Date(params.value),
@@ -360,7 +363,7 @@ export default function generateCol(
       columns.push({
         field: "data_obrabotki_arhive_id",
         headerName: "Когда переведено в архив",
-        type: d,
+        type: typeDate,
         sortable: true,
         width: 160,
         valueGetter: (params) => new Date(params.value),

@@ -1,0 +1,28 @@
+import axios from "axios";
+import { GetCookies } from "./getcookies";
+import server from "../utils/server";
+import { GridSelectionModel } from "@mui/x-data-grid-premium";
+import React from "react";
+import { Result } from "../Page/Main";
+
+export default function delete_from_arhive(
+  select: GridSelectionModel,
+  setResult: React.Dispatch<React.SetStateAction<Result>>,
+  Refresh: () => void,
+  type: number
+) {
+  if (select.length > 0) {
+    axios({
+      url: server() + "/Add_Arhive",
+      method: "POST",
+      data: { select: select, ...GetCookies(), action: "delete", type: type },
+    })
+      .then((res) => {
+        setResult(res.data);
+        Refresh();
+      })
+      .catch((e) => {
+        setResult(e.response.data);
+      });
+  } else alert("Ни одна строка не выбрана");
+}

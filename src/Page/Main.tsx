@@ -4,14 +4,27 @@ import {
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
+  GridCellEditCommitParams,
+  GridSelectionModel,
+  GridFilterModel,
+  GridSortModel,
 } from "@mui/x-data-grid-premium";
 import { getDatab } from "../function/connect";
 import { GetCookies } from "../function/getcookies";
 import { EditCells } from "../function/editCells";
-import { Snackbar, Grid, Alert as MuiAlert, Button } from "@mui/material";
-import { Admin } from "../utils/AdminPanel";
+import {
+  Snackbar,
+  Grid,
+  Alert as MuiAlert,
+  Button,
+  SelectChangeEvent,
+  SnackbarCloseReason,
+  AlertProps,
+  AlertColor,
+} from "@mui/material";
+import AdminPanel from "../utils/AdminPanel";
 import React from "react";
-import ElArhive from "../utils/ElArhive";
+import Arhive from "../utils/Arhive";
 import GenerateCol from "../function/generateCol";
 import CustomPagination from "../utils/pagination";
 import {
@@ -28,43 +41,81 @@ import {
 } from "@mui/material";
 import Add_in_corob from "../function/add_in_corob";
 import Delete_from_arhive from "../function/delete_from_arhive";
-
-const createDictUseState = (hook, count, init) => {
-  let result = {};
+interface Results<T> {
+  [index: number]: {
+    value: T;
+    setValue: React.Dispatch<React.SetStateAction<T>>;
+  };
+}
+function createDictUseState<T extends any>(
+  hook: typeof React.useState,
+  count: number,
+  init: T
+) {
+  const result: Results<T> = {};
   for (let i = 1; i <= count; i++) {
     const [value, setValue] = hook(init);
     result[i] = { value, setValue };
   }
   return result;
-};
-const Alert = React.forwardRef(function Alert(props, ref) {
+}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function Main({ administ, el_arhive, editable, dep }) {
-  const [type, settype] = React.useState(1);
-  const [data, setdata] = React.useState([]);
-  const filter = createDictUseState(React.useState, 3, { items: [] });
+interface MainProps {
+  administ: boolean;
+  el_arhive: boolean;
+  editable: boolean;
+  department: string;
+}
+export interface Result {
+  Result: AlertColor;
+  Code?: string;
+  Message?: string;
+}
+export default function Main({
+  administ,
+  el_arhive,
+  editable,
+  department,
+}: MainProps) {
+  const [type, setType] = React.useState(1);
+  const [data, setData] = React.useState([]);
+  const filter = createDictUseState<GridFilterModel>(React.useState, 3, {
+    items: [],
+  });
   const [currentTab, setTab] = React.useState(1);
-  const sort = createDictUseState(React.useState, 3, []);
-  const page = createDictUseState(React.useState, 3, 0);
+  const sort = createDictUseState<GridSortModel>(React.useState, 3, []);
+  const page = createDictUseState<number>(React.useState, 3, 0);
   const [pageSize, setPageSize] = React.useState(25);
   const [length, setLength] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-  const [openD, setOpenD] = React.useState(false);
-  const [vari, setVari] = React.useState("info");
+  const [openDialogArhive, setOpenDialogArhive] = React.useState(false);
+  const [severity, setSeverity] = React.useState<AlertColor>("info");
   const [comm, setComm] = React.useState("");
-  const [valu, setvalu] = React.useState({});
-  const [adopen, setadopen] = React.useState(0);
-  const [d, sd] = React.useState("date");
+  const [result, setResult] = React.useState<Result>({ Result: "info" });
+  const [adminOpen, setAdminOpen] = React.useState(0);
+  const [typeDate, setTypeDate] = React.useState("date");
   const [onChange, changes] = React.useState([]);
-  const select = createDictUseState(React.useState, 3, []);
-  const [Vkladka, setVkl] = React.useState(0);
-  const [num, setNum] = React.useState(null);
+  const select = createDictUseState<GridSelectionModel>(React.useState, 3, []);
+  const [typeArhive, setTypeArhive] = React.useState(0);
+  const [num, setNum] = React.useState<number>(0);
   const prevSelectionModel = React.useRef(select);
-  const [activBtn, setActiveBtn] = React.useState(1);
-  const changeActive = (e) => setActiveBtn(+e.target.id);
+  const [mode, setMode] = React.useState(1);
+  const changeActive = (value: number) => setMode(value);
   const [columns, setColumns] = React.useState(
-    GenerateCol(Vkladka, editable, d, dep, administ, type, activBtn)
+    GenerateCol(
+      typeArhive,
+      editable,
+      typeDate,
+      department,
+      administ,
+      type,
+      mode
+    )
   );
   const Refresh = () => {
     changes([]);
@@ -79,25 +130,31 @@ export default function Main({ administ, el_arhive, editable, dep }) {
       </GridToolbarContainer>
     );
   }
-  const choose_type = (e) => {
+  const choose_type = (e: SelectChangeEvent<number>) => {
     prevSelectionModel.current = select;
-    if (Vkladka === 1) {
-      setTab(1 + e.target.value);
+    if (typeArhive === 1) {
+      setTab(1 + Number(e.target.value));
     }
-    if (Vkladka === 0) {
+    if (typeArhive === 0) {
       setTab(1);
     }
-    settype(e.target.value);
+    setType(Number(e.target.value));
   };
-  const Edit = (value) => {
+  const Edit = (value: GridCellEditCommitParams) => {
     EditCells(value, GetCookies(), columns).then((Add) => {
       setOpen(true);
-      setVari(Add.Result);
+      setSeverity(Add.Result);
       setComm(`Код ответа : ${Add.Code}, Сообщение: ${Add.Message}`);
     });
   };
 
-  const handleClose = (event, reason) => {
+  const handleCloseAlert = (event: React.SyntheticEvent<Element, Event>) => {
+    setOpen(false);
+  };
+  const handleCloseSnackbar = (
+    event: Event | React.SyntheticEvent<any, Event>,
+    reason: SnackbarCloseReason
+  ) => {
     if (reason === "clickaway") {
       return;
     }
@@ -119,10 +176,18 @@ export default function Main({ administ, el_arhive, editable, dep }) {
   }, []);
   React.useEffect(() => {
     setColumns(
-      GenerateCol(Vkladka, editable, d, dep, administ, type, activBtn)
+      GenerateCol(
+        typeArhive,
+        editable,
+        typeDate,
+        department,
+        administ,
+        type,
+        mode
+      )
     );
-  }, [Vkladka, editable, d, dep, administ, type, activBtn]);
-  const setVkladka = (val) => {
+  }, [typeArhive, editable, typeDate, department, administ, type, mode]);
+  const setVkladka = (val: number) => {
     prevSelectionModel.current = select;
     if (val === 1) {
       setTab(1 + type);
@@ -130,7 +195,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     if (val === 0) {
       setTab(1);
     }
-    setVkl(val);
+    setTypeArhive(val);
   };
   React.useEffect(() => {
     getDatab(
@@ -140,11 +205,11 @@ export default function Main({ administ, el_arhive, editable, dep }) {
       columns,
       pageSize,
       sort[currentTab].value,
-      Vkladka,
+      typeArhive,
       type,
-      activBtn
+      mode
     ).then((res) => {
-      setdata(res.rows);
+      setData(res.rows);
       setLength(res.count);
       setTimeout(() => {
         select[currentTab].setValue(
@@ -157,18 +222,18 @@ export default function Main({ administ, el_arhive, editable, dep }) {
     page[currentTab].value,
     pageSize,
     sort[currentTab].value,
-    Vkladka,
+    typeArhive,
     onChange,
     type,
-    activBtn,
+    mode,
   ]);
   React.useEffect(() => {
-    if (Object.keys(valu).length > 0) {
+    if (Object.keys(result).length > 1) {
       setOpen(true);
-      setVari(valu.Result);
-      setComm(`Код ответа : ${valu.Code}, Сообщение: ${valu.Message}`);
+      setSeverity(result.Result);
+      setComm(`Код ответа : ${result.Code}, Сообщение: ${result.Message}`);
     }
-  }, [valu]);
+  }, [result]);
 
   return (
     <div style={{ height: "94.5vh", width: "99vw" }}>
@@ -181,21 +246,20 @@ export default function Main({ administ, el_arhive, editable, dep }) {
           </React.Fragment>
           {administ && (
             <React.Fragment>
-              {adopen === 1 && (
-                <Admin
+              {adminOpen === 1 && (
+                <AdminPanel
                   Refresh={Refresh}
-                  setvalu={setvalu}
-                  adopen={adopen}
-                  setadopen={setadopen}
-                  sd={sd}
+                  setResult={setResult}
+                  setAdminOpen={setAdminOpen}
+                  setTypeDate={setTypeDate}
                   select={select[currentTab].value}
                 />
               )}
-              {adopen === 0 && (
+              {adminOpen === 0 && (
                 <Button
                   color="success"
                   variant="contained"
-                  onClick={() => setadopen(1)}
+                  onClick={() => setAdminOpen(1)}
                 >
                   Админка
                 </Button>
@@ -224,13 +288,13 @@ export default function Main({ administ, el_arhive, editable, dep }) {
                 </Select>
               </FormControl>
 
-              {Vkladka === 0 ? (
+              {typeArhive === 0 ? (
                 <React.Fragment>
                   {" "}
-                  <ElArhive
+                  <Arhive
                     select={select[currentTab].value}
-                    setvalu={setvalu}
-                    type={type}
+                    setResult={setResult}
+                    typeArhive={type}
                   />{" "}
                 </React.Fragment>
               ) : (
@@ -240,7 +304,8 @@ export default function Main({ administ, el_arhive, editable, dep }) {
                     <Button
                       color="secondary"
                       onClick={() => {
-                        if (select[currentTab].value.length > 0) setOpenD(true);
+                        if (select[currentTab].value.length > 0)
+                          setOpenDialogArhive(true);
                         else alert("Ни одна строка не выбрана");
                       }}
                       variant="contained"
@@ -255,7 +320,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
                       onClick={() =>
                         Delete_from_arhive(
                           select[currentTab].value,
-                          setvalu,
+                          setResult,
                           Refresh,
                           type
                         )
@@ -270,16 +335,19 @@ export default function Main({ administ, el_arhive, editable, dep }) {
                 color="secondary"
                 variant="outlined"
                 onClick={
-                  Vkladka === 0 ? () => setVkladka(1) : () => setVkladka(0)
+                  typeArhive === 0 ? () => setVkladka(1) : () => setVkladka(0)
                 }
               >
-                {Vkladka === 0 ? "Перейти в архив" : "Вернуться в Почту"}
+                {typeArhive === 0 ? "Перейти в архив" : "Вернуться в Почту"}
               </Button>
             </React.Fragment>
           )}
         </Grid>
       </Grid>
-      <Dialog open={openD} onClose={() => setOpenD(false)}>
+      <Dialog
+        open={openDialogArhive}
+        onClose={() => setOpenDialogArhive(false)}
+      >
         <DialogTitle>Внесение</DialogTitle>
         <DialogContent>
           <DialogContentText>Впишите номер короба</DialogContentText>
@@ -295,7 +363,7 @@ export default function Main({ administ, el_arhive, editable, dep }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenD(false)} color="error">
+          <Button onClick={() => setOpenDialogArhive(false)} color="error">
             Закрыть
           </Button>
           <Button
@@ -303,10 +371,10 @@ export default function Main({ administ, el_arhive, editable, dep }) {
               Add_in_corob(
                 select[currentTab].value,
                 num,
-                setvalu,
+                setResult,
                 Refresh,
                 type,
-                setOpenD
+                setOpenDialogArhive
               )
             }
             color="success"
@@ -355,11 +423,19 @@ export default function Main({ administ, el_arhive, editable, dep }) {
           Toolbar: CustomToolbar,
         }}
         componentsProps={{
-          pagination: { activBtn, changeActive },
+          pagination: { mode, changeActive },
         }}
       />
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={vari} sx={{ width: "100%" }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
           {comm}
         </Alert>
       </Snackbar>

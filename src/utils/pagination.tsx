@@ -16,16 +16,23 @@ import {
   useGridApiContext,
   useGridSelector,
   gridPaginationSelector,
-} from "@mui/x-data-grid-pro";
+} from "@mui/x-data-grid-premium";
 const listRange = [25, 50, 100];
 
-export default function CustomPagination({activBtn, changeActive}) {
+interface CustomPaginationProps {
+  mode: number;
+  changeMode: (value: number) => void;
+}
+
+export default function CustomPagination({
+  mode,
+  changeMode,
+}: CustomPaginationProps) {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   const pageSize = useGridSelector(apiRef, gridPageSizeSelector);
   const state = useGridSelector(apiRef, gridPaginationSelector);
-  
 
   return (
     <div
@@ -41,34 +48,30 @@ export default function CustomPagination({activBtn, changeActive}) {
         <Grid container spacing={1}>
           <Grid item>
             <Button
-              id={1}
-              variant={activBtn === 1 ? "outlined" : "contained"}
-              onClick={changeActive}
+              variant={mode === 1 ? "outlined" : "contained"}
+              onClick={(e) => changeMode(1)}
             >
               Входящая почта
             </Button>
           </Grid>
           <Grid item>
             <Button
-              id={2}
-              variant={activBtn === 2 ? "outlined" : "contained"}
-              onClick={changeActive}
+              variant={mode === 2 ? "outlined" : "contained"}
+              onClick={(e) => changeMode(2)}
             >
               Госпочта
             </Button>
           </Grid>
           <Grid item>
             <Button
-              id={3}
-              variant={activBtn === 3 ? "outlined" : "contained"}
-              onClick={changeActive}
+              variant={mode === 3 ? "outlined" : "contained"}
+              onClick={(e) => changeMode(3)}
             >{`Мейл(Суд)`}</Button>
           </Grid>
           <Grid item>
             <Button
-              id={4}
-              variant={activBtn === 4 ? "outlined" : "contained"}
-              onClick={changeActive}
+              variant={mode === 4 ? "outlined" : "contained"}
+              onClick={(e) => changeMode(4)}
             >{`Мейл(ФССП)`}</Button>
           </Grid>
         </Grid>
@@ -85,7 +88,7 @@ export default function CustomPagination({activBtn, changeActive}) {
           variant="outlined"
           value={pageSize}
           onChange={(e) => {
-            apiRef.current.setPageSize(e.target.value);
+            apiRef.current.setPageSize(Number(e.target.value));
           }}
         >
           {listRange.map((value) => (
