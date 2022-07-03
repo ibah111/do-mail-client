@@ -5,7 +5,7 @@ import React from "react";
 import { Result } from "../Page/Main";
 import { getToken } from "../utils/getToken";
 
-export default function Delete_from_arhive(
+export default function RemoveBox(
   select: GridSelectionModel,
   setResult: React.Dispatch<React.SetStateAction<Result>>,
   Refresh: () => void,
@@ -13,9 +13,9 @@ export default function Delete_from_arhive(
 ) {
   if (select.length > 0) {
     axios({
-      url: server() + "/Add_Arhive",
+      url: server() + "/Arhive",
       method: "POST",
-      data: { select: select, ...getToken(), action: "delete", type: type },
+      data: { select: select, ...getToken(), action: "remove", type: type },
     })
       .then((res) => {
         setResult(res.data);

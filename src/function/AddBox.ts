@@ -4,7 +4,7 @@ import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import { Result } from "../Page/Main";
 import { getToken } from "../utils/getToken";
 
-export default function Add_in_corob(
+export default function AddBox(
   select: GridSelectionModel,
   number: number | string,
   setResult: React.Dispatch<React.SetStateAction<Result>>,
@@ -14,12 +14,12 @@ export default function Add_in_corob(
 ) {
   if (number !== null && number !== "") {
     axios({
-      url: server() + "/Add_Arhive",
+      url: server() + "/Arhive",
       method: "POST",
       data: {
         select: select,
         ...getToken(),
-        action: "corob",
+        action: "box",
         number: number,
         type: type,
       },

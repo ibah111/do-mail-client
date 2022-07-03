@@ -13,8 +13,8 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import Add_in_corob from "../function/Add_in_corob";
-import Delete_from_arhive from "../function/Delete_from_arhive";
+import AddBox from "../function/AddBox";
+import RemoveBox from "../function/RemoveBox";
 import { Result } from "../Page/Main";
 import { useAppSelector } from "../Reducer";
 import Arhive from "./Arhive";
@@ -42,7 +42,7 @@ export default function ArhivePanel({
   const [num, setNum] = React.useState<number>(0);
   return (
     <>
-      {User.roles.includes("el_arhive") && (
+      {User.roles.includes("arhive") && (
         <>
           <FormControl size="small" sx={{ width: "13vh" }} color="secondary">
             <InputLabel id="age-label">Тип</InputLabel>
@@ -88,12 +88,7 @@ export default function ArhivePanel({
                   color="secondary"
                   variant="contained"
                   onClick={() =>
-                    Delete_from_arhive(
-                      select[currentTab],
-                      setResult,
-                      Refresh,
-                      type
-                    )
+                    RemoveBox(select[currentTab], setResult, Refresh, type)
                   }
                 >
                   Убрать из архива
@@ -137,7 +132,7 @@ export default function ArhivePanel({
           </Button>
           <Button
             onClick={() =>
-              Add_in_corob(
+              AddBox(
                 select[currentTab],
                 num,
                 setResult,

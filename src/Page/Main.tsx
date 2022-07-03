@@ -35,8 +35,8 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import Add_in_corob from "../function/Add_in_corob";
-import Delete_from_arhive from "../function/Delete_from_arhive";
+import AddBox from "../function/AddBox";
+import RemoveBox from "../function/RemoveBox";
 import { useAppDispatch, useAppSelector } from "../Reducer";
 import { setSortModel } from "../Reducer/sortModel";
 import { setSelectionModel } from "../Reducer/selectionModel";
