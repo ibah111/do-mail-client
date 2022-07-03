@@ -5,9 +5,6 @@ import {
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
   GridCellEditCommitParams,
-  GridSelectionModel,
-  GridFilterModel,
-  GridSortModel,
 } from "@mui/x-data-grid-premium";
 import { getDatab } from "../function/connect";
 import { GetCookies } from "../function/getcookies";
@@ -41,24 +38,11 @@ import {
 } from "@mui/material";
 import Add_in_corob from "../function/add_in_corob";
 import Delete_from_arhive from "../function/delete_from_arhive";
-interface Results<T> {
-  [index: number]: {
-    value: T;
-    setValue: React.Dispatch<React.SetStateAction<T>>;
-  };
-}
-function createDictUseState<T extends any>(
-  hook: typeof React.useState,
-  count: number,
-  init: T
-) {
-  const result: Results<T> = {};
-  for (let i = 1; i <= count; i++) {
-    const [value, setValue] = hook(init);
-    result[i] = { value, setValue };
-  }
-  return result;
-}
+import { useAppDispatch, useAppSelector } from "../Reducer";
+import { setSortModel } from "../Reducer/sortModel";
+import { setSelectionModel } from "../Reducer/selectionModel";
+import { setFilterModel } from "../Reducer/filterModel";
+import { setPageModel } from "../Reducer/pageModel";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -83,13 +67,13 @@ export default function Main({
   department,
 }: MainProps) {
   const [type, setType] = React.useState(1);
+  const dispatch = useAppDispatch();
   const [data, setData] = React.useState([]);
-  const filter = createDictUseState<GridFilterModel>(React.useState, 3, {
-    items: [],
-  });
   const [currentTab, setTab] = React.useState(1);
-  const sort = createDictUseState<GridSortModel>(React.useState, 3, []);
-  const page = createDictUseState<number>(React.useState, 3, 0);
+  const filter = useAppSelector((state) => state.filterModel);
+  const sort = useAppSelector((state) => state.sortModel);
+  const page = useAppSelector((state) => state.pageModel);
+  const select = useAppSelector((state) => state.selectionModel);
   const [pageSize, setPageSize] = React.useState(25);
   const [length, setLength] = React.useState(0);
   const [open, setOpen] = React.useState(false);
@@ -100,12 +84,11 @@ export default function Main({
   const [adminOpen, setAdminOpen] = React.useState(0);
   const [typeDate, setTypeDate] = React.useState("date");
   const [onChange, changes] = React.useState([]);
-  const select = createDictUseState<GridSelectionModel>(React.useState, 3, []);
   const [typeArhive, setTypeArhive] = React.useState(0);
   const [num, setNum] = React.useState<number>(0);
   const prevSelectionModel = React.useRef(select);
   const [mode, setMode] = React.useState(1);
-  const changeActive = (value: number) => setMode(value);
+  const changeMode = (value: number) => setMode(value);
   const [columns, setColumns] = React.useState(
     GenerateCol(
       typeArhive,
@@ -161,18 +144,28 @@ export default function Main({
     setOpen(false);
   };
   React.useEffect(() => {
-    sort[2].setValue([
-      {
-        field: "data_obrabotki_arhive",
-        sort: "asc",
-      },
-    ]);
-    sort[3].setValue([
-      {
-        field: "data_obrabotki_arhive",
-        sort: "asc",
-      },
-    ]);
+    dispatch(
+      setSortModel([
+        2,
+        [
+          {
+            field: "data_obrabotki_arhive",
+            sort: "asc",
+          },
+        ],
+      ])
+    );
+    dispatch(
+      setSortModel([
+        3,
+        [
+          {
+            field: "data_obrabotki_arhive",
+            sort: "asc",
+          },
+        ],
+      ])
+    );
   }, []);
   React.useEffect(() => {
     setColumns(
@@ -200,11 +193,11 @@ export default function Main({
   React.useEffect(() => {
     getDatab(
       GetCookies(),
-      filter[currentTab].value,
-      page[currentTab].value,
+      filter[currentTab],
+      page[currentTab],
       columns,
       pageSize,
-      sort[currentTab].value,
+      sort[currentTab],
       typeArhive,
       type,
       mode
@@ -212,16 +205,19 @@ export default function Main({
       setData(res.rows);
       setLength(res.count);
       setTimeout(() => {
-        select[currentTab].setValue(
-          prevSelectionModel.current[currentTab].value
+        dispatch(
+          setSelectionModel([
+            currentTab,
+            prevSelectionModel.current[currentTab],
+          ])
         );
       });
     });
   }, [
-    filter[currentTab].value,
-    page[currentTab].value,
+    filter[currentTab],
+    page[currentTab],
     pageSize,
-    sort[currentTab].value,
+    sort[currentTab],
     typeArhive,
     onChange,
     type,
@@ -252,7 +248,7 @@ export default function Main({
                   setResult={setResult}
                   setAdminOpen={setAdminOpen}
                   setTypeDate={setTypeDate}
-                  select={select[currentTab].value}
+                  select={select[currentTab]}
                 />
               )}
               {adminOpen === 0 && (
@@ -292,7 +288,7 @@ export default function Main({
                 <React.Fragment>
                   {" "}
                   <Arhive
-                    select={select[currentTab].value}
+                    select={select[currentTab]}
                     setResult={setResult}
                     typeArhive={type}
                   />{" "}
@@ -304,7 +300,7 @@ export default function Main({
                     <Button
                       color="secondary"
                       onClick={() => {
-                        if (select[currentTab].value.length > 0)
+                        if (select[currentTab].length > 0)
                           setOpenDialogArhive(true);
                         else alert("Ни одна строка не выбрана");
                       }}
@@ -319,7 +315,7 @@ export default function Main({
                       variant="contained"
                       onClick={() =>
                         Delete_from_arhive(
-                          select[currentTab].value,
+                          select[currentTab],
                           setResult,
                           Refresh,
                           type
@@ -369,7 +365,7 @@ export default function Main({
           <Button
             onClick={() =>
               Add_in_corob(
-                select[currentTab].value,
+                select[currentTab],
                 num,
                 setResult,
                 Refresh,
@@ -384,27 +380,27 @@ export default function Main({
         </DialogActions>
       </Dialog>
       <DataGridPremium
-        page={page[currentTab].value}
+        page={page[currentTab]}
         rows={data}
         columns={columns}
         rowCount={length}
         pageSize={pageSize}
         onFilterModelChange={(value) => {
           prevSelectionModel.current = select;
-          filter[currentTab].setValue(value);
+          dispatch(setFilterModel([currentTab, value]));
         }}
         pagination
         paginationMode="server"
         onPageChange={(newPage) => {
           prevSelectionModel.current = select;
-          page[currentTab].setValue(newPage);
+          dispatch(setPageModel([currentTab, newPage]));
         }}
-        filterModel={filter[currentTab].value}
+        filterModel={filter[currentTab]}
         sortingMode="server"
-        sortModel={sort[currentTab].value}
+        sortModel={sort[currentTab]}
         onSortModelChange={(newSortModel) => {
           prevSelectionModel.current = select;
-          sort[currentTab].setValue(newSortModel);
+          dispatch(setSortModel([currentTab, newSortModel]));
         }}
         onPageSizeChange={(newPageSize) => {
           prevSelectionModel.current = select;
@@ -413,17 +409,17 @@ export default function Main({
         filterMode="server"
         checkboxSelection
         disableSelectionOnClick
-        selectionModel={select[currentTab].value}
+        selectionModel={select[currentTab]}
         onCellEditCommit={Edit}
         onSelectionModelChange={(newSelectionModel) => {
-          select[currentTab].setValue(newSelectionModel);
+          dispatch(setSelectionModel([currentTab, newSelectionModel]));
         }}
         components={{
           Pagination: CustomPagination,
           Toolbar: CustomToolbar,
         }}
         componentsProps={{
-          pagination: { mode, changeActive },
+          pagination: { mode, changeMode },
         }}
       />
       <Snackbar
