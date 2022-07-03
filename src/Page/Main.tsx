@@ -20,23 +20,8 @@ import {
 } from "@mui/material";
 import AdminPanel from "../Components/AdminPanel";
 import React from "react";
-import Arhive from "../Components/Arhive";
 import GenerateCol from "../Components/generateCol";
-import CustomPagination from "../Components/pagination";
-import {
-  FormControl,
-  InputLabel,
-  Dialog,
-  DialogContentText,
-  TextField,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import AddBox from "../function/AddBox";
-import RemoveBox from "../function/RemoveBox";
+import CustomPagination from "../Components/CustomPagination";
 import { useAppDispatch, useAppSelector } from "../Reducer";
 import { setSortModel } from "../Reducer/sortModel";
 import { setSelectionModel } from "../Reducer/selectionModel";
