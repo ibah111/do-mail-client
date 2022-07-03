@@ -20,7 +20,6 @@ const connect = async (
   } catch (e: unknown) {
     if (e instanceof AxiosError) {
       const data = e.response?.data;
-      console.log(data);
       if (data.Result === "error") {
         setError(data?.Message);
       } else {

@@ -13,10 +13,9 @@ interface ArhiveProps {
 }
 export default function Arhive({ select, setResult, typeArhive }: ArhiveProps) {
   const add_to_arhive = () => {
-    console.log(typeArhive);
     if (select.length > 0) {
       axios({
-        url: server() + "/Add_Arhive",
+        url: server() + "/Arhive",
         method: "POST",
         data: {
           select: select,
