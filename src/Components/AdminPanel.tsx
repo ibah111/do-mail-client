@@ -14,17 +14,16 @@ import server from "../utils/server";
 import { Result } from "../Page/Main";
 import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import { getToken } from "../utils/getToken";
+import { useAppSelector } from "../Reducer";
 interface AdminProps {
   select: GridSelectionModel;
   setResult: React.Dispatch<React.SetStateAction<Result>>;
-  setAdminOpen: React.Dispatch<React.SetStateAction<number>>;
   setTypeDate: React.Dispatch<React.SetStateAction<string>>;
   Refresh: () => void;
 }
 export default function AdminPanel({
   select,
   setResult,
-  setAdminOpen,
   setTypeDate,
   Refresh,
 }: AdminProps) {
@@ -32,7 +31,9 @@ export default function AdminPanel({
   const [da, sda] = React.useState("Дата/Время");
   const [com, setcom] = React.useState(0);
   const [role, setrole] = React.useState(1);
-  const NeawLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [open, setOpen] = React.useState(false);
+  const User = useAppSelector((state) => state.User);
+  const NewLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
     setuser(event.target!.value);
   };
   const choose = (event: SelectChangeEvent<number>) => {
@@ -78,54 +79,71 @@ export default function AdminPanel({
 
   return (
     <React.Fragment>
-      <TextField label="Логин" size="small" onChange={NeawLogin} />
-      {user.length > 11 && (
-        <FormControl size="small" sx={{ width: "20vh" }}>
-          <InputLabel id="age-label">Роль</InputLabel>
-          <Select
-            labelId="age-label"
-            id="age"
-            label="Роль"
-            value={role}
-            onChange={choose}
+      {User.roles.includes("admin") &&
+        (open ? (
+          <>
+            <TextField label="Логин" size="small" onChange={NewLogin} />
+            {user.length > 11 && (
+              <FormControl size="small" sx={{ width: "20vh" }}>
+                <InputLabel id="age-label">Роль</InputLabel>
+                <Select
+                  labelId="age-label"
+                  id="age"
+                  label="Роль"
+                  value={role}
+                  onChange={choose}
+                >
+                  <MenuItem value={1}>Администратор</MenuItem>
+                  <MenuItem value={2}>Редактор</MenuItem>
+                  <MenuItem value={3}>Эл.архив</MenuItem>
+                </Select>
+              </FormControl>
+            )}
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: blue[300] }}
+              onClick={Add}
+            >
+              Добавить
+            </Button>
+            <Button variant="contained" color="success" onClick={Delete}>
+              Удалить запись
+            </Button>
+            {/* <Button variant="contained" color="success">Выгрузить в excel</Button> */}
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                if (com === 0) {
+                  setTypeDate("dateTime");
+                  sda("Дата");
+                  setcom(1);
+                } else {
+                  setTypeDate("date");
+                  sda("Дата/Время");
+                  setcom(0);
+                }
+              }}
+            >
+              {da}
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => setOpen(false)}
+            >
+              Закрыть
+            </Button>
+          </>
+        ) : (
+          <Button
+            color="success"
+            variant="contained"
+            onClick={() => setOpen(true)}
           >
-            <MenuItem value={1}>Администратор</MenuItem>
-            <MenuItem value={2}>Редактор</MenuItem>
-            <MenuItem value={3}>Эл.архив</MenuItem>
-          </Select>
-        </FormControl>
-      )}
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: blue[300] }}
-        onClick={Add}
-      >
-        Добавить
-      </Button>
-      <Button variant="contained" color="success" onClick={Delete}>
-        Удалить запись
-      </Button>
-      {/* <Button variant="contained" color="success">Выгрузить в excel</Button> */}
-      <Button
-        variant="contained"
-        color="success"
-        onClick={() => {
-          if (com === 0) {
-            setTypeDate("dateTime");
-            sda("Дата");
-            setcom(1);
-          } else {
-            setTypeDate("date");
-            sda("Дата/Время");
-            setcom(0);
-          }
-        }}
-      >
-        {da}
-      </Button>
-      <Button variant="contained" color="error" onClick={() => setAdminOpen(0)}>
-        Закрыть
-      </Button>
+            Админка
+          </Button>
+        ))}
     </React.Fragment>
   );
 }

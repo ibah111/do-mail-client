@@ -1,16 +1,18 @@
 import { Button } from "@mui/material";
 import { GridColDef, GridColumns } from "@mui/x-data-grid-premium";
 import React from "react";
+import { store } from "../Reducer";
 
 export default function generateCol(
-  mode: number,
-  editable: boolean,
+  typeArhive: number,
   typeDate: string,
-  depart: string,
-  admin: boolean,
   type: number,
-  activBtn: number
+  mode: number
 ) {
+  const User = store.getState().User;
+  const editable = User.roles.includes("editor");
+  const admin = User.roles.includes("admin");
+  const depart = User.department;
   const columns: GridColumns = [
     { field: "id", headerName: "№", width: 90 },
     {
@@ -110,7 +112,7 @@ export default function generateCol(
     //   },
     // },
   ];
-  switch (activBtn) {
+  switch (mode) {
     case 2: {
       let tmp: GridColumns = [
         {
@@ -306,7 +308,7 @@ export default function generateCol(
       width: 250,
     });
   }
-  if (mode === 1 || mode) {
+  if (typeArhive === 1 || typeArhive) {
     if (type === 1) {
       columns.map((value) => {
         if (value.field === "doc_name") {

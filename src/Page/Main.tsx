@@ -35,36 +35,26 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import Add_in_corob from "../function/add_in_corob";
-import Delete_from_arhive from "../function/delete_from_arhive";
+import Add_in_corob from "../function/Add_in_corob";
+import Delete_from_arhive from "../function/Delete_from_arhive";
 import { useAppDispatch, useAppSelector } from "../Reducer";
 import { setSortModel } from "../Reducer/sortModel";
 import { setSelectionModel } from "../Reducer/selectionModel";
 import { setFilterModel } from "../Reducer/filterModel";
 import { setPageModel } from "../Reducer/pageModel";
+import ArhivePanel from "../Components/ArhivePanel";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-interface MainProps {
-  administ: boolean;
-  el_arhive: boolean;
-  editable: boolean;
-  department: string;
-}
 export interface Result {
   Result: AlertColor;
   Code?: string;
   Message?: string;
 }
-export default function Main({
-  administ,
-  el_arhive,
-  editable,
-  department,
-}: MainProps) {
+export default function Main() {
   const [type, setType] = React.useState(1);
   const dispatch = useAppDispatch();
   const [data, setData] = React.useState([]);
@@ -76,28 +66,17 @@ export default function Main({
   const [pageSize, setPageSize] = React.useState(25);
   const [length, setLength] = React.useState(0);
   const [open, setOpen] = React.useState(false);
-  const [openDialogArhive, setOpenDialogArhive] = React.useState(false);
   const [severity, setSeverity] = React.useState<AlertColor>("info");
   const [comm, setComm] = React.useState("");
   const [result, setResult] = React.useState<Result>({ Result: "info" });
-  const [adminOpen, setAdminOpen] = React.useState(0);
   const [typeDate, setTypeDate] = React.useState("date");
   const [onChange, changes] = React.useState([]);
   const [typeArhive, setTypeArhive] = React.useState(0);
-  const [num, setNum] = React.useState<number>(0);
   const prevSelectionModel = React.useRef(select);
   const [mode, setMode] = React.useState(1);
   const changeMode = (value: number) => setMode(value);
   const [columns, setColumns] = React.useState(
-    GenerateCol(
-      typeArhive,
-      editable,
-      typeDate,
-      department,
-      administ,
-      type,
-      mode
-    )
+    GenerateCol(typeArhive, typeDate, type, mode)
   );
   const Refresh = () => {
     changes([]);
@@ -167,18 +146,8 @@ export default function Main({
     );
   }, []);
   React.useEffect(() => {
-    setColumns(
-      GenerateCol(
-        typeArhive,
-        editable,
-        typeDate,
-        department,
-        administ,
-        type,
-        mode
-      )
-    );
-  }, [typeArhive, editable, typeDate, department, administ, type, mode]);
+    setColumns(GenerateCol(typeArhive, typeDate, type, mode));
+  }, [typeArhive, typeDate, type, mode]);
   const setVkladka = (val: number) => {
     prevSelectionModel.current = select;
     if (val === 1) {
@@ -238,145 +207,25 @@ export default function Main({
               Обновить
             </Button>{" "}
           </React.Fragment>
-          {administ && (
-            <React.Fragment>
-              {adminOpen === 1 && (
-                <AdminPanel
-                  Refresh={Refresh}
-                  setResult={setResult}
-                  setAdminOpen={setAdminOpen}
-                  setTypeDate={setTypeDate}
-                  select={select[currentTab]}
-                />
-              )}
-              {adminOpen === 0 && (
-                <Button
-                  color="success"
-                  variant="contained"
-                  onClick={() => setAdminOpen(1)}
-                >
-                  Админка
-                </Button>
-              )}
-            </React.Fragment>
-          )}
+          <AdminPanel
+            Refresh={Refresh}
+            setResult={setResult}
+            setTypeDate={setTypeDate}
+            select={select[currentTab]}
+          />
         </Grid>
         <Grid item xs={"auto"}>
-          {el_arhive && (
-            <React.Fragment>
-              <FormControl
-                size="small"
-                sx={{ width: "13vh" }}
-                color="secondary"
-              >
-                <InputLabel id="age-label">Тип</InputLabel>
-                <Select
-                  labelId="age-label"
-                  id="age"
-                  label="Тип"
-                  value={type}
-                  onChange={choose_type}
-                >
-                  <MenuItem value={1}>Обычные</MenuItem>
-                  <MenuItem value={2}>ИД</MenuItem>
-                </Select>
-              </FormControl>
-
-              {typeArhive === 0 ? (
-                <React.Fragment>
-                  {" "}
-                  <Arhive
-                    select={select[currentTab]}
-                    setResult={setResult}
-                    typeArhive={type}
-                  />{" "}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <React.Fragment>
-                    {" "}
-                    <Button
-                      color="secondary"
-                      onClick={() => {
-                        if (select[currentTab].length > 0)
-                          setOpenDialogArhive(true);
-                        else alert("Ни одна строка не выбрана");
-                      }}
-                      variant="contained"
-                    >
-                      Внесение в короб
-                    </Button>{" "}
-                  </React.Fragment>{" "}
-                  <React.Fragment>
-                    <Button
-                      color="secondary"
-                      variant="contained"
-                      onClick={() =>
-                        Delete_from_arhive(
-                          select[currentTab],
-                          setResult,
-                          Refresh,
-                          type
-                        )
-                      }
-                    >
-                      Убрать из архива
-                    </Button>
-                  </React.Fragment>{" "}
-                </React.Fragment>
-              )}
-              <Button
-                color="secondary"
-                variant="outlined"
-                onClick={
-                  typeArhive === 0 ? () => setVkladka(1) : () => setVkladka(0)
-                }
-              >
-                {typeArhive === 0 ? "Перейти в архив" : "Вернуться в Почту"}
-              </Button>
-            </React.Fragment>
-          )}
+          <ArhivePanel
+            type={type}
+            choose_type={choose_type}
+            setResult={setResult}
+            currentTab={currentTab}
+            typeArhive={typeArhive}
+            Refresh={Refresh}
+            setVkladka={setVkladka}
+          />
         </Grid>
       </Grid>
-      <Dialog
-        open={openDialogArhive}
-        onClose={() => setOpenDialogArhive(false)}
-      >
-        <DialogTitle>Внесение</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Впишите номер короба</DialogContentText>
-          <TextField
-            onChange={(e) => {
-              setNum(Number(e.target.value));
-            }}
-            autoFocus
-            label="№ Короба"
-            type="number"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialogArhive(false)} color="error">
-            Закрыть
-          </Button>
-          <Button
-            onClick={() =>
-              Add_in_corob(
-                select[currentTab],
-                num,
-                setResult,
-                Refresh,
-                type,
-                setOpenDialogArhive
-              )
-            }
-            color="success"
-          >
-            Сохранить
-          </Button>
-        </DialogActions>
-      </Dialog>
       <DataGridPremium
         page={page[currentTab]}
         rows={data}

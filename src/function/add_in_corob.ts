@@ -4,7 +4,7 @@ import { GridSelectionModel } from "@mui/x-data-grid-premium";
 import { Result } from "../Page/Main";
 import { getToken } from "../utils/getToken";
 
-export default function add_in_corob(
+export default function Add_in_corob(
   select: GridSelectionModel,
   number: number | string,
   setResult: React.Dispatch<React.SetStateAction<Result>>,

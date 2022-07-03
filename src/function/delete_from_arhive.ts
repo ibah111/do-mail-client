@@ -5,7 +5,7 @@ import React from "react";
 import { Result } from "../Page/Main";
 import { getToken } from "../utils/getToken";
 
-export default function delete_from_arhive(
+export default function Delete_from_arhive(
   select: GridSelectionModel,
   setResult: React.Dispatch<React.SetStateAction<Result>>,
   Refresh: () => void,
