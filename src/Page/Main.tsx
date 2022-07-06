@@ -6,8 +6,8 @@ import {
   GridToolbarDensitySelector,
   GridCellEditCommitParams,
 } from "@mui/x-data-grid-premium";
-import { getDatab } from "../function/connect";
-import { EditCells } from "../function/editCells";
+import { getDatab } from "../api/connect";
+import { EditCells } from "../api/editCells";
 import {
   Snackbar,
   Grid,

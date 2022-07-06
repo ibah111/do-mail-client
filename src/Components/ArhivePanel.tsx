@@ -13,8 +13,8 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import AddBox from "../function/AddBox";
-import RemoveBox from "../function/RemoveBox";
+import AddBox from "../api/AddBox";
+import RemoveBox from "../api/RemoveBox";
 import { Result } from "../Page/Main";
 import { useAppSelector } from "../Reducer";
 import Arhive from "./Arhive";
