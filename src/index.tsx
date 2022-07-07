@@ -10,6 +10,8 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import theme from "./lib/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import license from "./utils/crack";
+license();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

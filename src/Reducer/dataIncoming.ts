@@ -11,9 +11,9 @@ const initialState: DataIncomingState = {
   ArhiveIncomingCourtMail: [],
   ArhiveIncomingCourtBailiff: [],
 };
-const dataIncomingSlice = createSlice({
-  name: "dataIncoming",
+const DataIncomingSlice = createSlice({
+  name: "DataIncoming",
   initialState,
   reducers: {},
 });
-export default dataIncomingSlice.reducer;
+export default DataIncomingSlice.reducer;

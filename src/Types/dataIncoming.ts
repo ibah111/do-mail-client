@@ -473,12 +473,36 @@ export class ArhiveIncomingCourtBailiffState extends IncomingCourtBailiffState {
 }
 
 export class DataIncomingState {
+  /**
+   * Входящая почта
+   */
   IncomingMail: IncomingMailState[];
+  /**
+   * Госпочта
+   */
   IncomingGovernmentMail: IncomingGovernmentMailState[];
+  /**
+   * МЕЙЛ(СУД)
+   */
   IncomingCourtMail: IncomingCourtMailState[];
+  /**
+   * МЕЙЛ(ФССП)
+   */
   IncomingCourtBailiff: IncomingCourtBailiffState[];
+  /**
+   * Входящая почта (АРХИВ)
+   */
   ArhiveIncomingMail: ArhiveIncomingMailState[];
+  /**
+   * Госпочта (АРХИВ)
+   */
   ArhiveIncomingGovernmentMail: ArhiveIncomingGovernmentMailState[];
+  /**
+   * МЕЙЛ(СУД) (АРХИВ)
+   */
   ArhiveIncomingCourtMail: ArhiveIncomingCourtMailState[];
+  /**
+   * МЕЙЛ(ФССП) (АРХИВ)
+   */
   ArhiveIncomingCourtBailiff: ArhiveIncomingCourtBailiffState[];
 }
