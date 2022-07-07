@@ -4,7 +4,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface sortModelState {
   [index: number]: GridSortModel;
 }
-const initialState: sortModelState = { 1: [], 2: [], 3: [] };
+const initialState: sortModelState = {
+  1: [],
+  2: [
+    {
+      field: "data_obrabotki_arhive",
+      sort: "asc",
+    },
+  ],
+  3: [
+    {
+      field: "data_obrabotki_arhive",
+      sort: "desc",
+    },
+  ],
+};
 const sortModel = createSlice({
   name: "sortModel",
   initialState,

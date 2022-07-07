@@ -44,10 +44,10 @@ export default function Main() {
   const dispatch = useAppDispatch();
   const [data, setData] = React.useState([]);
   const [currentTab, setTab] = React.useState(1);
-  const filter = useAppSelector((state) => state.filterModel);
-  const sort = useAppSelector((state) => state.sortModel);
-  const page = useAppSelector((state) => state.pageModel);
-  const select = useAppSelector((state) => state.selectionModel);
+  const filter = useAppSelector((state) => state.filterModel[currentTab]);
+  const sort = useAppSelector((state) => state.sortModel[currentTab]);
+  const page = useAppSelector((state) => state.pageModel[currentTab]);
+  const select = useAppSelector((state) => state.selectionModel[currentTab]);
   const [pageSize, setPageSize] = React.useState(25);
   const [length, setLength] = React.useState(0);
   const [open, setOpen] = React.useState(false);
@@ -57,7 +57,6 @@ export default function Main() {
   const [typeDate, setTypeDate] = React.useState("date");
   const [onChange, changes] = React.useState([]);
   const [typeArhive, setTypeArhive] = React.useState(0);
-  const prevSelectionModel = React.useRef(select);
   const [mode, setMode] = React.useState(1);
   const changeMode = (value: number) => setMode(value);
   const [columns, setColumns] = React.useState(
@@ -77,7 +76,6 @@ export default function Main() {
     );
   }
   const choose_type = (e: SelectChangeEvent<number>) => {
-    prevSelectionModel.current = select;
     if (typeArhive === 1) {
       setTab(1 + Number(e.target.value));
     }
@@ -130,11 +128,7 @@ export default function Main() {
       ])
     );
   }, []);
-  React.useEffect(() => {
-    setColumns(GenerateCol(typeArhive, typeDate, type, mode));
-  }, [typeArhive, typeDate, type, mode]);
   const setVkladka = (val: number) => {
-    prevSelectionModel.current = select;
     if (val === 1) {
       setTab(1 + type);
     }
@@ -144,32 +138,27 @@ export default function Main() {
     setTypeArhive(val);
   };
   React.useEffect(() => {
+    const columns = GenerateCol(typeArhive, typeDate, type, mode);
+    setColumns(columns);
     getDatab(
-      filter[currentTab],
-      page[currentTab],
+      filter,
+      page,
       columns,
       pageSize,
-      sort[currentTab],
+      sort,
       typeArhive,
       type,
       mode
     ).then((res) => {
       setData(res.rows);
       setLength(res.count);
-      setTimeout(() => {
-        dispatch(
-          setSelectionModel([
-            currentTab,
-            prevSelectionModel.current[currentTab],
-          ])
-        );
-      });
     });
   }, [
-    filter[currentTab],
-    page[currentTab],
+    filter,
+    page,
     pageSize,
-    sort[currentTab],
+    sort,
+    typeDate,
     typeArhive,
     onChange,
     type,
@@ -196,7 +185,7 @@ export default function Main() {
             Refresh={Refresh}
             setResult={setResult}
             setTypeDate={setTypeDate}
-            select={select[currentTab]}
+            select={select}
           />
         </Grid>
         <Grid item xs={"auto"}>
@@ -212,37 +201,34 @@ export default function Main() {
         </Grid>
       </Grid>
       <DataGridPremium
-        page={page[currentTab]}
+        page={page}
         rows={data}
         columns={columns}
         rowCount={length}
         pageSize={pageSize}
         onFilterModelChange={(value) => {
-          prevSelectionModel.current = select;
           dispatch(setFilterModel([currentTab, value]));
         }}
         pagination
         paginationMode="server"
         onPageChange={(newPage) => {
-          prevSelectionModel.current = select;
           dispatch(setPageModel([currentTab, newPage]));
         }}
-        filterModel={filter[currentTab]}
+        filterModel={filter}
         sortingMode="server"
-        sortModel={sort[currentTab]}
+        sortModel={sort}
         onSortModelChange={(newSortModel) => {
-          prevSelectionModel.current = select;
           dispatch(setSortModel([currentTab, newSortModel]));
         }}
         onPageSizeChange={(newPageSize) => {
-          prevSelectionModel.current = select;
           setPageSize(newPageSize);
         }}
         filterMode="server"
         checkboxSelection
         disableSelectionOnClick
-        selectionModel={select[currentTab]}
+        selectionModel={select}
         onCellEditCommit={Edit}
+        keepNonExistentRowsSelected
         onSelectionModelChange={(newSelectionModel) => {
           dispatch(setSelectionModel([currentTab, newSelectionModel]));
         }}
