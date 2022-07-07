@@ -1,3 +1,3 @@
-export function Main() {
-  return <>test</>;
+export default function Main() {
+  return <></>;
 }
