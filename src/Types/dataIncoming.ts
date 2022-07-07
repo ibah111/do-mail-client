@@ -1,4 +1,6 @@
+import { Type } from "class-transformer";
 import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator";
+import { findAndCount } from "./findAndCount";
 
 export class IncomingMailState {
   /**
@@ -11,6 +13,7 @@ export class IncomingMailState {
    * Дата поступления
    */
   @IsDate()
+  @Type(() => Date)
   date_post: Date;
 
   /**
@@ -89,6 +92,7 @@ export class IncomingMailState {
    * Когда обработано
    */
   @IsDate()
+  @Type(() => Date)
   kogda_otdano: Date;
 
   /**
@@ -127,6 +131,7 @@ export class IncomingGovernmentMailState {
    * Дата поступления
    */
   @IsDate()
+  @Type(() => Date)
   date_post: Date;
 
   /**
@@ -187,6 +192,7 @@ export class IncomingGovernmentMailState {
    * Когда обработано
    */
   @IsDate()
+  @Type(() => Date)
   kogda_otdano: Date;
 
   /**
@@ -217,6 +223,7 @@ export class IncomingGovernmentMailState {
    * Дата вынесения документа
    */
   @IsDate()
+  @Type(() => Date)
   dateDoc: Date;
 
   /**
@@ -236,6 +243,7 @@ export class IncomingCourtMailState {
    * Дата поступления
    */
   @IsDate()
+  @Type(() => Date)
   date_post: Date;
 
   /**
@@ -284,6 +292,7 @@ export class IncomingCourtMailState {
    * Когда обработано
    */
   @IsDate()
+  @Type(() => Date)
   kogda_otdano: Date;
 
   /**
@@ -327,6 +336,7 @@ export class IncomingCourtBailiffState {
    * Дата поступления
    */
   @IsDate()
+  @Type(() => Date)
   date_post: Date;
 
   /**
@@ -375,6 +385,7 @@ export class IncomingCourtBailiffState {
    * Когда обработано
    */
   @IsDate()
+  @Type(() => Date)
   kogda_otdano: Date;
 
   /**
@@ -406,6 +417,7 @@ export class ArhiveIncomingMailState extends IncomingMailState {
    * Дата обработки архива
    */
   @IsDate()
+  @Type(() => Date)
   data_obrabotki_arhive: Date;
 
   /**
@@ -425,6 +437,7 @@ export class ArhiveIncomingGovernmentMailState extends IncomingGovernmentMailSta
    * Дата обработки архива
    */
   @IsDate()
+  @Type(() => Date)
   data_obrabotki_arhive: Date;
 
   /**
@@ -444,6 +457,7 @@ export class ArhiveIncomingCourtMailState extends IncomingCourtMailState {
    * Дата обработки архива
    */
   @IsDate()
+  @Type(() => Date)
   data_obrabotki_arhive: Date;
 
   /**
@@ -463,6 +477,7 @@ export class ArhiveIncomingCourtBailiffState extends IncomingCourtBailiffState {
    * Дата обработки архива
    */
   @IsDate()
+  @Type(() => Date)
   data_obrabotki_arhive: Date;
 
   /**
@@ -476,33 +491,33 @@ export class DataIncomingState {
   /**
    * Входящая почта
    */
-  IncomingMail: IncomingMailState[];
+  IncomingMail: findAndCount<IncomingMailState>;
   /**
    * Госпочта
    */
-  IncomingGovernmentMail: IncomingGovernmentMailState[];
+  IncomingGovernmentMail: findAndCount<IncomingGovernmentMailState>;
   /**
    * МЕЙЛ(СУД)
    */
-  IncomingCourtMail: IncomingCourtMailState[];
+  IncomingCourtMail: findAndCount<IncomingCourtMailState>;
   /**
    * МЕЙЛ(ФССП)
    */
-  IncomingCourtBailiff: IncomingCourtBailiffState[];
+  IncomingCourtBailiff: findAndCount<IncomingCourtBailiffState>;
   /**
    * Входящая почта (АРХИВ)
    */
-  ArhiveIncomingMail: ArhiveIncomingMailState[];
+  ArhiveIncomingMail: findAndCount<ArhiveIncomingMailState>;
   /**
    * Госпочта (АРХИВ)
    */
-  ArhiveIncomingGovernmentMail: ArhiveIncomingGovernmentMailState[];
+  ArhiveIncomingGovernmentMail: findAndCount<ArhiveIncomingGovernmentMailState>;
   /**
    * МЕЙЛ(СУД) (АРХИВ)
    */
-  ArhiveIncomingCourtMail: ArhiveIncomingCourtMailState[];
+  ArhiveIncomingCourtMail: findAndCount<ArhiveIncomingCourtMailState>;
   /**
    * МЕЙЛ(ФССП) (АРХИВ)
    */
-  ArhiveIncomingCourtBailiff: ArhiveIncomingCourtBailiffState[];
+  ArhiveIncomingCourtBailiff: findAndCount<ArhiveIncomingCourtBailiffState>;
 }

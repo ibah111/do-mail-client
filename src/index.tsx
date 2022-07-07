@@ -11,6 +11,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro";
 import theme from "./lib/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import license from "./utils/crack";
+import { SnackbarProvider } from "notistack";
+import ErrorHandler from "./Components/ErrorHandler";
+import "reflect-metadata";
 license();
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -21,11 +24,14 @@ root.render(
       <CssBaseline />
       <LocalizationProvider adapterLocale={"ru"} dateAdapter={AdapterMoment}>
         <Provider store={store}>
-          <Connect>
-            <Login>
-              <Router />
-            </Login>
-          </Connect>
+          <SnackbarProvider maxSnack={3}>
+            <ErrorHandler />
+            <Connect>
+              <Login>
+                <Router />
+              </Login>
+            </Connect>
+          </SnackbarProvider>
         </Provider>
       </LocalizationProvider>
     </ThemeProvider>

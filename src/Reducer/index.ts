@@ -2,11 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import DataIncoming from "./DataIncoming";
 import User from "./User";
+import Error from "./Error";
+import Model from "./Model";
 
 export const store = configureStore({
   reducer: {
     User,
     DataIncoming,
+    Error,
+    Model,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
