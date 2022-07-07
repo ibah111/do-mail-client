@@ -1,6 +1,6 @@
 import React from "react";
 import getGrid from "../../api/getGrid";
-import useGrid from "../../Hooks/useGrid";
+import useGrid from "./Hooks/useGrid";
 import { IncomingMailState } from "../../Types/dataIncoming";
 import DataGrid from "./DataGrid";
 export const typData = "IncomingMail";

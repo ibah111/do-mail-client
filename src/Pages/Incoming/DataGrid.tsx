@@ -1,9 +1,10 @@
 import { DataGridPremium } from "@mui/x-data-grid-premium";
 import { plainToInstance } from "class-transformer";
 import { typData } from ".";
-import useGrid from "../../Hooks/useGrid";
+import useGrid from "./Hooks/useGrid";
 import { IncomingMailState } from "../../Types/dataIncoming";
 import IncomingMailColumns from "./Columns/IncomingMail";
+import Toolbar from "./Components/Toolbar";
 export default function DataGrid() {
   const {
     data,
@@ -34,9 +35,12 @@ export default function DataGrid() {
         selectionModel={state.selectionModel}
         checkboxSelection={true}
         disableSelectionOnClick={true}
+        components={{
+          Toolbar: Toolbar,
+        }}
         filterMode="server"
         keepNonExistentRowsSelected
-        rows={plainToInstance(IncomingMailState, data.rows)}
+        rows={data.rows}
       />
     </>
   );

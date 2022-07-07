@@ -4,10 +4,11 @@ import {
   GridSortModel,
 } from "@mui/x-data-grid-premium";
 import { ClassConstructor, plainToInstance } from "class-transformer";
-import { useAppDispatch, useAppSelector } from "../Reducer";
-import { setMail } from "../Reducer/DataIncoming";
-import { Modeler, setData, startModelState } from "../Reducer/Model";
-import { DataIncomingState } from "../Types/dataIncoming";
+import { useAppDispatch, useAppSelector } from "../../../Reducer";
+import { setMail } from "../../../Reducer/DataIncoming";
+import { Modeler, setData, startModelState } from "../../../Reducer/Model";
+import { DataIncomingState } from "../../../Types/dataIncoming";
+import Transformation from "../Transformation";
 export interface Grider<T extends keyof DataIncomingState> {
   data: DataIncomingState[T];
   state: Modeler;
@@ -21,7 +22,12 @@ export interface Grider<T extends keyof DataIncomingState> {
 export default function useGrid<T extends keyof DataIncomingState>(
   typData: T
 ): Grider<T> {
-  const data = useAppSelector((state) => state.DataIncoming[typData]);
+  const typDataString = typData as string;
+  const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
+  const data: DataIncomingState[T] = {
+    rows: plainToInstance(Transformation[typDataString], dataIncoming.rows),
+    count: dataIncoming.count,
+  };
   const state = useAppSelector((state) => state.Model[typData]);
   const dispatch = useAppDispatch();
   const setMailer = (value: DataIncomingState[T]) =>
