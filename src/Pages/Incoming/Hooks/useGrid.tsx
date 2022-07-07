@@ -5,9 +5,11 @@ import {
   GridSortModel,
 } from "@mui/x-data-grid-premium";
 import { ClassConstructor, plainToInstance } from "class-transformer";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../Reducer";
 import { setMail } from "../../../Reducer/DataIncoming";
 import { Modeler, setData, startModelState } from "../../../Reducer/Model";
+import { setLoading } from "../../../Reducer/Stater";
 import { DataIncomingState } from "../../../Types/dataIncoming";
 import Columns from "../Columns";
 import Transformation from "../Transformation";
@@ -16,6 +18,8 @@ export interface Grider<T extends keyof DataIncomingState> {
   state: Modeler;
   columns: GridColumns;
   typData: T;
+  loading: boolean;
+  setLoaded: (value: boolean) => void;
   setMail: (value: DataIncomingState[T]) => void;
   setPage: (value: number) => void;
   setPageSize: (value: number) => void;
@@ -26,7 +30,8 @@ export interface Grider<T extends keyof DataIncomingState> {
 export default function useGrid<
   T extends keyof DataIncomingState
 >(): Grider<T> {
-  const typData = useAppSelector((state) => state.ChangerMode) as T;
+  const loading = useAppSelector((state) => state.Stater.loading);
+  const typData = useAppSelector((state) => state.Stater.mode) as T;
   const typDataString = typData as string;
   const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
   const data: DataIncomingState[T] = {
@@ -35,6 +40,7 @@ export default function useGrid<
   };
   const state = useAppSelector((state) => state.Model[typData]);
   const dispatch = useAppDispatch();
+  const setLoaded = (value: boolean) => dispatch(setLoading(!value));
   const setMailer = (value: DataIncomingState[T]) =>
     dispatch(setMail([typData, value]));
   const setPage = (value: number) =>
@@ -50,6 +56,8 @@ export default function useGrid<
   return {
     typData,
     data,
+    loading,
+    setLoaded,
     columns: Columns[typDataString],
     state: state ? state : startModelState,
     setPage,

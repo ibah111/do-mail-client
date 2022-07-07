@@ -9,7 +9,7 @@ import server from "../utils/server";
 export default async function getGrid<
   T extends keyof DataIncomingState
 >(): Promise<DataIncomingState[T]> {
-  const changerMode = store.getState().ChangerMode;
+  const changerMode = store.getState().Stater.mode;
   const state = store.getState().Model[changerMode];
   try {
     const response = await axios.post<DataIncomingState[T]>(

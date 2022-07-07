@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Loader from "./Components/Loader";
 import Menu from "./Components/Menu";
 const Main = React.lazy(() => import("./Pages/Main"));
 const Incoming = React.lazy(() => import("./Pages/Incoming"));
@@ -11,7 +12,13 @@ export default function Router() {
         <Route
           path="/"
           element={
-            <React.Suspense fallback={<>Загрузка...</>}>
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
               <Main />
             </React.Suspense>
           }
@@ -19,7 +26,13 @@ export default function Router() {
         <Route
           path="/incoming"
           element={
-            <React.Suspense fallback={<>Загрузка...</>}>
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
               <Incoming />
             </React.Suspense>
           }

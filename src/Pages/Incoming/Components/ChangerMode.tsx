@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../Reducer";
-import { changeMode } from "../../../Reducer/ChangerMode";
+import { changeMode } from "../../../Reducer/Stater";
 
 export default function ChangerMode() {
-  const changerMode = useAppSelector((state) => state.ChangerMode);
+  const changerMode = useAppSelector((state) => state.Stater.mode);
   const dispatch = useAppDispatch();
   return (
     <>

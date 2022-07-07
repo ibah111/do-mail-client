@@ -4,12 +4,12 @@ import DataIncoming from "./DataIncoming";
 import User from "./User";
 import Error from "./Error";
 import Model from "./Model";
-import ChangerMode from "./ChangerMode";
+import Stater from "./Stater";
 
 export const store = configureStore({
   reducer: {
     User,
-    ChangerMode,
+    Stater,
     DataIncoming,
     Error,
     Model,

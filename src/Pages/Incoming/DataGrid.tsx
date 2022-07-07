@@ -1,8 +1,10 @@
 import { DataGridPremium } from "@mui/x-data-grid-premium";
 import useGrid from "./Hooks/useGrid";
 import Toolbar from "./Components/Toolbar";
+import CustomPagination from "../../Components/CustomPagination";
 export default function DataGrid() {
   const {
+    loading,
     columns,
     data,
     state,
@@ -19,6 +21,7 @@ export default function DataGrid() {
         columns={columns}
         rowCount={data.count}
         pagination
+        loading={loading}
         paginationMode="server"
         sortModel={state.sortModel}
         sortingMode="server"
@@ -34,6 +37,7 @@ export default function DataGrid() {
         disableSelectionOnClick={true}
         components={{
           Toolbar: Toolbar,
+          Pagination: CustomPagination,
         }}
         filterMode="server"
         keepNonExistentRowsSelected
