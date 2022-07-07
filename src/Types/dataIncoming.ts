@@ -135,12 +135,6 @@ export class IncomingGovernmentMailState {
   date_post: Date;
 
   /**
-   * Адрес отправителя
-   */
-  @IsString()
-  adr_otp: string;
-
-  /**
    * Отправитель
    */
   @IsString()
@@ -157,12 +151,6 @@ export class IncomingGovernmentMailState {
    */
   @IsString()
   doc_name: string;
-
-  /**
-   * Статья и пункт
-   */
-  @IsString()
-  st_pnkt: string;
 
   /**
    * ГД - Гражданское дело

@@ -1,12 +1,9 @@
 import { DataGridPremium } from "@mui/x-data-grid-premium";
-import { plainToInstance } from "class-transformer";
-import { typData } from ".";
 import useGrid from "./Hooks/useGrid";
-import { IncomingMailState } from "../../Types/dataIncoming";
-import IncomingMailColumns from "./Columns/IncomingMail";
 import Toolbar from "./Components/Toolbar";
 export default function DataGrid() {
   const {
+    columns,
     data,
     state,
     setPage,
@@ -14,12 +11,12 @@ export default function DataGrid() {
     setFilterModel,
     setSelectionModel,
     setSortModel,
-  } = useGrid(typData);
+  } = useGrid();
   return (
     <>
       <DataGridPremium
         autoHeight
-        columns={IncomingMailColumns}
+        columns={columns}
         rowCount={data.count}
         pagination
         paginationMode="server"
