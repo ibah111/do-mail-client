@@ -2,6 +2,7 @@ import React from "react";
 import getGrid from "../../api/getGrid";
 import useGrid from "./Hooks/useGrid";
 import DataGrid from "./DataGrid";
+import { Paper } from "@mui/material";
 export default function Incoming() {
   const { state, setMail, typData } = useGrid();
   React.useEffect(() => {
@@ -11,7 +12,9 @@ export default function Incoming() {
   }, [typData, state.filterModel, state.page, state.pageSize, state.sortModel]);
   return (
     <>
-      <DataGrid />
+      <Paper>
+        <DataGrid />
+      </Paper>
     </>
   );
 }
