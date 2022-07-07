@@ -3,15 +3,29 @@ import {
   GridSelectionModel,
   GridSortModel,
 } from "@mui/x-data-grid-premium";
+import { ClassConstructor, plainToInstance } from "class-transformer";
 import { useAppDispatch, useAppSelector } from "../Reducer";
-import { setData, startModelState } from "../Reducer/Model";
-
-export default function useGrid(typData: string) {
-  const data = useAppSelector((state) => state.DataIncoming.IncomingMail);
-  const state = useAppSelector((state) =>
-    state.Model[typData] ? state.Model[typData] : startModelState
-  );
+import { setMail } from "../Reducer/DataIncoming";
+import { Modeler, setData, startModelState } from "../Reducer/Model";
+import { DataIncomingState } from "../Types/dataIncoming";
+export interface Grider<T extends keyof DataIncomingState> {
+  data: DataIncomingState[T];
+  state: Modeler;
+  setMail: (value: DataIncomingState[T]) => void;
+  setPage: (value: number) => void;
+  setPageSize: (value: number) => void;
+  setFilterModel: (value: GridFilterModel) => void;
+  setSortModel: (value: GridSortModel) => void;
+  setSelectionModel: (value: GridSelectionModel) => void;
+}
+export default function useGrid<T extends keyof DataIncomingState>(
+  typData: T
+): Grider<T> {
+  const data = useAppSelector((state) => state.DataIncoming[typData]);
+  const state = useAppSelector((state) => state.Model[typData]);
   const dispatch = useAppDispatch();
+  const setMailer = (value: DataIncomingState[T]) =>
+    dispatch(setMail([typData, value]));
   const setPage = (value: number) =>
     dispatch(setData([typData, "page", value]));
   const setPageSize = (value: number) =>
@@ -24,8 +38,9 @@ export default function useGrid(typData: string) {
     dispatch(setData([typData, "selectionModel", value]));
   return {
     data,
-    state,
+    state: state ? state : startModelState,
     setPage,
+    setMail: setMailer,
     setPageSize,
     setFilterModel,
     setSortModel,

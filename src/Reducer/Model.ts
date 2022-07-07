@@ -6,7 +6,7 @@ import {
 import _ from "lodash";
 import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 
-interface Modeler {
+export interface Modeler {
   filterModel: GridFilterModel;
   page: number;
   pageSize: number;

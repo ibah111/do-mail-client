@@ -1,4 +1,4 @@
-import { Box, Button, Collapse, Grid, Typography } from "@mui/material";
+import { Box, Button, Collapse, Grid } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 interface Page {
   name: string;

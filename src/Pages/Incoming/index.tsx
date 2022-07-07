@@ -1,18 +1,17 @@
 import React from "react";
 import getGrid from "../../api/getGrid";
-import { useAppDispatch, useAppSelector } from "../../Reducer";
-import { setMail } from "../../Reducer/DataIncoming";
-import { DataIncomingState } from "../../Types/dataIncoming";
+import useGrid from "../../Hooks/useGrid";
+import { IncomingMailState } from "../../Types/dataIncoming";
 import DataGrid from "./DataGrid";
 export const typData = "IncomingMail";
 export default function Incoming() {
-  const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.Model[typData]);
+  const { state, setMail } = useGrid(typData);
   React.useEffect(() => {
     getGrid(typData).then((res) => {
-      dispatch(setMail([typData, res]));
+      console.log(res);
+      setMail(res);
     });
-  }, [state]);
+  }, [state.filterModel, state.page, state.pageSize, state.sortModel]);
   return (
     <>
       <DataGrid />
