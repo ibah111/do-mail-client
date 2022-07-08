@@ -3,13 +3,13 @@ import { DataIncomingState } from "../Types/dataIncoming";
 export type ArhiveState = 0 | 1 | 2;
 export interface StaterState {
   loading: boolean;
-  mode: keyof DataIncomingState;
-  typeArhive: ArhiveState;
+  ChangerMode: keyof DataIncomingState;
+  ArhiveType: ArhiveState;
 }
 const initialState: StaterState = {
   loading: true,
-  mode: "IncomingMail",
-  typeArhive: 0,
+  ChangerMode: "IncomingMail",
+  ArhiveType: 0,
 };
 const StaterSlice = createSlice({
   name: "Stater",
@@ -19,13 +19,13 @@ const StaterSlice = createSlice({
       state: Draft<StaterState>,
       action: PayloadAction<T>
     ) {
-      state.mode = action.payload;
+      state.ChangerMode = action.payload;
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
     setArhive(state, action: PayloadAction<ArhiveState>) {
-      state.typeArhive = action.payload;
+      state.ArhiveType = action.payload;
     },
   },
 });

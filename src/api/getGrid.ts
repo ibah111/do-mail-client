@@ -9,15 +9,17 @@ import server from "../utils/server";
 export default async function getGrid<
   T extends keyof DataIncomingState
 >(): Promise<DataIncomingState[T]> {
-  const changerMode = store.getState().Stater.mode;
-  const state = store.getState().Model[changerMode];
+  const ChangerMode = store.getState().Stater.ChangerMode;
+  const state = store.getState().Model[ChangerMode];
+  const ArhiveType = store.getState().Stater.ArhiveType;
   try {
     const response = await axios.post<DataIncomingState[T]>(
       `${server()}/data`,
       {
         ...getToken(),
         ...(state ? state : startModelState),
-        changerMode,
+        ChangerMode,
+        ArhiveType,
       }
     );
     return response.data;

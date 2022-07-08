@@ -10,7 +10,7 @@ export default function CustomButton<T extends keyof DataIncomingState>({
   mode,
   children,
 }: CustomButtonProps<T>) {
-  const changerMode = useAppSelector((state) => state.Stater.mode);
+  const changerMode = useAppSelector((state) => state.Stater.ChangerMode);
   const dispatch = useAppDispatch();
   return (
     <Button

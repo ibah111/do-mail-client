@@ -31,8 +31,8 @@ export default function useGrid<
   T extends keyof DataIncomingState
 >(): Grider<T> {
   const loading = useAppSelector((state) => state.Stater.loading);
-  const arhive = useAppSelector((state) => state.Stater.typeArhive);
-  const typData = useAppSelector((state) => state.Stater.mode) as T;
+  const arhive = useAppSelector((state) => state.Stater.ArhiveType);
+  const typData = useAppSelector((state) => state.Stater.ChangerMode) as T;
   const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
   const data: DataIncomingState[T] = {
     rows: plainToInstance(Transformation[typData], dataIncoming.rows),
