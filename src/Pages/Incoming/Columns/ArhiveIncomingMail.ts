@@ -1,8 +1,8 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
 import Model from "../../../Reducer/Model";
-import { IncomingMailState } from "../../../Types/dataIncoming";
+import { ArhiveIncomingMailState } from "../../../Types/dataIncoming";
 
-const IncomingMailColumns: GridColumns<IncomingMailState> = [
+const ArhiveIncomingMailColumns: GridColumns<ArhiveIncomingMailState> = [
   { field: "id", headerName: "ID", type: "number" },
   { field: "date_post", headerName: "Дата поступления", type: "date" },
   { field: "convert", headerName: "Учет конвертов", type: "boolean" },
@@ -27,4 +27,4 @@ const IncomingMailColumns: GridColumns<IncomingMailState> = [
   },
   { field: "check_vsisk_name", headerName: "Кем проверено" },
 ];
-export default IncomingMailColumns;
+export default ArhiveIncomingMailColumns;

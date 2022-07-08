@@ -1,7 +1,7 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import { IncomingGovernmentMailState } from "../../../Types/dataIncoming";
+import { ArhiveIncomingGovernmentMailState } from "../../../Types/dataIncoming";
 
-const IncomingGovernmentMailColumns: GridColumns<IncomingGovernmentMailState> =
+const ArhiveIncomingGovernmentMailColumns: GridColumns<ArhiveIncomingGovernmentMailState> =
   [
     { field: "id", headerName: " ID записи", type: "number" },
     { field: "date_post", headerName: " Дата поступления", type: "date" },
@@ -28,4 +28,4 @@ const IncomingGovernmentMailColumns: GridColumns<IncomingGovernmentMailState> =
     { field: "dateDoc", headerName: " Дата вынесения документа", type: "date" },
     { field: "ecp", headerName: " ЕЦП", type: "string" },
   ];
-export default IncomingGovernmentMailColumns;
+export default ArhiveIncomingGovernmentMailColumns;

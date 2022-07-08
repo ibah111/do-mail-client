@@ -1,7 +1,7 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import { IncomingGovernmentMailState } from "../../../Types/dataIncoming";
+import { ArhiveIncomingCourtMailState } from "../../../Types/dataIncoming";
 
-const IncomingGovernmentMailColumns: GridColumns<IncomingGovernmentMailState> =
+const ArhiveIncomingCourtMailColumns: GridColumns<ArhiveIncomingCourtMailState> =
   [
     { field: "id", headerName: " ID записи", type: "number" },
     { field: "date_post", headerName: " Дата поступления", type: "date" },
@@ -24,8 +24,7 @@ const IncomingGovernmentMailColumns: GridColumns<IncomingGovernmentMailState> =
       type: "boolean",
     },
     { field: "check_vsisk_name", headerName: " Кем проверено", type: "string" },
-    { field: "ist", headerName: " Истец, взыскатель", type: "string" },
-    { field: "dateDoc", headerName: " Дата вынесения документа", type: "date" },
-    { field: "ecp", headerName: " ЕЦП", type: "string" },
+    { field: "adres", headerName: " Откуда", type: "string" },
+    { field: "mail", headerName: " На какую почту", type: "string" },
   ];
-export default IncomingGovernmentMailColumns;
+export default ArhiveIncomingCourtMailColumns;

@@ -4,8 +4,7 @@ import {
   GridSelectionModel,
   GridSortModel,
 } from "@mui/x-data-grid-premium";
-import { ClassConstructor, plainToInstance } from "class-transformer";
-import React from "react";
+import { plainToInstance } from "class-transformer";
 import { useAppDispatch, useAppSelector } from "../../../Reducer";
 import { setMail } from "../../../Reducer/DataIncoming";
 import { Modeler, setData, startModelState } from "../../../Reducer/Model";
@@ -32,10 +31,9 @@ export default function useGrid<
 >(): Grider<T> {
   const loading = useAppSelector((state) => state.Stater.loading);
   const typData = useAppSelector((state) => state.Stater.mode) as T;
-  const typDataString = typData as string;
   const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
   const data: DataIncomingState[T] = {
-    rows: plainToInstance(Transformation[typDataString], dataIncoming.rows),
+    rows: plainToInstance(Transformation[typData], dataIncoming.rows),
     count: dataIncoming.count,
   };
   const state = useAppSelector((state) => state.Model[typData]);
@@ -58,7 +56,7 @@ export default function useGrid<
     data,
     loading,
     setLoaded,
-    columns: Columns[typDataString],
+    columns: Columns[typData],
     state: state ? state : startModelState,
     setPage,
     setMail: setMailer,
