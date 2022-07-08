@@ -15,7 +15,7 @@ export default function CustomButton<T extends keyof DataIncomingState>({
   return (
     <Button
       size="small"
-      variant="outlined"
+      variant={changerMode === mode ? "outlined" : "contained"}
       onClick={() => dispatch(changeMode(mode))}
     >
       {children}
