@@ -4,6 +4,7 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from "@mui/x-data-grid-premium";
+import Arhive from "./Arhive";
 import ChangerMode from "./ChangerMode";
 
 export default function Toolbar() {
@@ -13,6 +14,7 @@ export default function Toolbar() {
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
       <ChangerMode />
+      <Arhive />
     </GridToolbarContainer>
   );
 }
