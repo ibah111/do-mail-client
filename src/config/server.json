@@ -1,5 +1,5 @@
 {
   "protocol": "ssl",
-  "server": "localhost",
+  "server": "alex.usb.ru",
   "port": 3001
 }
