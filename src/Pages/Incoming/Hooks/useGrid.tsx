@@ -8,7 +8,7 @@ import { plainToInstance } from "class-transformer";
 import { useAppDispatch, useAppSelector } from "../../../Reducer";
 import { setMail } from "../../../Reducer/DataIncoming";
 import { Modeler, setData, startModelState } from "../../../Reducer/Model";
-import { setLoading } from "../../../Reducer/Stater";
+import { ArhiveState, setLoading } from "../../../Reducer/Stater";
 import { DataIncomingState } from "../../../Types/dataIncoming";
 import Columns from "../Columns";
 import Transformation from "../Transformation";
@@ -18,6 +18,7 @@ export interface Grider<T extends keyof DataIncomingState> {
   columns: GridColumns;
   typData: T;
   loading: boolean;
+  arhive: ArhiveState;
   setLoaded: (value: boolean) => void;
   setMail: (value: DataIncomingState[T]) => void;
   setPage: (value: number) => void;
@@ -30,6 +31,7 @@ export default function useGrid<
   T extends keyof DataIncomingState
 >(): Grider<T> {
   const loading = useAppSelector((state) => state.Stater.loading);
+  const arhive = useAppSelector((state) => state.Stater.typeArhive);
   const typData = useAppSelector((state) => state.Stater.mode) as T;
   const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
   const data: DataIncomingState[T] = {
@@ -55,6 +57,7 @@ export default function useGrid<
     typData,
     data,
     loading,
+    arhive,
     setLoaded,
     columns: Columns[typData],
     state: state ? state : startModelState,
