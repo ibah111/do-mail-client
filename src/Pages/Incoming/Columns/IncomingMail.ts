@@ -1,5 +1,4 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import Model from "../../../Reducer/Model";
 import { IncomingMailState } from "../../../Types/dataIncoming";
 
 const IncomingMailColumns: GridColumns<IncomingMailState> = [

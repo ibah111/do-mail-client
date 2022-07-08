@@ -1,5 +1,4 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import Model from "../../../Reducer/Model";
 import { ArhiveIncomingMailState } from "../../../Types/dataIncoming";
 
 const ArhiveIncomingMailColumns: GridColumns<ArhiveIncomingMailState> = [
