@@ -6,7 +6,7 @@ const Main = React.lazy(() => import("./Pages/Main"));
 const Incoming = React.lazy(() => import("./Pages/Incoming"));
 export default function Router() {
   return (
-    <BrowserRouter basename="/apps/mail">
+    <BrowserRouter basename="/apps/mail-dev">
       <Menu />
       <Routes>
         <Route
