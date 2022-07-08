@@ -22,7 +22,7 @@ export default function Incoming() {
   return (
     <>
       <Paper>
-        <div style={{ display: "flex", height: "100%" }}>
+        <div style={{ display: "flex", height: "95vh" }}>
           <div style={{ flexGrow: 1 }}>
             <DataGrid />
           </div>

@@ -17,7 +17,6 @@ export default function DataGrid() {
   return (
     <>
       <DataGridPremium
-        autoHeight
         columns={columns}
         rowCount={data.count}
         columnBuffer={columns.length}
