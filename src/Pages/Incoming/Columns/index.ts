@@ -1,10 +1,10 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
 import { DataIncomingState } from "../../../Types/dataIncoming";
-import ArhiveIncomingCourtBailiffColumns from "./ArhiveIncomingCourtBailiff";
+import ArhiveIncomingCourtBailiffMailColumns from "./ArhiveIncomingCourtBailiffMail";
 import ArhiveIncomingCourtMailColumns from "./ArhiveIncomingCourtMail";
 import ArhiveIncomingGovernmentMailColumns from "./ArhiveIncomingGovernmentMail";
 import ArhiveIncomingMailColumns from "./ArhiveIncomingMail";
-import IncomingCourtBailiffColumns from "./IncomingCourtBailiff";
+import IncomingCourtBailiffMailColumns from "./IncomingCourtBailiffMail";
 import IncomingCourtMailColumns from "./IncomingCourtMail";
 import IncomingGovernmentMailColumns from "./IncomingGovernmentMail";
 import IncomingMailColumns from "./IncomingMail";
@@ -15,10 +15,10 @@ const Columns: ColumnsState = {
   IncomingMail: IncomingMailColumns,
   IncomingGovernmentMail: IncomingGovernmentMailColumns,
   IncomingCourtMail: IncomingCourtMailColumns,
-  IncomingCourtBailiff: IncomingCourtBailiffColumns,
+  IncomingCourtBailiffMail: IncomingCourtBailiffMailColumns,
   ArhiveIncomingMail: ArhiveIncomingMailColumns,
   ArhiveIncomingGovernmentMail: ArhiveIncomingGovernmentMailColumns,
   ArhiveIncomingCourtMail: ArhiveIncomingCourtMailColumns,
-  ArhiveIncomingCourtBailiff: ArhiveIncomingCourtBailiffColumns,
+  ArhiveIncomingCourtBailiffMail: ArhiveIncomingCourtBailiffMailColumns,
 };
 export default Columns;

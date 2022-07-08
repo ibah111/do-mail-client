@@ -1,7 +1,7 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import { ArhiveIncomingCourtBailiffState } from "../../../Types/dataIncoming";
+import { IncomingCourtBailiffMailState } from "../../../Types/dataIncoming";
 
-const ArhiveIncomingCourtBailiffColumns: GridColumns<ArhiveIncomingCourtBailiffState> =
+const IncomingCourtBailiffMailColumns: GridColumns<IncomingCourtBailiffMailState> =
   [
     { field: "id", headerName: " ID записи", type: "number" },
     { field: "date_post", headerName: " Дата поступления", type: "date" },
@@ -25,4 +25,4 @@ const ArhiveIncomingCourtBailiffColumns: GridColumns<ArhiveIncomingCourtBailiffS
     },
     { field: "check_vsisk_name", headerName: " Кем проверено", type: "string" },
   ];
-export default ArhiveIncomingCourtBailiffColumns;
+export default IncomingCourtBailiffMailColumns;

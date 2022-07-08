@@ -313,7 +313,7 @@ export class IncomingCourtMailState {
   @IsString()
   mail: string;
 }
-export class IncomingCourtBailiffState {
+export class IncomingCourtBailiffMailState {
   /**
    * ID записи
    */
@@ -454,7 +454,7 @@ export class ArhiveIncomingCourtMailState extends IncomingCourtMailState {
   @IsString()
   kto_obrabotal_arhive: string;
 }
-export class ArhiveIncomingCourtBailiffState extends IncomingCourtBailiffState {
+export class ArhiveIncomingCourtBailiffMailState extends IncomingCourtBailiffMailState {
   /**
    * Короб архива
    */
@@ -491,7 +491,7 @@ export class DataIncomingState {
   /**
    * МЕЙЛ(ФССП)
    */
-  IncomingCourtBailiff: findAndCount<IncomingCourtBailiffState>;
+  IncomingCourtBailiffMail: findAndCount<IncomingCourtBailiffMailState>;
   /**
    * Входящая почта (АРХИВ)
    */
@@ -507,5 +507,5 @@ export class DataIncomingState {
   /**
    * МЕЙЛ(ФССП) (АРХИВ)
    */
-  ArhiveIncomingCourtBailiff: findAndCount<ArhiveIncomingCourtBailiffState>;
+  ArhiveIncomingCourtBailiffMail: findAndCount<ArhiveIncomingCourtBailiffMailState>;
 }

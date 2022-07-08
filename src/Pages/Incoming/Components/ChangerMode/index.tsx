@@ -8,7 +8,7 @@ export default function ChangerMode() {
       <CustomButton mode="IncomingCourtMail">
         Электронная почта(СУД)
       </CustomButton>
-      <CustomButton mode="IncomingCourtBailiff">
+      <CustomButton mode="IncomingCourtBailiffMail">
         Электронная почта (ФССП)
       </CustomButton>
     </>
