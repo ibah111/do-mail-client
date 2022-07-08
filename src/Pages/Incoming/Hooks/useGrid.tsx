@@ -15,7 +15,7 @@ import Transformation from "../Transformation";
 export interface Grider<T extends keyof DataIncomingState> {
   data: DataIncomingState[T];
   state: Modeler;
-  columns: GridColumns;
+  columns: GridColumns<DataIncomingState[T]["rows"][number]>;
   typData: T;
   loading: boolean;
   arhive: ArhiveState;

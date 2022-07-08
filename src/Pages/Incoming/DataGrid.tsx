@@ -20,6 +20,7 @@ export default function DataGrid() {
         autoHeight
         columns={columns}
         rowCount={data.count}
+        columnBuffer={columns.length}
         pagination
         loading={loading}
         paginationMode="server"
