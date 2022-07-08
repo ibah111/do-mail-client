@@ -25,5 +25,16 @@ const ArhiveIncomingMailColumns: GridColumns<ArhiveIncomingMailState> = [
     type: "boolean",
   },
   { field: "check_vsisk_name", headerName: "Кем проверено" },
+  { field: "korob_arhive", headerName: " Короб архива", type: "number" },
+  {
+    field: "data_obrabotki_arhive",
+    headerName: " Дата обработки архива",
+    type: "date",
+  },
+  {
+    field: "kto_obrabotal_arhive",
+    headerName: " Кто обработал архив",
+    type: "date",
+  },
 ];
 export default ArhiveIncomingMailColumns;

@@ -27,5 +27,16 @@ const ArhiveIncomingGovernmentMailColumns: GridColumns<ArhiveIncomingGovernmentM
     { field: "ist", headerName: " Истец, взыскатель", type: "string" },
     { field: "dateDoc", headerName: " Дата вынесения документа", type: "date" },
     { field: "ecp", headerName: " ЕЦП", type: "string" },
+    { field: "korob_arhive", headerName: " Короб архива", type: "number" },
+    {
+      field: "data_obrabotki_arhive",
+      headerName: " Дата обработки архива",
+      type: "date",
+    },
+    {
+      field: "kto_obrabotal_arhive",
+      headerName: " Кто обработал архив",
+      type: "date",
+    },
   ];
 export default ArhiveIncomingGovernmentMailColumns;
