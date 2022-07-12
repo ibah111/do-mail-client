@@ -1,7 +1,10 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
 import { ArhiveIncomingMailState } from "../../../Types/dataIncoming";
 
-const ArhiveIncomingMailColumns: GridColumns<ArhiveIncomingMailState> = [
+const ArhiveIncomingMailColumns = (
+  roles: string[],
+  editor: (...args: string[]) => boolean
+): GridColumns<ArhiveIncomingMailState> => [
   { field: "id", headerName: "ID", type: "number" },
   { field: "date_post", headerName: "Дата поступления", type: "date" },
   { field: "convert", headerName: "Учет конвертов", type: "boolean" },

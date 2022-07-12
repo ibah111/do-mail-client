@@ -1,4 +1,5 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
+import { store } from "../../../Reducer";
 import { ArhiveState } from "../../../Reducer/Stater";
 import { DataIncomingState } from "../../../Types/dataIncoming";
 import ArhiveIncomingCourtBailiffMailColumns from "./ArhiveIncomingCourtBailiffMail";
@@ -10,7 +11,10 @@ import IncomingCourtMailColumns from "./IncomingCourtMail";
 import IncomingGovernmentMailColumns from "./IncomingGovernmentMail";
 import IncomingMailColumns from "./IncomingMail";
 type ColumnsState = {
-  [index: string]: GridColumns<any>;
+  [index: string]: (
+    roles: string[],
+    editor: (...args: string[]) => boolean
+  ) => GridColumns<any>;
 };
 export const allColumns: ColumnsState = {
   IncomingMail: IncomingMailColumns,
@@ -26,5 +30,19 @@ export default function getColumns<T extends keyof DataIncomingState>(
   typ: T,
   arhive: ArhiveState
 ) {
-  return allColumns[`${arhive > 0 ? "Arhive" : ""}${typ}`];
+  const roles = store.getState().User.roles;
+  return allColumns[`${arhive > 0 ? "Arhive" : ""}${typ}`](
+    roles,
+    editor(roles)
+  );
 }
+export const editor =
+  (roles: string[]) =>
+  (...userRoles: string[]) => {
+    let result = 0;
+    for (const role of userRoles) {
+      roles.includes(role);
+      result += 1;
+    }
+    return result > 0;
+  };

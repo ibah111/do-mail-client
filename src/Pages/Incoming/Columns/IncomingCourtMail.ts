@@ -1,7 +1,10 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
 import { IncomingCourtMailState } from "../../../Types/dataIncoming";
 
-const IncomingCourtMailColumns: GridColumns<IncomingCourtMailState> = [
+const IncomingCourtMailColumns = (
+  roles: string[],
+  editor: (...args: string[]) => boolean
+): GridColumns<IncomingCourtMailState> => [
   { field: "id", headerName: " ID записи", type: "number" },
   { field: "date_post", headerName: " Дата поступления", type: "date" },
   { field: "otprav", headerName: " Отправитель", type: "string" },
