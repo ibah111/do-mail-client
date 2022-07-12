@@ -1,5 +1,6 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
 import { ArhiveIncomingMailState } from "../../../Types/dataIncoming";
+import { checkDateGrid } from "../../../utils/checkDate";
 
 const ArhiveIncomingMailColumns = (
   isAllow: (...args: string[]) => boolean
@@ -9,6 +10,7 @@ const ArhiveIncomingMailColumns = (
     field: "date_post",
     headerName: "Дата поступления",
     type: "date",
+    preProcessEditCellProps: checkDateGrid,
     editable: isAllow("editor"),
   },
   {

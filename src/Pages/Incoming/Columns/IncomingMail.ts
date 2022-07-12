@@ -1,5 +1,7 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
+import moment from "moment";
 import { IncomingMailState } from "../../../Types/dataIncoming";
+import { checkDateGrid } from "../../../utils/checkDate";
 
 const IncomingMailColumns = (
   isAllow: (...args: string[]) => boolean
@@ -9,6 +11,7 @@ const IncomingMailColumns = (
     field: "date_post",
     headerName: "Дата поступления",
     type: "date",
+    preProcessEditCellProps: checkDateGrid,
     editable: isAllow("editor"),
   },
   {
@@ -45,7 +48,11 @@ const IncomingMailColumns = (
   { field: "kd", headerName: "КД - Кредитный договор" },
   { field: "ispol_zadach", headerName: "Исполнитель задачи" },
   { field: "vsisk", headerName: "ФИО взыскателя" },
-  { field: "kogda_otdano", headerName: "Когда обработано", type: "date" },
+  {
+    field: "kogda_otdano",
+    headerName: "Когда обработано",
+    type: "date",
+  },
   { field: "kto_obrabotal", headerName: "Кто обработал" },
   { field: "nal_skan", headerName: "Скан", type: "boolean" },
   {
