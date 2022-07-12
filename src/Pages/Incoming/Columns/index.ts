@@ -1,7 +1,7 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import { store } from "../../../Reducer";
 import { ArhiveState } from "../../../Reducer/Stater";
 import { DataIncomingState } from "../../../Types/dataIncoming";
+import { isAllow } from "../../../utils/isAllow";
 import ArhiveIncomingCourtBailiffMailColumns from "./ArhiveIncomingCourtBailiffMail";
 import ArhiveIncomingCourtMailColumns from "./ArhiveIncomingCourtMail";
 import ArhiveIncomingGovernmentMailColumns from "./ArhiveIncomingGovernmentMail";
@@ -31,14 +31,3 @@ export default function getColumns<T extends keyof DataIncomingState>(
 ) {
   return allColumns[`${arhive > 0 ? "Arhive" : ""}${typ}`](isAllow());
 }
-export const isAllow = () => {
-  const roles = store.getState().User.roles;
-  return (...userRoles: string[]) => {
-    let result = 0;
-    for (const role of userRoles) {
-      roles.includes(role);
-      result += 1;
-    }
-    return result > 0;
-  };
-};
