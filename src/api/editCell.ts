@@ -1,9 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import moment from "moment";
 import { store } from "../Reducer";
-import { callError } from "../Reducer/Error";
-import { startModelState } from "../Reducer/Model";
 import { DataIncomingState } from "../Types/dataIncoming";
+import getErrorAxios from "../utils/getErrorAxios";
 import { getToken } from "../utils/getToken";
 import server from "../utils/server";
 
@@ -32,12 +31,6 @@ export default async function editCell<T extends keyof DataIncomingState>(
     );
     return response.data;
   } catch (e) {
-    store.dispatch(
-      callError({
-        text: "Произошла непредвиденная ошибка",
-        params: { variant: "error" },
-      })
-    );
-    throw e;
+    throw getErrorAxios(e);
   }
 }

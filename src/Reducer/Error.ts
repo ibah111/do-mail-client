@@ -12,8 +12,8 @@ const ErrorSlice = createSlice({
   name: "Error",
   initialState,
   reducers: {
-    callError(state, action: PayloadAction<ErrorState>) {
-      return action.payload;
+    callError(state, action: PayloadAction<string>) {
+      return { text: action.payload, params: { variant: "error" } };
     },
   },
 });

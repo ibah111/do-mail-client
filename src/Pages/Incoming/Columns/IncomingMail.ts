@@ -1,10 +1,10 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
-import moment from "moment";
+import { AllowFunction } from "../../../hooks/getAllow";
 import { IncomingMailState } from "../../../Types/dataIncoming";
 import { checkDateGrid } from "../../../utils/checkDate";
 
 const IncomingMailColumns = (
-  isAllow: (...args: string[]) => boolean
+  isAllow: AllowFunction
 ): GridColumns<IncomingMailState> => [
   { field: "id", headerName: "ID", type: "number" },
   {
@@ -32,7 +32,7 @@ const IncomingMailColumns = (
     editable: isAllow("editor"),
   },
   { field: "otprav", headerName: "Отправитель", editable: isAllow("editor") },
-  { field: "reestr", headerName: "Реестр" },
+  { field: "reestr", headerName: "Реестр", editable: true },
   {
     field: "doc_name",
     headerName: "Название документа",

@@ -1,6 +1,6 @@
 import { store } from "../Reducer";
-
-export const isAllow = () => {
+export type AllowFunction = (...userRoles: string[]) => boolean;
+const getAllow = (): AllowFunction => {
   const roles = store.getState().User.roles;
   return (...userRoles: string[]) => {
     let result = 0;
@@ -11,3 +11,4 @@ export const isAllow = () => {
     return result > 0;
   };
 };
+export default getAllow;

@@ -1,9 +1,10 @@
 import { GridColumns } from "@mui/x-data-grid-premium";
+import { AllowFunction } from "../../../hooks/getAllow";
 import { ArhiveIncomingCourtMailState } from "../../../Types/dataIncoming";
 import { checkDateGrid } from "../../../utils/checkDate";
 
 const ArhiveIncomingCourtMailColumns = (
-  isAllow: (...args: string[]) => boolean
+  isAllow: AllowFunction
 ): GridColumns<ArhiveIncomingCourtMailState> => [
   { field: "id", headerName: " ID записи", type: "number" },
   {
