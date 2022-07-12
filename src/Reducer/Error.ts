@@ -15,7 +15,10 @@ const ErrorSlice = createSlice({
     callError(state, action: PayloadAction<string>) {
       return { text: action.payload, params: { variant: "error" } };
     },
+    callSuccess(state, action: PayloadAction<string>) {
+      return { text: action.payload, params: { variant: "success" } };
+    },
   },
 });
-export const { callError } = ErrorSlice.actions;
+export const { callError, callSuccess } = ErrorSlice.actions;
 export default ErrorSlice.reducer;

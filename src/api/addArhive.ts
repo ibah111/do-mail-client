@@ -1,34 +1,29 @@
 import axios from "axios";
-import moment from "moment";
 import { store } from "../Reducer";
+import { callSuccess } from "../Reducer/Error";
+import { ArhiveState } from "../Reducer/Stater";
 import { DataIncomingState } from "../Types/dataIncoming";
 import getErrorAxios from "../utils/getErrorAxios";
 import { getToken } from "../utils/getToken";
 import server from "../utils/server";
+import { setData } from "../Reducer/Model";
 
-export default async function editCell<T extends keyof DataIncomingState>(
-  id: number,
-  name: string,
-  data: any
+export default async function addArhive<T extends keyof DataIncomingState>(
+  ArhiveType: ArhiveState
 ): Promise<DataIncomingState[T]> {
-  let value: string = data;
-  if (data instanceof Date) {
-    value = moment(data).toISOString();
-  }
   const ChangerMode = store.getState().Stater.ChangerMode;
-  const ArhiveType = store.getState().Stater.ArhiveType;
+  const state = store.getState().Model[ChangerMode];
   try {
     const response = await axios.post<DataIncomingState[T]>(
-      `${server()}/edit`,
+      `${server()}/arhive/add`,
       {
         ...getToken(),
-        id,
-        name,
-        value,
-        ChangerMode,
+        select: state.selectionModel,
         ArhiveType,
       }
     );
+    store.dispatch(callSuccess("Операция успешно выплнено"));
+    store.dispatch(setData([ChangerMode, "selectionModel", []]));
     return response.data;
   } catch (e) {
     throw getErrorAxios(e);
