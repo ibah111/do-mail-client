@@ -8,6 +8,7 @@ import getAllow from "../../../hooks/getAllow";
 import { useAppSelector } from "../../../Reducer";
 import AddArhive from "./AddArhive";
 import Arhive from "./Arhive";
+import BoxArhive from "./BoxArhive";
 import ChangerMode from "./ChangerMode";
 import RemoveArhive from "./RemoveArhive";
 
@@ -25,7 +26,12 @@ export default function Toolbar() {
         <>
           <Arhive />
           <AddArhive />
-          {ArhiveType > 0 && <RemoveArhive />}
+          {ArhiveType > 0 && (
+            <>
+              <BoxArhive />
+              <RemoveArhive />
+            </>
+          )}
         </>
       )}
     </GridToolbarContainer>
