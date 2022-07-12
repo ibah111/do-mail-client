@@ -14,7 +14,9 @@ import license from "./utils/crack";
 import { SnackbarProvider } from "notistack";
 import ErrorHandler from "./Components/ErrorHandler";
 import "reflect-metadata";
+import { tz } from "moment-timezone";
 license();
+tz.setDefault("GMT");
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

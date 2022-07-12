@@ -1,5 +1,5 @@
 import {
-  GridCellEditStopParams,
+  GridCellEditCommitParams,
   GridColumns,
   GridFilterModel,
   GridSelectionModel,
@@ -28,7 +28,7 @@ export interface Grider<T extends keyof DataIncomingState> {
   setFilterModel: (value: GridFilterModel) => void;
   setSortModel: (value: GridSortModel) => void;
   setSelectionModel: (value: GridSelectionModel) => void;
-  onCellEditStop: (value: GridCellEditStopParams) => void;
+  onCellEditCommit: (value: GridCellEditCommitParams) => void;
 }
 export default function useGrid<
   T extends keyof DataIncomingState
@@ -73,7 +73,7 @@ export default function useGrid<
     setFilterModel,
     setSortModel,
     setSelectionModel,
-    onCellEditStop: (params: GridCellEditStopParams) =>
+    onCellEditCommit: (params: GridCellEditCommitParams) =>
       editCell(Number(params.id), params.field, params.value),
   };
 }
