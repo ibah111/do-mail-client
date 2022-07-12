@@ -1,10 +1,12 @@
 import {
+  GridCellEditStopParams,
   GridColumns,
   GridFilterModel,
   GridSelectionModel,
   GridSortModel,
 } from "@mui/x-data-grid-premium";
 import { plainToInstance } from "class-transformer";
+import editCell from "../../../api/editCell";
 import { useAppDispatch, useAppSelector } from "../../../Reducer";
 import { setMail } from "../../../Reducer/DataIncoming";
 import { Modeler, setData, startModelState } from "../../../Reducer/Model";
@@ -26,6 +28,7 @@ export interface Grider<T extends keyof DataIncomingState> {
   setFilterModel: (value: GridFilterModel) => void;
   setSortModel: (value: GridSortModel) => void;
   setSelectionModel: (value: GridSelectionModel) => void;
+  onCellEditStop: (value: GridCellEditStopParams) => void;
 }
 export default function useGrid<
   T extends keyof DataIncomingState
@@ -70,5 +73,7 @@ export default function useGrid<
     setFilterModel,
     setSortModel,
     setSelectionModel,
+    onCellEditStop: (params: GridCellEditStopParams) =>
+      editCell(Number(params.id), params.field, params.value),
   };
 }

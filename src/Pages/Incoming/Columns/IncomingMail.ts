@@ -2,18 +2,44 @@ import { GridColumns } from "@mui/x-data-grid-premium";
 import { IncomingMailState } from "../../../Types/dataIncoming";
 
 const IncomingMailColumns = (
-  roles: string[],
-  editor: (...args: string[]) => boolean
+  isAllow: (...args: string[]) => boolean
 ): GridColumns<IncomingMailState> => [
   { field: "id", headerName: "ID", type: "number" },
-  { field: "date_post", headerName: "Дата поступления", type: "date" },
-  { field: "convert", headerName: "Учет конвертов", type: "boolean" },
-  { field: "pristavi", headerName: "Приставы", type: "boolean" },
-  { field: "adr_otp", headerName: "Адрес отправителя" },
-  { field: "otprav", headerName: "Отправитель" },
+  {
+    field: "date_post",
+    headerName: "Дата поступления",
+    type: "date",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "convert",
+    headerName: "Учет конвертов",
+    type: "boolean",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "pristavi",
+    headerName: "Приставы",
+    type: "boolean",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "adr_otp",
+    headerName: "Адрес отправителя",
+    editable: isAllow("editor"),
+  },
+  { field: "otprav", headerName: "Отправитель", editable: isAllow("editor") },
   { field: "reestr", headerName: "Реестр" },
-  { field: "doc_name", headerName: "Название документа" },
-  { field: "st_pnkt", headerName: "Статья и пункт" },
+  {
+    field: "doc_name",
+    headerName: "Название документа",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "st_pnkt",
+    headerName: "Статья и пункт",
+    editable: isAllow("editor"),
+  },
   { field: "gd", headerName: "ГД - Гражданское дело" },
   { field: "fio_dol", headerName: "ФИО должника" },
   { field: "kd", headerName: "КД - Кредитный договор" },
@@ -26,6 +52,7 @@ const IncomingMailColumns = (
     field: "check_vsisk",
     headerName: "Проверено взыскателем",
     type: "boolean",
+    editable: isAllow("editor"),
   },
   { field: "check_vsisk_name", headerName: "Кем проверено" },
 ];

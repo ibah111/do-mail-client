@@ -2,14 +2,28 @@ import { GridColumns } from "@mui/x-data-grid-premium";
 import { ArhiveIncomingGovernmentMailState } from "../../../Types/dataIncoming";
 
 const ArhiveIncomingGovernmentMailColumns = (
-  roles: string[],
-  editor: (...args: string[]) => boolean
+  isAllow: (...args: string[]) => boolean
 ): GridColumns<ArhiveIncomingGovernmentMailState> => [
   { field: "id", headerName: " ID записи", type: "number" },
-  { field: "date_post", headerName: " Дата поступления", type: "date" },
-  { field: "otprav", headerName: " Отправитель", type: "string" },
+  {
+    field: "date_post",
+    headerName: " Дата поступления",
+    type: "date",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "otprav",
+    headerName: " Отправитель",
+    type: "string",
+    editable: isAllow("editor"),
+  },
   { field: "reestr", headerName: " Реестр", type: "string" },
-  { field: "doc_name", headerName: " Название документа", type: "string" },
+  {
+    field: "doc_name",
+    headerName: " Название документа",
+    type: "string",
+    editable: isAllow("editor"),
+  },
   { field: "gd", headerName: " ГД - Гражданское дело", type: "string" },
   { field: "fio_dol", headerName: " ФИО должника", type: "string" },
   {
@@ -24,12 +38,33 @@ const ArhiveIncomingGovernmentMailColumns = (
     field: "check_vsisk",
     headerName: " Проверено взыскателем",
     type: "boolean",
+    editable: isAllow("editor"),
   },
   { field: "check_vsisk_name", headerName: " Кем проверено", type: "string" },
-  { field: "ist", headerName: " Истец, взыскатель", type: "string" },
-  { field: "dateDoc", headerName: " Дата вынесения документа", type: "date" },
-  { field: "ecp", headerName: " ЕЦП", type: "string" },
-  { field: "korob_arhive", headerName: " Короб архива", type: "number" },
+  {
+    field: "ist",
+    headerName: " Истец, взыскатель",
+    type: "string",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "dateDoc",
+    headerName: " Дата вынесения документа",
+    type: "date",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "ecp",
+    headerName: " ЕЦП",
+    type: "string",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "korob_arhive",
+    headerName: " Короб архива",
+    type: "number",
+    editable: isAllow("editor", "arhive"),
+  },
   {
     field: "data_obrabotki_arhive",
     headerName: " Дата обработки архива",

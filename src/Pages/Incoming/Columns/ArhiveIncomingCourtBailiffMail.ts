@@ -2,19 +2,20 @@ import { GridColumns } from "@mui/x-data-grid-premium";
 import { ArhiveIncomingCourtBailiffMailState } from "../../../Types/dataIncoming";
 
 const ArhiveIncomingCourtBailiffMailColumns = (
-  roles: string[],
-  editor: (...args: string[]) => boolean
+  isAllow: (...args: string[]) => boolean
 ): GridColumns<ArhiveIncomingCourtBailiffMailState> => [
   { field: "id", headerName: " ID записи", type: "number" },
   {
     field: "date_post",
     headerName: " Дата поступления",
     type: "date",
+    editable: isAllow("editor"),
   },
   {
     field: "otprav",
     headerName: " Отправитель",
     type: "string",
+    editable: isAllow("editor"),
   },
   {
     field: "reestr",
@@ -25,6 +26,7 @@ const ArhiveIncomingCourtBailiffMailColumns = (
     field: "doc_name",
     headerName: " Название документа",
     type: "string",
+    editable: isAllow("editor"),
   },
   {
     field: "gd",
@@ -52,9 +54,15 @@ const ArhiveIncomingCourtBailiffMailColumns = (
     field: "check_vsisk",
     headerName: " Проверено взыскателем",
     type: "boolean",
+    editable: isAllow("editor"),
   },
   { field: "check_vsisk_name", headerName: " Кем проверено", type: "string" },
-  { field: "korob_arhive", headerName: " Короб архива", type: "number" },
+  {
+    field: "korob_arhive",
+    headerName: " Короб архива",
+    type: "number",
+    editable: isAllow("editor", "arhive"),
+  },
   {
     field: "data_obrabotki_arhive",
     headerName: " Дата обработки архива",

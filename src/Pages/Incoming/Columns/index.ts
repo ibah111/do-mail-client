@@ -12,8 +12,7 @@ import IncomingGovernmentMailColumns from "./IncomingGovernmentMail";
 import IncomingMailColumns from "./IncomingMail";
 type ColumnsState = {
   [index: string]: (
-    roles: string[],
-    editor: (...args: string[]) => boolean
+    isAllow: (...args: string[]) => boolean
   ) => GridColumns<any>;
 };
 export const allColumns: ColumnsState = {
@@ -30,15 +29,11 @@ export default function getColumns<T extends keyof DataIncomingState>(
   typ: T,
   arhive: ArhiveState
 ) {
-  const roles = store.getState().User.roles;
-  return allColumns[`${arhive > 0 ? "Arhive" : ""}${typ}`](
-    roles,
-    editor(roles)
-  );
+  return allColumns[`${arhive > 0 ? "Arhive" : ""}${typ}`](isAllow());
 }
-export const editor =
-  (roles: string[]) =>
-  (...userRoles: string[]) => {
+export const isAllow = () => {
+  const roles = store.getState().User.roles;
+  return (...userRoles: string[]) => {
     let result = 0;
     for (const role of userRoles) {
       roles.includes(role);
@@ -46,3 +41,4 @@ export const editor =
     }
     return result > 0;
   };
+};

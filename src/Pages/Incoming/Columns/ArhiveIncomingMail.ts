@@ -2,18 +2,44 @@ import { GridColumns } from "@mui/x-data-grid-premium";
 import { ArhiveIncomingMailState } from "../../../Types/dataIncoming";
 
 const ArhiveIncomingMailColumns = (
-  roles: string[],
-  editor: (...args: string[]) => boolean
+  isAllow: (...args: string[]) => boolean
 ): GridColumns<ArhiveIncomingMailState> => [
   { field: "id", headerName: "ID", type: "number" },
-  { field: "date_post", headerName: "Дата поступления", type: "date" },
-  { field: "convert", headerName: "Учет конвертов", type: "boolean" },
-  { field: "pristavi", headerName: "Приставы", type: "boolean" },
-  { field: "adr_otp", headerName: "Адрес отправителя" },
-  { field: "otprav", headerName: "Отправитель" },
+  {
+    field: "date_post",
+    headerName: "Дата поступления",
+    type: "date",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "convert",
+    headerName: "Учет конвертов",
+    type: "boolean",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "pristavi",
+    headerName: "Приставы",
+    type: "boolean",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "adr_otp",
+    headerName: "Адрес отправителя",
+    editable: isAllow("editor"),
+  },
+  { field: "otprav", headerName: "Отправитель", editable: isAllow("editor") },
   { field: "reestr", headerName: "Реестр" },
-  { field: "doc_name", headerName: "Название документа" },
-  { field: "st_pnkt", headerName: "Статья и пункт" },
+  {
+    field: "doc_name",
+    headerName: "Название документа",
+    editable: isAllow("editor"),
+  },
+  {
+    field: "st_pnkt",
+    headerName: "Статья и пункт",
+    editable: isAllow("editor"),
+  },
   { field: "gd", headerName: "ГД - Гражданское дело" },
   { field: "fio_dol", headerName: "ФИО должника" },
   { field: "kd", headerName: "КД - Кредитный договор" },
@@ -26,9 +52,15 @@ const ArhiveIncomingMailColumns = (
     field: "check_vsisk",
     headerName: "Проверено взыскателем",
     type: "boolean",
+    editable: isAllow("editor"),
   },
   { field: "check_vsisk_name", headerName: "Кем проверено" },
-  { field: "korob_arhive", headerName: " Короб архива", type: "number" },
+  {
+    field: "korob_arhive",
+    headerName: " Короб архива",
+    type: "number",
+    editable: isAllow("editor", "arhive"),
+  },
   {
     field: "data_obrabotki_arhive",
     headerName: " Дата обработки архива",

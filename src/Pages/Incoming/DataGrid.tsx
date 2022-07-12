@@ -13,6 +13,7 @@ export default function DataGrid() {
     setFilterModel,
     setSelectionModel,
     setSortModel,
+    onCellEditStop,
   } = useGrid();
   return (
     <>
@@ -26,6 +27,7 @@ export default function DataGrid() {
         sortModel={state.sortModel}
         sortingMode="server"
         pageSize={state.pageSize}
+        onCellEditStop={onCellEditStop}
         onPageSizeChange={setPageSize}
         filterModel={state.filterModel}
         onFilterModelChange={setFilterModel}
