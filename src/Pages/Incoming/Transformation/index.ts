@@ -1,4 +1,5 @@
 import { ClassConstructor } from "class-transformer";
+import { ArhiveState } from "../../../Reducer/Stater";
 import {
   ArhiveIncomingCourtBailiffMailState,
   ArhiveIncomingCourtMailState,
@@ -11,9 +12,9 @@ import {
   IncomingMailState,
 } from "../../../Types/dataIncoming";
 type TransformationState = {
-  [index in keyof DataIncomingState]: ClassConstructor<any>;
+  [index: string]: ClassConstructor<any>;
 };
-const Transformation: TransformationState = {
+export const allTransformations: TransformationState = {
   IncomingMail: IncomingMailState,
   IncomingGovernmentMail: IncomingGovernmentMailState,
   IncomingCourtMail: IncomingCourtMailState,
@@ -23,4 +24,9 @@ const Transformation: TransformationState = {
   ArhiveIncomingCourtMail: ArhiveIncomingCourtMailState,
   ArhiveIncomingCourtBailiffMail: ArhiveIncomingCourtBailiffMailState,
 };
-export default Transformation;
+export default function getColumns<T extends keyof DataIncomingState>(
+  typ: T,
+  arhive: ArhiveState
+) {
+  return allTransformations[`${arhive > 0 ? "Arhive" : ""}${typ}`];
+}

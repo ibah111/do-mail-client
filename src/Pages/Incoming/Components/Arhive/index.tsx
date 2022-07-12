@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../../Reducer";
 import { ArhiveState, setArhive } from "../../../../Reducer/Stater";
 
-const arhives: string[] = ["Нет", "Обычный", "Эллектронный"];
+const arhives: string[] = ["Нет", "Документы", "Исполнительные документы"];
 export default function Arhive() {
   const arhive = useAppSelector((state) => state.Stater.ArhiveType);
   const dispatch = useAppDispatch();

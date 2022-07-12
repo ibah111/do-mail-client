@@ -33,7 +33,6 @@ const ArhiveIncomingCourtBailiffMailColumns: GridColumns<ArhiveIncomingCourtBail
     {
       field: "kto_obrabotal_arhive",
       headerName: " Кто обработал архив",
-      type: "date",
     },
   ];
 export default ArhiveIncomingCourtBailiffMailColumns;

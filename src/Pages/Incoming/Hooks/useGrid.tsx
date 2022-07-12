@@ -10,8 +10,8 @@ import { setMail } from "../../../Reducer/DataIncoming";
 import { Modeler, setData, startModelState } from "../../../Reducer/Model";
 import { ArhiveState, setLoading } from "../../../Reducer/Stater";
 import { DataIncomingState } from "../../../Types/dataIncoming";
-import Columns from "../Columns";
-import Transformation from "../Transformation";
+import getColumns from "../Columns";
+import getTransformations from "../Transformation";
 export interface Grider<T extends keyof DataIncomingState> {
   data: DataIncomingState[T];
   state: Modeler;
@@ -35,7 +35,10 @@ export default function useGrid<
   const typData = useAppSelector((state) => state.Stater.ChangerMode) as T;
   const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
   const data: DataIncomingState[T] = {
-    rows: plainToInstance(Transformation[typData], dataIncoming.rows),
+    rows: plainToInstance(
+      getTransformations(typData, arhive),
+      dataIncoming.rows
+    ),
     count: dataIncoming.count,
   };
   const state = useAppSelector((state) => state.Model[typData]);
@@ -59,7 +62,7 @@ export default function useGrid<
     loading,
     arhive,
     setLoaded,
-    columns: Columns[typData],
+    columns: getColumns(typData, arhive),
     state: state ? state : startModelState,
     setPage,
     setMail: setMailer,
