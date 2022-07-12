@@ -10,7 +10,7 @@ export default async function editCell(
   name: string,
   data: any
 ): Promise<null> {
-  let value: string = data;
+  let value: string = String(data);
   if (data instanceof Date) {
     value = moment(data).toISOString();
   }
