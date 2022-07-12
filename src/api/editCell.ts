@@ -1,16 +1,15 @@
 import axios from "axios";
 import moment from "moment";
 import { store } from "../Reducer";
-import { DataIncomingState } from "../Types/dataIncoming";
 import getErrorAxios from "../utils/getErrorAxios";
 import { getToken } from "../utils/getToken";
 import server from "../utils/server";
 
-export default async function editCell<T extends keyof DataIncomingState>(
+export default async function editCell(
   id: number,
   name: string,
   data: any
-): Promise<DataIncomingState[T]> {
+): Promise<null> {
   let value: string = data;
   if (data instanceof Date) {
     value = moment(data).toISOString();
@@ -18,17 +17,14 @@ export default async function editCell<T extends keyof DataIncomingState>(
   const ChangerMode = store.getState().Stater.ChangerMode;
   const ArhiveType = store.getState().Stater.ArhiveType;
   try {
-    const response = await axios.post<DataIncomingState[T]>(
-      `${server()}/edit`,
-      {
-        ...getToken(),
-        id,
-        name,
-        value,
-        ChangerMode,
-        ArhiveType,
-      }
-    );
+    const response = await axios.post<null>(`${server()}/edit`, {
+      ...getToken(),
+      id,
+      name,
+      value,
+      ChangerMode,
+      ArhiveType,
+    });
     return response.data;
   } catch (e) {
     throw getErrorAxios(e);
