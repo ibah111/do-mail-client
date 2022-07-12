@@ -5,11 +5,13 @@ export interface StaterState {
   loading: boolean;
   ChangerMode: keyof DataIncomingState;
   ArhiveType: ArhiveState;
+  reload: boolean;
 }
 const initialState: StaterState = {
   loading: true,
   ChangerMode: "IncomingMail",
   ArhiveType: 0,
+  reload: true,
 };
 const StaterSlice = createSlice({
   name: "Stater",
@@ -27,7 +29,11 @@ const StaterSlice = createSlice({
     setArhive(state, action: PayloadAction<ArhiveState>) {
       state.ArhiveType = action.payload;
     },
+    setReload(state, action: PayloadAction<boolean>) {
+      state.reload = action.payload;
+    },
   },
 });
-export const { changeMode, setLoading, setArhive } = StaterSlice.actions;
+export const { changeMode, setLoading, setArhive, setReload } =
+  StaterSlice.actions;
 export default StaterSlice.reducer;
