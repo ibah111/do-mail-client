@@ -5,8 +5,7 @@ const getAllow = (): AllowFunction => {
   return (...userRoles: string[]) => {
     let result = 0;
     for (const role of userRoles) {
-      roles.includes(role);
-      result += 1;
+      if (roles.includes(role)) result += 1;
     }
     return result > 0;
   };
