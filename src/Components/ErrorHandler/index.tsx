@@ -1,12 +1,18 @@
 import { useSnackbar } from 'notistack';
 import React from 'react';
-import { useAppSelector } from '../../Reducer';
+import { useAppDispatch, useAppSelector } from '../../Reducer';
+import { resetMessage } from '../../Reducer/Message';
 
 export default function ErrorHandler() {
-  const error = useAppSelector((state) => state.Error);
+  const messages = useAppSelector((state) => state.Message);
+  const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   React.useEffect(() => {
-    if (error.text) enqueueSnackbar(error.text, error.params);
-  }, [error]);
+    if (messages.length > 0) {
+      for (const message of messages)
+        enqueueSnackbar(message.text, message.params);
+      dispatch(resetMessage());
+    }
+  }, [messages]);
   return <></>;
 }

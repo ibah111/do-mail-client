@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import DataIncoming from './DataIncoming';
 import User from './User';
-import Error from './Error';
+import Message from './Message';
 import Model from './Model';
 import Stater from './Stater';
 
@@ -11,7 +11,7 @@ export const store = configureStore({
     User,
     Stater,
     DataIncoming,
-    Error,
+    Message,
     Model,
   },
 });

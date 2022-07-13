@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { store } from '../Reducer';
-import { callError } from '../Reducer/Error';
+import { callError } from '../Reducer/Message';
 
 export default function getErrorAxios(e: unknown) {
   if (e instanceof AxiosError) {

@@ -6,7 +6,7 @@ import { Paper } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../Reducer';
 import { setReload } from '../../Reducer/Stater';
 export default function Incoming() {
-  const { data, arhive, state, setMail, typData, setLoaded } = useGrid();
+  const { arhive, state, setMail, typData, setLoaded } = useGrid();
   const dispatch = useAppDispatch();
   const reload = useAppSelector((state) => state.Stater.reload);
   React.useEffect(() => {

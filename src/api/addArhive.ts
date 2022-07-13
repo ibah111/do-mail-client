@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../Reducer';
-import { callError, callSuccess, callWarning } from '../Reducer/Error';
+import { callError, callSuccess, callWarning } from '../Reducer/Message';
 import getErrorAxios from '../utils/getErrorAxios';
 import { getToken } from '../utils/getToken';
 import server from '../utils/server';
