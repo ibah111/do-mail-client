@@ -1,10 +1,6 @@
 import { GridColumns } from '@mui/x-data-grid-premium';
 import getAllow, { AllowFunction } from '../../../hooks/getAllow';
-import {
-  ArhiveType,
-  DataIncomingState,
-  MailType,
-} from '../../../Types/dataIncoming';
+import { ArhiveType, MailType } from '../../../Types/dataIncoming';
 import ArhiveIncomingCourtBailiffMailColumns from './ArhiveIncomingCourtBailiffMail';
 import ArhiveIncomingCourtMailColumns from './ArhiveIncomingCourtMail';
 import ArhiveIncomingGovernmentMailColumns from './ArhiveIncomingGovernmentMail';

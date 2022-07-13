@@ -1,5 +1,5 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
+import { ArhiveType, MailType } from '../Types/dataIncoming';
 export interface StaterState {
   loading: boolean;
   MailType: MailType;
