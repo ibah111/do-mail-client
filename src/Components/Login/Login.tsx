@@ -36,15 +36,17 @@ export function Login({ children }: LoginProps) {
   const dispatch = useAppDispatch();
   const [message, setMessage] = React.useState<string | null>(null);
   React.useEffect(() => {
-    const token = getToken();
-    connect(
-      token.token,
-      (value) => {
-        dispatch(setUser(value));
-      },
-      (message) => setMessage(message),
-    );
-  }, []);
+    if (!loged) {
+      const token = getToken();
+      connect(
+        token.token,
+        (value) => {
+          dispatch(setUser(value));
+        },
+        (message) => setMessage(message),
+      );
+    }
+  }, [loged]);
   return (
     <>{loged ? children : <NotLoged message={message ? message : ''} />}</>
   );
