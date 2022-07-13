@@ -12,7 +12,8 @@ import {
   IncomingMailState,
 } from '../../../Types/dataIncoming';
 type TransformationState = {
-  [index: string]: ClassConstructor<unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [index: string]: ClassConstructor<any>;
 };
 export const allTransformations: TransformationState = {
   IncomingMail: IncomingMailState,
