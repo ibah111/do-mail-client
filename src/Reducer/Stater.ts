@@ -1,14 +1,14 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { ArhiveType, DataIncomingState } from '../Types/dataIncoming';
+import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
 export interface StaterState {
   loading: boolean;
-  ChangerMode: keyof DataIncomingState;
+  MailType: MailType;
   ArhiveType: ArhiveType;
   reload: boolean;
 }
 const initialState: StaterState = {
   loading: true,
-  ChangerMode: 'IncomingMail',
+  MailType: MailType.INCOMING_MAIL,
   ArhiveType: 0,
   reload: true,
 };
@@ -16,11 +16,8 @@ const StaterSlice = createSlice({
   name: 'Stater',
   initialState,
   reducers: {
-    changeMode<T extends keyof DataIncomingState>(
-      state: Draft<StaterState>,
-      action: PayloadAction<T>,
-    ) {
-      state.ChangerMode = action.payload;
+    changeMode(state: Draft<StaterState>, action: PayloadAction<MailType>) {
+      state.MailType = action.payload;
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;

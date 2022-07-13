@@ -1,14 +1,17 @@
+import { MailType } from '../../../../Types/dataIncoming';
 import CustomButton from './CustomButton';
 
 export default function ChangerMode() {
   return (
     <>
-      <CustomButton mode="IncomingMail">Входящая почта</CustomButton>
-      <CustomButton mode="IncomingGovernmentMail">Госпочта</CustomButton>
-      <CustomButton mode="IncomingCourtMail">
+      <CustomButton mode={MailType.INCOMING_MAIL}>Входящая почта</CustomButton>
+      <CustomButton mode={MailType.INCOMING_GOVERNMENT_MAIL}>
+        Госпочта
+      </CustomButton>
+      <CustomButton mode={MailType.INCOMING_COURT_MAIL}>
         Электронная почта(СУД)
       </CustomButton>
-      <CustomButton mode="IncomingCourtBailiffMail">
+      <CustomButton mode={MailType.INCOMING_COURT_BAILIFF_MAIL}>
         Электронная почта (ФССП)
       </CustomButton>
     </>

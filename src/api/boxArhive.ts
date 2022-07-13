@@ -8,9 +8,9 @@ import server from '../utils/server';
 import { setData } from '../Reducer/Model';
 
 export default async function boxArhive(box: number): Promise<null> {
-  const ChangerMode = store.getState().Stater.ChangerMode;
+  const ChangerMode = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
-  const state = store.getState().Model[ChangerMode];
+  const state = store.getState().Model[ChangerMode][ArhiveType];
   try {
     const response = await axios.post<null>(`${server()}/arhive/box`, {
       ...getToken(),
@@ -19,7 +19,7 @@ export default async function boxArhive(box: number): Promise<null> {
       box,
     });
     store.dispatch(callSuccess('Операция успешно выплнено'));
-    store.dispatch(setData([ChangerMode, 'selectionModel', []]));
+    store.dispatch(setData([ChangerMode, ArhiveType, 'selectionModel', []]));
     store.dispatch(setReload(true));
     return response.data;
   } catch (e) {

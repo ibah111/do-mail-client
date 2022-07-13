@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -13,7 +14,6 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import license from './utils/crack';
 import { SnackbarProvider } from 'notistack';
 import ErrorHandler from './Components/ErrorHandler';
-import 'reflect-metadata';
 import { tz } from 'moment-timezone';
 license();
 tz.setDefault('GMT');

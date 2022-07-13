@@ -480,38 +480,78 @@ export enum ArhiveType {
   ARHIVE = 1,
   ARHIVE_LAW_EXEC = 2,
 }
+export enum MailType {
+  INCOMING_MAIL = 'IncomingMail',
+  INCOMING_GOVERNMENT_MAIL = 'IncomingGovernmentMail',
+  INCOMING_COURT_MAIL = 'IncomingCourtMail',
+  INCOMING_COURT_BAILIFF_MAIL = 'IncomingCourtBailiffMail',
+}
 
 export class DataIncomingState {
   /**
    * Входящая почта
    */
-  IncomingMail: findAndCount<IncomingMailState>;
+  [MailType.INCOMING_MAIL]: {
+    [ArhiveType.NO]: findAndCount<IncomingMailState>;
+    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingMailState>;
+    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingMailState>;
+  };
   /**
    * Госпочта
    */
-  IncomingGovernmentMail: findAndCount<IncomingGovernmentMailState>;
+  [MailType.INCOMING_GOVERNMENT_MAIL]: {
+    [ArhiveType.NO]: findAndCount<IncomingGovernmentMailState>;
+    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingGovernmentMailState>;
+    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingGovernmentMailState>;
+  };
   /**
    * МЕЙЛ(СУД)
    */
-  IncomingCourtMail: findAndCount<IncomingCourtMailState>;
+  [MailType.INCOMING_COURT_MAIL]: {
+    [ArhiveType.NO]: findAndCount<IncomingCourtMailState>;
+    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtMailState>;
+    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtMailState>;
+  };
   /**
    * МЕЙЛ(ФССП)
    */
-  IncomingCourtBailiffMail: findAndCount<IncomingCourtBailiffMailState>;
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
+    [ArhiveType.NO]: findAndCount<IncomingCourtBailiffMailState>;
+    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
+    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
+  };
+}
+export class DataIncomingType {
   /**
-   * Входящая почта (АРХИВ)
+   * Входящая почта
    */
-  ArhiveIncomingMail: findAndCount<ArhiveIncomingMailState>;
+  [MailType.INCOMING_MAIL]: {
+    [ArhiveType.NO]: IncomingMailState;
+    [ArhiveType.ARHIVE]: ArhiveIncomingMailState;
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingMailState;
+  };
   /**
-   * Госпочта (АРХИВ)
+   * Госпочта
    */
-  ArhiveIncomingGovernmentMail: findAndCount<ArhiveIncomingGovernmentMailState>;
+  [MailType.INCOMING_GOVERNMENT_MAIL]: {
+    [ArhiveType.NO]: IncomingGovernmentMailState;
+    [ArhiveType.ARHIVE]: ArhiveIncomingGovernmentMailState;
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingGovernmentMailState;
+  };
   /**
-   * МЕЙЛ(СУД) (АРХИВ)
+   * МЕЙЛ(СУД)
    */
-  ArhiveIncomingCourtMail: findAndCount<ArhiveIncomingCourtMailState>;
+  [MailType.INCOMING_COURT_MAIL]: {
+    [ArhiveType.NO]: IncomingCourtMailState;
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtMailState;
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtMailState;
+  };
   /**
-   * МЕЙЛ(ФССП) (АРХИВ)
+   * МЕЙЛ(ФССП)
    */
-  ArhiveIncomingCourtBailiffMail: findAndCount<ArhiveIncomingCourtBailiffMailState>;
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
+    [ArhiveType.NO]: IncomingCourtBailiffMailState;
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState;
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState;
+  };
 }

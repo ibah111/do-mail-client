@@ -11,18 +11,23 @@ import { useAppDispatch, useAppSelector } from '../../../Reducer';
 import { setMail } from '../../../Reducer/DataIncoming';
 import { Modeler, setData, startModelState } from '../../../Reducer/Model';
 import { setLoading } from '../../../Reducer/Stater';
-import { ArhiveType, DataIncomingState } from '../../../Types/dataIncoming';
+import {
+  ArhiveType,
+  DataIncomingState,
+  DataIncomingType,
+  MailType,
+} from '../../../Types/dataIncoming';
 import getColumns from '../Columns';
 import getTransformations from '../Transformation';
-export interface Grider<T extends keyof DataIncomingState> {
-  data: DataIncomingState[T];
+export interface Grider<T extends MailType, K extends ArhiveType> {
+  data: DataIncomingState[T][K];
   state: Modeler;
-  columns: GridColumns<DataIncomingState[T]['rows'][number]>;
+  columns: GridColumns<DataIncomingType[T][K]>;
   typData: T;
   loading: boolean;
-  arhive: ArhiveType;
+  arhive: K;
   setLoaded: (value: boolean) => void;
-  setMail: (value: DataIncomingState[T]) => void;
+  setMail: (value: DataIncomingState[T][K]) => void;
   setPage: (value: number) => void;
   setPageSize: (value: number) => void;
   setFilterModel: (value: GridFilterModel) => void;
@@ -31,34 +36,37 @@ export interface Grider<T extends keyof DataIncomingState> {
   onCellEditCommit: (value: GridCellEditCommitParams) => void;
 }
 export default function useGrid<
-  T extends keyof DataIncomingState,
->(): Grider<T> {
+  T extends MailType,
+  K extends ArhiveType,
+>(): Grider<T, K> {
   const loading = useAppSelector((state) => state.Stater.loading);
-  const arhive = useAppSelector((state) => state.Stater.ArhiveType);
-  const typData = useAppSelector((state) => state.Stater.ChangerMode) as T;
-  const dataIncoming = useAppSelector((state) => state.DataIncoming[typData]);
-  const data: DataIncomingState[T] = {
+  const typData = useAppSelector((state) => state.Stater.MailType) as T;
+  const arhive = useAppSelector((state) => state.Stater.ArhiveType) as K;
+  const dataIncoming = useAppSelector(
+    (state) => state.DataIncoming[typData][arhive],
+  );
+  const data = {
     rows: plainToInstance(
       getTransformations(typData, arhive),
       dataIncoming.rows,
     ),
     count: dataIncoming.count,
-  };
-  const state = useAppSelector((state) => state.Model[typData]);
+  } as DataIncomingState[T][K];
+  const state = useAppSelector((state) => state.Model[typData][arhive]);
   const dispatch = useAppDispatch();
   const setLoaded = (value: boolean) => dispatch(setLoading(!value));
-  const setMailer = (value: DataIncomingState[T]) =>
-    dispatch(setMail([typData, value]));
+  const setMailer = (value: DataIncomingState[T][K]) =>
+    dispatch(setMail([typData, arhive, value]));
   const setPage = (value: number) =>
-    dispatch(setData([typData, 'page', value]));
+    dispatch(setData([typData, arhive, 'page', value]));
   const setPageSize = (value: number) =>
-    dispatch(setData([typData, 'pageSize', value]));
+    dispatch(setData([typData, arhive, 'pageSize', value]));
   const setFilterModel = (value: GridFilterModel) =>
-    dispatch(setData([typData, 'filterModel', value]));
+    dispatch(setData([typData, arhive, 'filterModel', value]));
   const setSortModel = (value: GridSortModel) =>
-    dispatch(setData([typData, 'sortModel', value]));
+    dispatch(setData([typData, arhive, 'sortModel', value]));
   const setSelectionModel = (value: GridSelectionModel) =>
-    dispatch(setData([typData, 'selectionModel', value]));
+    dispatch(setData([typData, arhive, 'selectionModel', value]));
   return {
     typData,
     data,

@@ -8,9 +8,9 @@ import server from '../utils/server';
 import { setData } from '../Reducer/Model';
 
 export default async function removeArhive(): Promise<null> {
-  const ChangerMode = store.getState().Stater.ChangerMode;
+  const ChangerMode = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
-  const state = store.getState().Model[ChangerMode];
+  const state = store.getState().Model[ChangerMode][ArhiveType];
   try {
     const response = await axios.post<null>(`${server()}/arhive/remove`, {
       ...getToken(),
@@ -18,7 +18,7 @@ export default async function removeArhive(): Promise<null> {
       ArhiveType,
     });
     store.dispatch(callSuccess('Операция успешно выплнено'));
-    store.dispatch(setData([ChangerMode, 'selectionModel', []]));
+    store.dispatch(setData([ChangerMode, ArhiveType, 'selectionModel', []]));
     store.dispatch(setReload(true));
     return response.data;
   } catch (e) {

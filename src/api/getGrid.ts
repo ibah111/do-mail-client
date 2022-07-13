@@ -1,23 +1,23 @@
 import axios from 'axios';
 import { store } from '../Reducer';
-import { startModelState } from '../Reducer/Model';
-import { DataIncomingState } from '../Types/dataIncoming';
+import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
 import getErrorAxios from '../utils/getErrorAxios';
 import { getToken } from '../utils/getToken';
 import server from '../utils/server';
 
 export default async function getGrid<
-  T extends keyof DataIncomingState,
->(): Promise<DataIncomingState[T]> {
-  const ChangerMode = store.getState().Stater.ChangerMode;
-  const state = store.getState().Model[ChangerMode];
+  T extends MailType,
+  K extends ArhiveType,
+>(): Promise<DataIncomingState[T][K]> {
+  const ChangerMode = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
+  const state = store.getState().Model[ChangerMode][ArhiveType];
   try {
-    const response = await axios.post<DataIncomingState[T]>(
+    const response = await axios.post<DataIncomingState[T][K]>(
       `${server()}/data`,
       {
         ...getToken(),
-        ...(state ? state : startModelState),
+        ...state,
         ChangerMode,
         ArhiveType,
       },

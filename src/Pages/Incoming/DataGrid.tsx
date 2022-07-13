@@ -16,9 +16,6 @@ export default function DataGrid() {
     setSortModel,
     onCellEditCommit,
   } = useGrid();
-  React.useEffect(() => {
-    console.log(state);
-  }, [state]);
   return (
     <>
       <DataGridPremium

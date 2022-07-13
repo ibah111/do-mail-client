@@ -3,8 +3,8 @@ import {
   GridSelectionModel,
   GridSortModel,
 } from '@mui/x-data-grid-premium';
-import _ from 'lodash';
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import { ArhiveType, MailType } from '../Types/dataIncoming';
 
 export interface Modeler {
   filterModel: GridFilterModel;
@@ -13,9 +13,10 @@ export interface Modeler {
   selectionModel: GridSelectionModel;
   sortModel: GridSortModel;
 }
-interface ModelState {
-  [index: string]: Modeler;
-}
+type ArhiveState = { [key in ArhiveType]: Modeler };
+type ModelState = {
+  [index in MailType]: ArhiveState;
+};
 export const startModelState: Modeler = {
   filterModel: { items: [] },
   page: 0,
@@ -23,21 +24,27 @@ export const startModelState: Modeler = {
   selectionModel: [],
   sortModel: [],
 };
-const initialState: ModelState = {};
+const startModelsState: ArhiveState = {
+  [ArhiveType.NO]: startModelState,
+  [ArhiveType.ARHIVE]: startModelState,
+  [ArhiveType.ARHIVE_LAW_EXEC]: startModelState,
+};
+const initialState: ModelState = {
+  [MailType.INCOMING_MAIL]: startModelsState,
+  [MailType.INCOMING_GOVERNMENT_MAIL]: startModelsState,
+  [MailType.INCOMING_COURT_MAIL]: startModelsState,
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: startModelsState,
+};
 const ModelSlice = createSlice({
   name: 'Model',
   initialState,
   reducers: {
-    setData<K extends keyof Modeler>(
+    setData<T extends MailType, J extends ArhiveType, K extends keyof Modeler>(
       state: Draft<ModelState>,
-      action: PayloadAction<[string, K, Modeler[K]]>,
+      action: PayloadAction<[T, J, K, Modeler[K]]>,
     ) {
-      if (state[action.payload[0]]) {
-        state[action.payload[0]][action.payload[1]] = action.payload[2];
-      } else {
-        state[action.payload[0]] = _.cloneDeep(startModelState);
-        state[action.payload[0]][action.payload[1]] = action.payload[2];
-      }
+      state[action.payload[0]][action.payload[1]][action.payload[2]] =
+        action.payload[3];
     },
   },
 });

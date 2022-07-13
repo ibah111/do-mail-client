@@ -1,25 +1,37 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { DataIncomingState } from '../Types/dataIncoming';
+import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
 
 const initialState: DataIncomingState = {
-  IncomingMail: { rows: [], count: 0 },
-  IncomingGovernmentMail: { rows: [], count: 0 },
-  IncomingCourtMail: { rows: [], count: 0 },
-  IncomingCourtBailiffMail: { rows: [], count: 0 },
-  ArhiveIncomingMail: { rows: [], count: 0 },
-  ArhiveIncomingGovernmentMail: { rows: [], count: 0 },
-  ArhiveIncomingCourtMail: { rows: [], count: 0 },
-  ArhiveIncomingCourtBailiffMail: { rows: [], count: 0 },
+  [MailType.INCOMING_MAIL]: {
+    [ArhiveType.NO]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+  },
+  [MailType.INCOMING_GOVERNMENT_MAIL]: {
+    [ArhiveType.NO]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+  },
+  [MailType.INCOMING_COURT_MAIL]: {
+    [ArhiveType.NO]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+  },
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
+    [ArhiveType.NO]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
+    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+  },
 };
 const DataIncomingSlice = createSlice({
   name: 'DataIncoming',
   initialState,
   reducers: {
-    setMail<T extends keyof DataIncomingState>(
+    setMail<T extends MailType, K extends ArhiveType>(
       state: Draft<DataIncomingState>,
-      action: PayloadAction<[T, DataIncomingState[T]]>,
+      action: PayloadAction<[T, K, DataIncomingState[T][K]]>,
     ) {
-      state[action.payload[0]] = action.payload[1];
+      state[action.payload[0]][action.payload[1]] = action.payload[2];
     },
   },
 });
