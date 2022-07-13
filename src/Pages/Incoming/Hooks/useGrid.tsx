@@ -6,9 +6,10 @@ import {
   GridSortModel,
 } from '@mui/x-data-grid-premium';
 import { plainToInstance } from 'class-transformer';
+import React from 'react';
 import editCell from '../../../api/editCell';
 import { useAppDispatch, useAppSelector } from '../../../Reducer';
-import { setMail } from '../../../Reducer/DataIncoming';
+import { setMail, startDataIncoming } from '../../../Reducer/DataIncoming';
 import { Modeler, setData, startModelState } from '../../../Reducer/Model';
 import { setLoading } from '../../../Reducer/Stater';
 import {
@@ -45,13 +46,8 @@ export default function useGrid<
   const dataIncoming = useAppSelector(
     (state) => state.DataIncoming[typData][arhive],
   );
-  const data = {
-    rows: plainToInstance(
-      getTransformations(typData, arhive),
-      dataIncoming.rows,
-    ),
-    count: dataIncoming.count,
-  } as DataIncomingState[T][K];
+  const [data, setResult] =
+    React.useState<DataIncomingState[T][K]>(startDataIncoming);
   const state = useAppSelector((state) => state.Model[typData][arhive]);
   const dispatch = useAppDispatch();
   const setLoaded = (value: boolean) => dispatch(setLoading(!value));
@@ -67,6 +63,15 @@ export default function useGrid<
     dispatch(setData([typData, arhive, 'sortModel', value]));
   const setSelectionModel = (value: GridSelectionModel) =>
     dispatch(setData([typData, arhive, 'selectionModel', value]));
+  React.useEffect(() => {
+    setResult({
+      rows: plainToInstance(
+        getTransformations(typData, arhive),
+        dataIncoming.rows,
+      ),
+      count: dataIncoming.count,
+    } as DataIncomingState[T][K]);
+  }, [dataIncoming]);
   return {
     typData,
     data,

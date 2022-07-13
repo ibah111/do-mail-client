@@ -1,26 +1,29 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
-
+export const startDataIncoming = {
+  rows: [],
+  count: 0,
+};
 const initialState: DataIncomingState = {
   [MailType.INCOMING_MAIL]: {
-    [ArhiveType.NO]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
   [MailType.INCOMING_GOVERNMENT_MAIL]: {
-    [ArhiveType.NO]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
   [MailType.INCOMING_COURT_MAIL]: {
-    [ArhiveType.NO]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
   [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
-    [ArhiveType.NO]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE]: { rows: [], count: 0 },
-    [ArhiveType.ARHIVE_LAW_EXEC]: { rows: [], count: 0 },
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
 };
 const DataIncomingSlice = createSlice({
