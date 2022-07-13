@@ -32,7 +32,7 @@ const IncomingMailColumns = (
     editable: isAllow('editor'),
   },
   { field: 'otprav', headerName: 'Отправитель', editable: isAllow('editor') },
-  { field: 'reestr', headerName: 'Реестр', editable: true },
+  { field: 'reestr', headerName: 'Реестр' },
   {
     field: 'doc_name',
     headerName: 'Название документа',
