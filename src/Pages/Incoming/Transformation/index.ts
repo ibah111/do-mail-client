@@ -18,22 +18,22 @@ type TransformationState = {
   };
 };
 export const allTransformations: TransformationState = {
-  IncomingMail: {
+  [MailType.INCOMING_MAIL]: {
     [ArhiveType.NO]: IncomingMailState,
     [ArhiveType.ARHIVE]: ArhiveIncomingMailState,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingMailState,
   },
-  IncomingGovernmentMail: {
+  [MailType.INCOMING_GOVERNMENT_MAIL]: {
     [ArhiveType.NO]: IncomingGovernmentMailState,
     [ArhiveType.ARHIVE]: ArhiveIncomingGovernmentMailState,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingGovernmentMailState,
   },
-  IncomingCourtMail: {
+  [MailType.INCOMING_COURT_MAIL]: {
     [ArhiveType.NO]: IncomingCourtMailState,
     [ArhiveType.ARHIVE]: ArhiveIncomingCourtMailState,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtMailState,
   },
-  IncomingCourtBailiffMail: {
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
     [ArhiveType.NO]: IncomingCourtBailiffMailState,
     [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState,
