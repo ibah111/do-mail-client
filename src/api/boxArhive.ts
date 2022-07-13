@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../Reducer";
 import { callSuccess } from "../Reducer/Error";
-import { ArhiveState, setReload } from "../Reducer/Stater";
+import { setReload } from "../Reducer/Stater";
 import getErrorAxios from "../utils/getErrorAxios";
 import { getToken } from "../utils/getToken";
 import server from "../utils/server";

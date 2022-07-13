@@ -1,8 +1,6 @@
 import { Box, Button, IconButton, Menu, TextField } from "@mui/material";
 import React from "react";
 import { Send as SendIcon } from "@mui/icons-material";
-import addArhive from "../../../../api/addArhive";
-import { ArhiveState } from "../../../../Reducer/Stater";
 import boxArhive from "../../../../api/boxArhive";
 
 export default function AddArhive() {
@@ -14,10 +12,6 @@ export default function AddArhive() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const sendArhive = (value: ArhiveState) => () => {
-    addArhive(value);
-    handleClose();
   };
   return (
     <>
