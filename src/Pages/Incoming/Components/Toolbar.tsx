@@ -16,6 +16,11 @@ export default function Toolbar() {
   const isAllow = getAllow();
   const arhive = isAllow('arhive');
   const ArhiveType = useAppSelector((state) => state.Stater.ArhiveType);
+  const lengthSelect = useAppSelector(
+    (state) =>
+      state.Model[state.Stater.MailType][state.Stater.ArhiveType].selectionModel
+        .length,
+  );
   return (
     <GridToolbarContainer>
       <GridToolbarColumnsButton />
@@ -25,8 +30,8 @@ export default function Toolbar() {
       {arhive && (
         <>
           <ChangerArhiveType />
-          <AddArhive />
-          {ArhiveType > 0 && (
+          {lengthSelect > 0 && <AddArhive />}
+          {ArhiveType > 0 && lengthSelect > 0 && (
             <>
               <BoxArhive />
               <RemoveArhive />
