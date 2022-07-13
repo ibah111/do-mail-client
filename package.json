@@ -37,8 +37,12 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "git-semver-tags": "^4.1.1",
+    "prettier": "^2.7.1",
     "react-app-rewired": "^2.2.1",
     "semver": "^7.3.7"
   },
