@@ -1,6 +1,10 @@
 import { GridColumns } from '@mui/x-data-grid-premium';
 import getAllow, { AllowFunction } from '../../../hooks/getAllow';
-import { ArhiveType, MailType } from '../../../Types/dataIncoming';
+import {
+  ArhiveType,
+  DataIncomingType,
+  MailType,
+} from '../../../Types/dataIncoming';
 import ArhiveIncomingCourtBailiffMailColumns from './ArhiveIncomingCourtBailiffMail';
 import ArhiveIncomingCourtMailColumns from './ArhiveIncomingCourtMail';
 import ArhiveIncomingGovernmentMailColumns from './ArhiveIncomingGovernmentMail';
@@ -9,22 +13,43 @@ import IncomingCourtBailiffMailColumns from './IncomingCourtBailiffMail';
 import IncomingCourtMailColumns from './IncomingCourtMail';
 import IncomingGovernmentMailColumns from './IncomingGovernmentMail';
 import IncomingMailColumns from './IncomingMail';
-type ColumnsState = {
-  [index: string]: (isAllow: AllowFunction) => GridColumns;
+type GridColumnMail<T extends MailType, K extends ArhiveType> = GridColumns<
+  DataIncomingType[T][K]
+>;
+type ColumnFunction<T extends MailType, K extends ArhiveType> = (
+  isAllow: AllowFunction,
+) => GridColumnMail<T, K>;
+type ColumnsArhiveState<T extends MailType> = {
+  [index in ArhiveType]: ColumnFunction<T, index>;
 };
-export const allColumns: ColumnsState = {
-  IncomingMail: IncomingMailColumns,
-  IncomingGovernmentMail: IncomingGovernmentMailColumns,
-  IncomingCourtMail: IncomingCourtMailColumns,
-  IncomingCourtBailiffMail: IncomingCourtBailiffMailColumns,
-  ArhiveIncomingMail: ArhiveIncomingMailColumns,
-  ArhiveIncomingGovernmentMail: ArhiveIncomingGovernmentMailColumns,
-  ArhiveIncomingCourtMail: ArhiveIncomingCourtMailColumns,
-  ArhiveIncomingCourtBailiffMail: ArhiveIncomingCourtBailiffMailColumns,
+type ColumnsMailState = {
+  [index in MailType]: ColumnsArhiveState<index>;
+};
+export const allColumns: ColumnsMailState = {
+  [MailType.INCOMING_MAIL]: {
+    [ArhiveType.NO]: IncomingMailColumns,
+    [ArhiveType.ARHIVE]: ArhiveIncomingMailColumns,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingMailColumns,
+  },
+  [MailType.INCOMING_GOVERNMENT_MAIL]: {
+    [ArhiveType.NO]: IncomingGovernmentMailColumns,
+    [ArhiveType.ARHIVE]: ArhiveIncomingGovernmentMailColumns,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingGovernmentMailColumns,
+  },
+  [MailType.INCOMING_COURT_MAIL]: {
+    [ArhiveType.NO]: IncomingCourtMailColumns,
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtMailColumns,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtMailColumns,
+  },
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
+    [ArhiveType.NO]: IncomingCourtBailiffMailColumns,
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailColumns,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns,
+  },
 };
 export default function getColumns<T extends MailType, K extends ArhiveType>(
   typ: T,
   arhive: K,
-) {
-  return allColumns[`${arhive > 0 ? 'Arhive' : ''}${typ}`](getAllow());
+): GridColumnMail<T, K> {
+  return allColumns[typ][arhive](getAllow()) as GridColumnMail<T, K>;
 }
