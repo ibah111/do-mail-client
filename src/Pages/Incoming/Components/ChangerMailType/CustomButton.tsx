@@ -3,20 +3,20 @@ import { useAppDispatch, useAppSelector } from '../../../../Reducer';
 import { changeMode } from '../../../../Reducer/Stater';
 import { MailType } from '../../../../Types/dataIncoming';
 interface CustomButtonProps<T extends MailType> {
-  mode: T;
+  value: T;
   children: React.ReactNode;
 }
 export default function CustomButton<T extends MailType>({
-  mode,
+  value,
   children,
 }: CustomButtonProps<T>) {
-  const changerMode = useAppSelector((state) => state.Stater.MailType);
+  const MailType = useAppSelector((state) => state.Stater.MailType);
   const dispatch = useAppDispatch();
   return (
     <Button
       size="small"
-      variant={changerMode === mode ? 'outlined' : 'contained'}
-      onClick={() => dispatch(changeMode(mode))}
+      variant={MailType === value ? 'outlined' : 'contained'}
+      onClick={() => dispatch(changeMode(value))}
     >
       {children}
     </Button>

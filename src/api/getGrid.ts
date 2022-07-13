@@ -9,16 +9,16 @@ export default async function getGrid<
   T extends MailType,
   K extends ArhiveType,
 >(): Promise<DataIncomingState[T][K]> {
-  const ChangerMode = store.getState().Stater.MailType;
+  const MailType = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
-  const state = store.getState().Model[ChangerMode][ArhiveType];
+  const state = store.getState().Model[MailType][ArhiveType];
   try {
     const response = await axios.post<DataIncomingState[T][K]>(
       `${server()}/data`,
       {
         ...getToken(),
         ...state,
-        ChangerMode,
+        MailType,
         ArhiveType,
       },
     );

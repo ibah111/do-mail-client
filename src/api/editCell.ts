@@ -14,7 +14,7 @@ export default async function editCell(
   if (data instanceof Date) {
     value = moment(data).toISOString();
   }
-  const ChangerMode = store.getState().Stater.MailType;
+  const MailType = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
   try {
     const response = await axios.post<null>(`${server()}/edit`, {
@@ -22,7 +22,7 @@ export default async function editCell(
       id,
       name,
       value,
-      ChangerMode,
+      MailType,
       ArhiveType,
     });
     return response.data;

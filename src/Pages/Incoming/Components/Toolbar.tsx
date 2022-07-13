@@ -7,9 +7,9 @@ import {
 import getAllow from '../../../hooks/getAllow';
 import { useAppSelector } from '../../../Reducer';
 import AddArhive from './AddArhive';
-import Arhive from './Arhive';
+import ChangerArhiveType from './ChangerArhiveType';
 import BoxArhive from './BoxArhive';
-import ChangerMode from './ChangerMode';
+import ChangerMailType from './ChangerMailType';
 import RemoveArhive from './RemoveArhive';
 
 export default function Toolbar() {
@@ -21,10 +21,10 @@ export default function Toolbar() {
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
-      <ChangerMode />
+      <ChangerMailType />
       {arhive && (
         <>
-          <Arhive />
+          <ChangerArhiveType />
           <AddArhive />
           {ArhiveType > 0 && (
             <>

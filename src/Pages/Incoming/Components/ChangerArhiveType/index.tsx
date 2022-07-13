@@ -4,7 +4,7 @@ import { setArhive } from '../../../../Reducer/Stater';
 import { ArhiveType } from '../../../../Types/dataIncoming';
 
 const arhives: string[] = ['Нет', 'Документы', 'Исполнительные документы'];
-export default function Arhive() {
+export default function ChangerArhiveType() {
   const arhive = useAppSelector((state) => state.Stater.ArhiveType);
   const dispatch = useAppDispatch();
   return (
