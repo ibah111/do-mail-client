@@ -1,5 +1,5 @@
-import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
-import { DataIncomingState } from "../Types/dataIncoming";
+import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import { DataIncomingState } from '../Types/dataIncoming';
 
 const initialState: DataIncomingState = {
   IncomingMail: { rows: [], count: 0 },
@@ -12,12 +12,12 @@ const initialState: DataIncomingState = {
   ArhiveIncomingCourtBailiffMail: { rows: [], count: 0 },
 };
 const DataIncomingSlice = createSlice({
-  name: "DataIncoming",
+  name: 'DataIncoming',
   initialState,
   reducers: {
     setMail<T extends keyof DataIncomingState>(
       state: Draft<DataIncomingState>,
-      action: PayloadAction<[T, DataIncomingState[T]]>
+      action: PayloadAction<[T, DataIncomingState[T]]>,
     ) {
       state[action.payload[0]] = action.payload[1];
     },

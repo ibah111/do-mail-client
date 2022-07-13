@@ -1,6 +1,6 @@
-import { Box, Button, Collapse, Grid } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
-import getAllow, { AllowFunction } from "../../hooks/getAllow";
+import { Box, Button, Collapse, Grid } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import getAllow, { AllowFunction } from '../../hooks/getAllow';
 interface Page {
   name: string;
   path: string;
@@ -8,9 +8,9 @@ interface Page {
 }
 type Pages = Page[];
 const usePages = (isAllow: AllowFunction): Pages => [
-  { name: "Главная", path: "/", allow: true },
-  { name: "Входящая почта", path: "/incoming", allow: true },
-  { name: "Админ", path: "/admin", allow: isAllow("admin") },
+  { name: 'Главная', path: '/', allow: true },
+  { name: 'Входящая почта', path: '/incoming', allow: true },
+  { name: 'Админ', path: '/admin', allow: isAllow('admin') },
 ];
 export default function Menu() {
   const location = useLocation();
@@ -36,7 +36,7 @@ export default function Menu() {
                 >
                   <Grid xs="auto" item>
                     <Button
-                      sx={{ whiteSpace: "nowrap" }}
+                      sx={{ whiteSpace: 'nowrap' }}
                       component={Link}
                       to={page.path}
                       variant="text"
@@ -45,7 +45,7 @@ export default function Menu() {
                     </Button>
                   </Grid>
                 </Collapse>
-              )
+              ),
           )}
         </Grid>
       </Box>

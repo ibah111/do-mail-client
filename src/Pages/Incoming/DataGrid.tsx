@@ -1,7 +1,7 @@
-import { DataGridPremium } from "@mui/x-data-grid-premium";
-import useGrid from "./Hooks/useGrid";
-import Toolbar from "./Components/Toolbar";
-import CustomPagination from "../../Components/CustomPagination";
+import { DataGridPremium } from '@mui/x-data-grid-premium';
+import useGrid from './Hooks/useGrid';
+import Toolbar from './Components/Toolbar';
+import CustomPagination from '../../Components/CustomPagination';
 export default function DataGrid() {
   const {
     loading,

@@ -2,9 +2,9 @@ import {
   GridFilterModel,
   GridSelectionModel,
   GridSortModel,
-} from "@mui/x-data-grid-premium";
-import _ from "lodash";
-import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
+} from '@mui/x-data-grid-premium';
+import _ from 'lodash';
+import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Modeler {
   filterModel: GridFilterModel;
@@ -25,12 +25,12 @@ export const startModelState: Modeler = {
 };
 const initialState: ModelState = {};
 const ModelSlice = createSlice({
-  name: "Model",
+  name: 'Model',
   initialState,
   reducers: {
     setData<K extends keyof Modeler>(
       state: Draft<ModelState>,
-      action: PayloadAction<[string, K, Modeler[K]]>
+      action: PayloadAction<[string, K, Modeler[K]]>,
     ) {
       if (state[action.payload[0]]) {
         state[action.payload[0]][action.payload[1]] = action.payload[2];

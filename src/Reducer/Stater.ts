@@ -1,5 +1,5 @@
-import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
-import { DataIncomingState } from "../Types/dataIncoming";
+import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import { DataIncomingState } from '../Types/dataIncoming';
 export type ArhiveState = 0 | 1 | 2;
 export interface StaterState {
   loading: boolean;
@@ -9,17 +9,17 @@ export interface StaterState {
 }
 const initialState: StaterState = {
   loading: true,
-  ChangerMode: "IncomingMail",
+  ChangerMode: 'IncomingMail',
   ArhiveType: 0,
   reload: true,
 };
 const StaterSlice = createSlice({
-  name: "Stater",
+  name: 'Stater',
   initialState,
   reducers: {
     changeMode<T extends keyof DataIncomingState>(
       state: Draft<StaterState>,
-      action: PayloadAction<T>
+      action: PayloadAction<T>,
     ) {
       state.ChangerMode = action.payload;
     },

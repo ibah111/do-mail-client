@@ -1,7 +1,7 @@
-import { Button, Menu, MenuItem } from "@mui/material";
-import React from "react";
-import addArhive from "../../../../api/addArhive";
-import { ArhiveState } from "../../../../Reducer/Stater";
+import { Button, Menu, MenuItem } from '@mui/material';
+import React from 'react';
+import addArhive from '../../../../api/addArhive';
+import { ArhiveState } from '../../../../Reducer/Stater';
 
 export default function AddArhive() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

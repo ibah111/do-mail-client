@@ -4,20 +4,20 @@ import {
   GridFilterModel,
   GridSelectionModel,
   GridSortModel,
-} from "@mui/x-data-grid-premium";
-import { plainToInstance } from "class-transformer";
-import editCell from "../../../api/editCell";
-import { useAppDispatch, useAppSelector } from "../../../Reducer";
-import { setMail } from "../../../Reducer/DataIncoming";
-import { Modeler, setData, startModelState } from "../../../Reducer/Model";
-import { ArhiveState, setLoading } from "../../../Reducer/Stater";
-import { DataIncomingState } from "../../../Types/dataIncoming";
-import getColumns from "../Columns";
-import getTransformations from "../Transformation";
+} from '@mui/x-data-grid-premium';
+import { plainToInstance } from 'class-transformer';
+import editCell from '../../../api/editCell';
+import { useAppDispatch, useAppSelector } from '../../../Reducer';
+import { setMail } from '../../../Reducer/DataIncoming';
+import { Modeler, setData, startModelState } from '../../../Reducer/Model';
+import { ArhiveState, setLoading } from '../../../Reducer/Stater';
+import { DataIncomingState } from '../../../Types/dataIncoming';
+import getColumns from '../Columns';
+import getTransformations from '../Transformation';
 export interface Grider<T extends keyof DataIncomingState> {
   data: DataIncomingState[T];
   state: Modeler;
-  columns: GridColumns<DataIncomingState[T]["rows"][number]>;
+  columns: GridColumns<DataIncomingState[T]['rows'][number]>;
   typData: T;
   loading: boolean;
   arhive: ArhiveState;
@@ -31,7 +31,7 @@ export interface Grider<T extends keyof DataIncomingState> {
   onCellEditCommit: (value: GridCellEditCommitParams) => void;
 }
 export default function useGrid<
-  T extends keyof DataIncomingState
+  T extends keyof DataIncomingState,
 >(): Grider<T> {
   const loading = useAppSelector((state) => state.Stater.loading);
   const arhive = useAppSelector((state) => state.Stater.ArhiveType);
@@ -40,7 +40,7 @@ export default function useGrid<
   const data: DataIncomingState[T] = {
     rows: plainToInstance(
       getTransformations(typData, arhive),
-      dataIncoming.rows
+      dataIncoming.rows,
     ),
     count: dataIncoming.count,
   };
@@ -50,15 +50,15 @@ export default function useGrid<
   const setMailer = (value: DataIncomingState[T]) =>
     dispatch(setMail([typData, value]));
   const setPage = (value: number) =>
-    dispatch(setData([typData, "page", value]));
+    dispatch(setData([typData, 'page', value]));
   const setPageSize = (value: number) =>
-    dispatch(setData([typData, "pageSize", value]));
+    dispatch(setData([typData, 'pageSize', value]));
   const setFilterModel = (value: GridFilterModel) =>
-    dispatch(setData([typData, "filterModel", value]));
+    dispatch(setData([typData, 'filterModel', value]));
   const setSortModel = (value: GridSortModel) =>
-    dispatch(setData([typData, "sortModel", value]));
+    dispatch(setData([typData, 'sortModel', value]));
   const setSelectionModel = (value: GridSelectionModel) =>
-    dispatch(setData([typData, "selectionModel", value]));
+    dispatch(setData([typData, 'selectionModel', value]));
   return {
     typData,
     data,

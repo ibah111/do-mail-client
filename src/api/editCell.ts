@@ -1,16 +1,16 @@
-import axios from "axios";
-import moment from "moment";
-import { store } from "../Reducer";
-import getErrorAxios from "../utils/getErrorAxios";
-import { getToken } from "../utils/getToken";
-import server from "../utils/server";
+import axios from 'axios';
+import moment from 'moment';
+import { store } from '../Reducer';
+import getErrorAxios from '../utils/getErrorAxios';
+import { getToken } from '../utils/getToken';
+import server from '../utils/server';
 
 export default async function editCell(
   id: number,
   name: string,
-  data: any
+  data: unknown,
 ): Promise<null> {
-  let value: string = String(data);
+  let value = String(data);
   if (data instanceof Date) {
     value = moment(data).toISOString();
   }

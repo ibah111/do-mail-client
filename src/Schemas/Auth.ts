@@ -1,5 +1,5 @@
 export interface AuthUser<T> {
-  output: T extends true ? "Вы вошли" : "Вы не вошли";
+  output: T extends true ? 'Вы вошли' : 'Вы не вошли';
   error: T extends false ? string : never;
   id: T extends true ? number : never;
   login: T extends true ? string : never;
@@ -13,5 +13,5 @@ export interface AuthUser<T> {
   roles: T extends true ? string[] : never;
   avatar: T extends true ? string : never;
 }
-export interface AuthUserSuccess extends AuthUser<true> {}
-export interface AuthUserError extends AuthUser<false> {}
+export type AuthUserSuccess = AuthUser<true>;
+export type AuthUserError = AuthUser<false>;

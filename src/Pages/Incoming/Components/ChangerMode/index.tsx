@@ -1,4 +1,4 @@
-import CustomButton from "./CustomButton";
+import CustomButton from './CustomButton';
 
 export default function ChangerMode() {
   return (

@@ -1,7 +1,7 @@
-import { Box, Button, IconButton, Menu, TextField } from "@mui/material";
-import React from "react";
-import { Send as SendIcon } from "@mui/icons-material";
-import boxArhive from "../../../../api/boxArhive";
+import { Box, Button, IconButton, Menu, TextField } from '@mui/material';
+import React from 'react';
+import { Send as SendIcon } from '@mui/icons-material';
+import boxArhive from '../../../../api/boxArhive';
 
 export default function AddArhive() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -24,7 +24,7 @@ export default function AddArhive() {
         open={open}
         onClose={handleClose}
       >
-        <Box m={1} sx={{ display: "flex" }} component="form">
+        <Box m={1} sx={{ display: 'flex' }} component="form">
           <TextField
             label="Номер короба"
             size="small"
@@ -37,7 +37,7 @@ export default function AddArhive() {
           />
           <IconButton
             size="small"
-            onClick={(event) => {
+            onClick={() => {
               boxArhive(value);
               handleClose();
               setValue(0);

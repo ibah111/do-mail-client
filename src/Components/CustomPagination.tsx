@@ -3,8 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Grid,
   IconButton,
   MenuItem,
   Pagination,
@@ -12,7 +10,7 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   gridPageCountSelector,
   gridPageSelector,
@@ -20,8 +18,8 @@ import {
   gridPaginationSelector,
   useGridApiContext,
   useGridSelector,
-} from "@mui/x-data-grid-premium";
-import React from "react";
+} from '@mui/x-data-grid-premium';
+import React from 'react';
 const listRange = [25, 50, 100];
 export default function CustomPagination() {
   const [open, setOpen] = React.useState(false);
@@ -38,20 +36,20 @@ export default function CustomPagination() {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'center',
       }}
     >
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        <Typography sx={{ mx: 2 }}>{"Строк на странице:"}</Typography>
+        <Typography sx={{ mx: 2 }}>{'Строк на странице:'}</Typography>
         <Select
           size="small"
           variant="outlined"
@@ -74,22 +72,22 @@ export default function CustomPagination() {
           page={page + 1}
           renderItem={(item) => {
             switch (item.type) {
-              case "start-ellipsis":
+              case 'start-ellipsis':
                 return (
                   <IconButton
                     size="small"
-                    onClick={(value) => {
+                    onClick={() => {
                       setOpen(true);
                     }}
                   >
                     ...
                   </IconButton>
                 );
-              case "end-ellipsis":
+              case 'end-ellipsis':
                 return (
                   <IconButton
                     size="small"
-                    onClick={(value) => {
+                    onClick={() => {
                       setOpen(true);
                     }}
                   >
@@ -105,7 +103,7 @@ export default function CustomPagination() {
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogContent>
             <TextField
-              label={"Введите номер страницы"}
+              label={'Введите номер страницы'}
               type="number"
               sx={{ width: 200 }}
               value={value}
@@ -113,7 +111,7 @@ export default function CustomPagination() {
                 setValue(
                   Number(event.target.value) > pageCount
                     ? pageCount
-                    : Number(event.target.value)
+                    : Number(event.target.value),
                 )
               }
               InputProps={{ inputProps: { min: 1, max: pageCount } }}

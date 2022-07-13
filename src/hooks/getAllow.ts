@@ -1,4 +1,4 @@
-import { store } from "../Reducer";
+import { store } from '../Reducer';
 export type AllowFunction = (...userRoles: string[]) => boolean;
 const getAllow = (): AllowFunction => {
   const roles = store.getState().User.roles;

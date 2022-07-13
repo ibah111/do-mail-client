@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import removeArhive from "../../../../api/removeArhive";
+import { Button } from '@mui/material';
+import removeArhive from '../../../../api/removeArhive';
 
 export default function RemoveArhive() {
   return (

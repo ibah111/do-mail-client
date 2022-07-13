@@ -1,6 +1,6 @@
-import { Type } from "class-transformer";
-import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator";
-import { findAndCount } from "./findAndCount";
+import { Type } from 'class-transformer';
+import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
+import { findAndCount } from './findAndCount';
 
 export class IncomingMailState {
   /**

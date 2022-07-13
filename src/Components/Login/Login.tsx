@@ -1,26 +1,26 @@
-import React from "react";
-import { NotLoged } from "./NotLoged";
-import PropTypes from "prop-types";
-import server from "../../utils/server";
-import axios, { AxiosError } from "axios";
-import { getToken } from "../../utils/getToken";
-import { AuthUserSuccess } from "../../Schemas/Auth";
-import { useAppDispatch, useAppSelector } from "../../Reducer";
-import { setUser } from "../../Reducer/User";
+import React from 'react';
+import { NotLoged } from './NotLoged';
+import PropTypes from 'prop-types';
+import server from '../../utils/server';
+import axios, { AxiosError } from 'axios';
+import { getToken } from '../../utils/getToken';
+import { AuthUserSuccess } from '../../Schemas/Auth';
+import { useAppDispatch, useAppSelector } from '../../Reducer';
+import { setUser } from '../../Reducer/User';
 const connect = async (
   token: string,
   callback: (value: AuthUserSuccess) => void,
-  setError: (value: string | null) => void
+  setError: (value: string | null) => void,
 ) => {
   try {
-    const response = await axios.post<AuthUserSuccess>(server() + "/login", {
+    const response = await axios.post<AuthUserSuccess>(server() + '/login', {
       token,
     });
     callback(response.data);
   } catch (e: unknown) {
     if (e instanceof AxiosError) {
       const data = e.response?.data;
-      if (data.Result === "error") {
+      if (data.Result === 'error') {
         setError(data?.Message);
       } else {
         setError(null);
@@ -28,7 +28,10 @@ const connect = async (
     }
   }
 };
-export function Login({ children }: any) {
+interface LoginProps {
+  children: React.ReactNode;
+}
+export function Login({ children }: LoginProps) {
   const loged = useAppSelector((state) => state.User.login_result);
   const dispatch = useAppDispatch();
   const [message, setMessage] = React.useState<string | null>(null);
@@ -39,11 +42,11 @@ export function Login({ children }: any) {
       (value) => {
         dispatch(setUser(value));
       },
-      (message) => setMessage(message)
+      (message) => setMessage(message),
     );
   }, []);
   return (
-    <>{loged ? children : <NotLoged message={message ? message : ""} />}</>
+    <>{loged ? children : <NotLoged message={message ? message : ''} />}</>
   );
 }
 Login.propTypes = {

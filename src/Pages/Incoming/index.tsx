@@ -1,10 +1,10 @@
-import React from "react";
-import getGrid from "../../api/getGrid";
-import useGrid from "./Hooks/useGrid";
-import DataGrid from "./DataGrid";
-import { Paper } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../Reducer";
-import { setReload } from "../../Reducer/Stater";
+import React from 'react';
+import getGrid from '../../api/getGrid';
+import useGrid from './Hooks/useGrid';
+import DataGrid from './DataGrid';
+import { Paper } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../Reducer';
+import { setReload } from '../../Reducer/Stater';
 export default function Incoming() {
   const { arhive, state, setMail, typData, setLoaded } = useGrid();
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export default function Incoming() {
   return (
     <>
       <Paper>
-        <div style={{ display: "flex", height: "95vh" }}>
+        <div style={{ display: 'flex', height: '95vh' }}>
           <div style={{ flexGrow: 1 }}>
             <DataGrid />
           </div>

@@ -1,13 +1,13 @@
-import axios from "axios";
-import { store } from "../Reducer";
-import { startModelState } from "../Reducer/Model";
-import { DataIncomingState } from "../Types/dataIncoming";
-import getErrorAxios from "../utils/getErrorAxios";
-import { getToken } from "../utils/getToken";
-import server from "../utils/server";
+import axios from 'axios';
+import { store } from '../Reducer';
+import { startModelState } from '../Reducer/Model';
+import { DataIncomingState } from '../Types/dataIncoming';
+import getErrorAxios from '../utils/getErrorAxios';
+import { getToken } from '../utils/getToken';
+import server from '../utils/server';
 
 export default async function getGrid<
-  T extends keyof DataIncomingState
+  T extends keyof DataIncomingState,
 >(): Promise<DataIncomingState[T]> {
   const ChangerMode = store.getState().Stater.ChangerMode;
   const state = store.getState().Model[ChangerMode];
@@ -20,7 +20,7 @@ export default async function getGrid<
         ...(state ? state : startModelState),
         ChangerMode,
         ArhiveType,
-      }
+      },
     );
     return response.data;
   } catch (e) {

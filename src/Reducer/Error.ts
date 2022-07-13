@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { OptionsObject } from "notistack";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { OptionsObject } from 'notistack';
 
 interface ErrorState {
   text: string | null;
@@ -9,14 +9,14 @@ const initialState: ErrorState = {
   text: null,
 };
 const ErrorSlice = createSlice({
-  name: "Error",
+  name: 'Error',
   initialState,
   reducers: {
     callError(state, action: PayloadAction<string>) {
-      return { text: action.payload, params: { variant: "error" } };
+      return { text: action.payload, params: { variant: 'error' } };
     },
     callSuccess(state, action: PayloadAction<string>) {
-      return { text: action.payload, params: { variant: "success" } };
+      return { text: action.payload, params: { variant: 'success' } };
     },
   },
 });
