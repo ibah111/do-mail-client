@@ -1,7 +1,6 @@
 import { GridColumns } from '@mui/x-data-grid-premium';
 import getAllow, { AllowFunction } from '../../../hooks/getAllow';
-import { ArhiveState } from '../../../Reducer/Stater';
-import { DataIncomingState } from '../../../Types/dataIncoming';
+import { ArhiveType, DataIncomingState } from '../../../Types/dataIncoming';
 import ArhiveIncomingCourtBailiffMailColumns from './ArhiveIncomingCourtBailiffMail';
 import ArhiveIncomingCourtMailColumns from './ArhiveIncomingCourtMail';
 import ArhiveIncomingGovernmentMailColumns from './ArhiveIncomingGovernmentMail';
@@ -25,7 +24,7 @@ export const allColumns: ColumnsState = {
 };
 export default function getColumns<T extends keyof DataIncomingState>(
   typ: T,
-  arhive: ArhiveState,
+  arhive: ArhiveType,
 ) {
   return allColumns[`${arhive > 0 ? 'Arhive' : ''}${typ}`](getAllow());
 }

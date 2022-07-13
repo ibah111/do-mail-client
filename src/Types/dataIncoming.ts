@@ -475,6 +475,12 @@ export class ArhiveIncomingCourtBailiffMailState extends IncomingCourtBailiffMai
   kto_obrabotal_arhive: string;
 }
 
+export enum ArhiveType {
+  NO = 0,
+  ARHIVE = 1,
+  ARHIVE_LAW_EXEC = 2,
+}
+
 export class DataIncomingState {
   /**
    * Входящая почта

@@ -1,10 +1,9 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
-import { DataIncomingState } from '../Types/dataIncoming';
-export type ArhiveState = 0 | 1 | 2;
+import { ArhiveType, DataIncomingState } from '../Types/dataIncoming';
 export interface StaterState {
   loading: boolean;
   ChangerMode: keyof DataIncomingState;
-  ArhiveType: ArhiveState;
+  ArhiveType: ArhiveType;
   reload: boolean;
 }
 const initialState: StaterState = {
@@ -26,7 +25,7 @@ const StaterSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setArhive(state, action: PayloadAction<ArhiveState>) {
+    setArhive(state, action: PayloadAction<ArhiveType>) {
       state.ArhiveType = action.payload;
     },
     setReload(state, action: PayloadAction<boolean>) {

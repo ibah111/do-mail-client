@@ -1,7 +1,7 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import React from 'react';
 import addArhive from '../../../../api/addArhive';
-import { ArhiveState } from '../../../../Reducer/Stater';
+import { ArhiveType } from '../../../../Types/dataIncoming';
 
 export default function AddArhive() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -12,7 +12,7 @@ export default function AddArhive() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const sendArhive = (value: ArhiveState) => () => {
+  const sendArhive = (value: ArhiveType) => () => {
     addArhive(value);
     handleClose();
   };
@@ -27,8 +27,10 @@ export default function AddArhive() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={sendArhive(1)}>Документы</MenuItem>
-        <MenuItem onClick={sendArhive(2)}>Исполнительные документы</MenuItem>
+        <MenuItem onClick={sendArhive(ArhiveType.ARHIVE)}>Документы</MenuItem>
+        <MenuItem onClick={sendArhive(ArhiveType.ARHIVE_LAW_EXEC)}>
+          Исполнительные документы
+        </MenuItem>
       </Menu>
     </>
   );

@@ -10,8 +10,8 @@ import editCell from '../../../api/editCell';
 import { useAppDispatch, useAppSelector } from '../../../Reducer';
 import { setMail } from '../../../Reducer/DataIncoming';
 import { Modeler, setData, startModelState } from '../../../Reducer/Model';
-import { ArhiveState, setLoading } from '../../../Reducer/Stater';
-import { DataIncomingState } from '../../../Types/dataIncoming';
+import { setLoading } from '../../../Reducer/Stater';
+import { ArhiveType, DataIncomingState } from '../../../Types/dataIncoming';
 import getColumns from '../Columns';
 import getTransformations from '../Transformation';
 export interface Grider<T extends keyof DataIncomingState> {
@@ -20,7 +20,7 @@ export interface Grider<T extends keyof DataIncomingState> {
   columns: GridColumns<DataIncomingState[T]['rows'][number]>;
   typData: T;
   loading: boolean;
-  arhive: ArhiveState;
+  arhive: ArhiveType;
   setLoaded: (value: boolean) => void;
   setMail: (value: DataIncomingState[T]) => void;
   setPage: (value: number) => void;

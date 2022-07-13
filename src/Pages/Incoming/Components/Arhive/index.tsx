@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../Reducer';
-import { ArhiveState, setArhive } from '../../../../Reducer/Stater';
+import { setArhive } from '../../../../Reducer/Stater';
+import { ArhiveType } from '../../../../Types/dataIncoming';
 
 const arhives: string[] = ['Нет', 'Документы', 'Исполнительные документы'];
 export default function Arhive() {
@@ -16,7 +17,7 @@ export default function Arhive() {
           value={arhive}
           size="small"
           onChange={(event) => {
-            dispatch(setArhive(Number(event.target.value) as ArhiveState));
+            dispatch(setArhive(Number(event.target.value) as ArhiveType));
           }}
         >
           {arhives.map((value, index) => (

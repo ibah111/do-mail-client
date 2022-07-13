@@ -2,6 +2,7 @@ import { DataGridPremium } from '@mui/x-data-grid-premium';
 import useGrid from './Hooks/useGrid';
 import Toolbar from './Components/Toolbar';
 import CustomPagination from '../../Components/CustomPagination';
+import React from 'react';
 export default function DataGrid() {
   const {
     loading,
@@ -15,6 +16,9 @@ export default function DataGrid() {
     setSortModel,
     onCellEditCommit,
   } = useGrid();
+  React.useEffect(() => {
+    console.log(state);
+  }, [state]);
   return (
     <>
       <DataGridPremium
@@ -27,6 +31,7 @@ export default function DataGrid() {
         sortModel={state.sortModel}
         sortingMode="server"
         pageSize={state.pageSize}
+        page={state.page}
         onCellEditCommit={onCellEditCommit}
         onPageSizeChange={setPageSize}
         filterModel={state.filterModel}

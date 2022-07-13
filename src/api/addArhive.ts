@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { store } from '../Reducer';
 import { callSuccess } from '../Reducer/Error';
-import { ArhiveState } from '../Reducer/Stater';
 import getErrorAxios from '../utils/getErrorAxios';
 import { getToken } from '../utils/getToken';
 import server from '../utils/server';
 import { setData } from '../Reducer/Model';
+import { ArhiveType } from '../Types/dataIncoming';
 
-export default async function addArhive(
-  ArhiveType: ArhiveState,
-): Promise<null> {
+export default async function addArhive(ArhiveType: ArhiveType): Promise<null> {
   const ChangerMode = store.getState().Stater.ChangerMode;
   const state = store.getState().Model[ChangerMode];
   try {
