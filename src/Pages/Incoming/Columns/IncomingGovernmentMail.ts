@@ -41,7 +41,7 @@ const IncomingGovernmentMailColumns = (
     field: 'check_vsisk',
     headerName: ' Проверено взыскателем',
     type: 'boolean',
-    editable: isAllow('editor'),
+    editable: isAllow('collector'),
   },
   { field: 'check_vsisk_name', headerName: ' Кем проверено', type: 'string' },
   {

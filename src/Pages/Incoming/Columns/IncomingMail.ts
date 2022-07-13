@@ -59,7 +59,7 @@ const IncomingMailColumns = (
     field: 'check_vsisk',
     headerName: 'Проверено взыскателем',
     type: 'boolean',
-    editable: isAllow('editor'),
+    editable: isAllow('collector'),
   },
   { field: 'check_vsisk_name', headerName: 'Кем проверено' },
 ];
