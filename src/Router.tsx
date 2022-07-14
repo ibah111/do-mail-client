@@ -4,6 +4,7 @@ import Loader from './Components/Loader';
 import Menu from './Components/Menu';
 const Main = React.lazy(() => import('./Pages/Main'));
 const Incoming = React.lazy(() => import('./Pages/Incoming'));
+const Admin = React.lazy(() => import('./Pages/Admin'));
 export default function Router() {
   return (
     <BrowserRouter basename="/apps/mail-dev">
@@ -34,6 +35,20 @@ export default function Router() {
               }
             >
               <Incoming />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
+              <Admin />
             </React.Suspense>
           }
         />

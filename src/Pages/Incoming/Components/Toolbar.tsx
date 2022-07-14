@@ -11,6 +11,7 @@ import ChangerArhiveType from './ChangerArhiveType';
 import BoxArhive from './BoxArhive';
 import ChangerMailType from './ChangerMailType';
 import RemoveArhive from './RemoveArhive';
+import ReloadButton from './ReloadButton';
 
 export default function Toolbar() {
   const isAllow = getAllow();
@@ -23,6 +24,7 @@ export default function Toolbar() {
   );
   return (
     <GridToolbarContainer>
+      <ReloadButton />
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
