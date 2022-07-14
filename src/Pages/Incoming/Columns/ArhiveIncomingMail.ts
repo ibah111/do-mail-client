@@ -36,7 +36,7 @@ const ArhiveIncomingMailColumns = (
   {
     field: 'doc_name',
     headerName: 'Название документа',
-    editable: isAllow('editor'),
+    editable: isAllow('editor', 'arhive'),
   },
   {
     field: 'st_pnkt',

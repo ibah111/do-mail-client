@@ -25,7 +25,7 @@ const ArhiveIncomingGovernmentMailColumns = (
     field: 'doc_name',
     headerName: ' Название документа',
     type: 'string',
-    editable: isAllow('editor'),
+    editable: isAllow('editor', 'arhive'),
   },
   { field: 'gd', headerName: ' ГД - Гражданское дело', type: 'string' },
   { field: 'fio_dol', headerName: ' ФИО должника', type: 'string' },
