@@ -5,11 +5,11 @@ import { io } from 'socket.io-client';
 import server from '../../utils/server';
 import { useAppDispatch } from '../../Reducer';
 import { resetUser } from '../../Reducer/User';
-//import version from '../../utils/version';
+import version from '../../utils/version';
 const connect = (callback: (value: boolean) => void) => {
   const socket = io(server());
   socket.on('connect', () => {
-    //socket.emit("version", version());
+    socket.emit('version', version());
     callback(true);
   });
   socket.on('new_version', () => {
