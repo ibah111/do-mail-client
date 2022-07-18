@@ -7,7 +7,7 @@ const Incoming = React.lazy(() => import('./Pages/Incoming'));
 const Admin = React.lazy(() => import('./Pages/Admin'));
 export default function Router() {
   return (
-    <BrowserRouter basename="/apps/mail-dev">
+    <BrowserRouter basename="/apps/mail">
       <Menu />
       <Routes>
         <Route
