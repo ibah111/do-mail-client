@@ -1,4 +1,5 @@
 import {
+  GridColumnVisibilityModel,
   GridFilterModel,
   GridSelectionModel,
   GridSortModel,
@@ -12,6 +13,7 @@ export interface Modeler {
   pageSize: number;
   selectionModel: GridSelectionModel;
   sortModel: GridSortModel;
+  columnVisibilityModel: GridColumnVisibilityModel;
 }
 type ArhiveState = { [key in ArhiveType]: Modeler };
 type ModelState = {
@@ -23,6 +25,7 @@ export const startModelState: Modeler = {
   pageSize: 25,
   selectionModel: [],
   sortModel: [],
+  columnVisibilityModel: {},
 };
 const startModelsState: ArhiveState = {
   [ArhiveType.NO]: startModelState,

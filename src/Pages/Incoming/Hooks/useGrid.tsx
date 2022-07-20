@@ -1,6 +1,7 @@
 import {
   GridCellEditCommitParams,
   GridColumns,
+  GridColumnVisibilityModel,
   GridFilterModel,
   GridSelectionModel,
   GridSortModel,
@@ -34,6 +35,7 @@ export interface Grider<T extends MailType, K extends ArhiveType> {
   setFilterModel: (value: GridFilterModel) => void;
   setSortModel: (value: GridSortModel) => void;
   setSelectionModel: (value: GridSelectionModel) => void;
+  setColumnVisibilityModel: (value: GridColumnVisibilityModel) => void;
   onCellEditCommit: (value: GridCellEditCommitParams) => void;
 }
 export default function useGrid<
@@ -63,6 +65,8 @@ export default function useGrid<
     dispatch(setData([typData, arhive, 'sortModel', value]));
   const setSelectionModel = (value: GridSelectionModel) =>
     dispatch(setData([typData, arhive, 'selectionModel', value]));
+  const setColumnVisibilityModel = (value: GridColumnVisibilityModel) =>
+    dispatch(setData([typData, arhive, 'columnVisibilityModel', value]));
   React.useEffect(() => {
     setResult({
       rows: plainToInstance(
@@ -86,6 +90,7 @@ export default function useGrid<
     setFilterModel,
     setSortModel,
     setSelectionModel,
+    setColumnVisibilityModel,
     onCellEditCommit: (params: GridCellEditCommitParams) =>
       editCell(Number(params.id), params.field, params.value),
   };

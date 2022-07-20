@@ -15,6 +15,7 @@ export default function DataGrid() {
     setSelectionModel,
     setSortModel,
     onCellEditCommit,
+    setColumnVisibilityModel,
   } = useGrid();
   return (
     <>
@@ -39,6 +40,8 @@ export default function DataGrid() {
         selectionModel={state.selectionModel}
         checkboxSelection={true}
         disableSelectionOnClick={true}
+        columnVisibilityModel={state.columnVisibilityModel}
+        onColumnVisibilityModelChange={setColumnVisibilityModel}
         components={{
           Toolbar: Toolbar,
           Pagination: CustomPagination,
