@@ -118,6 +118,18 @@ export class IncomingMailState {
    */
   @IsString()
   check_vsisk_name: string;
+
+  /**
+   * ID Испол задачи
+   */
+  @IsNumber()
+  id_ispol_zadach: number;
+
+  /**
+   * ID Задачи
+   */
+  @IsNumber()
+  id_zadach: number;
 }
 
 export class IncomingGovernmentMailState {
@@ -219,6 +231,18 @@ export class IncomingGovernmentMailState {
    */
   @IsString()
   ecp: string;
+
+  /**
+   * ID Испол задачи
+   */
+  @IsNumber()
+  id_ispol_zadach: number;
+
+  /**
+   * ID Задачи
+   */
+  @IsNumber()
+  id_zadach: number;
 }
 export class IncomingCourtMailState {
   /**
@@ -312,6 +336,18 @@ export class IncomingCourtMailState {
    */
   @IsString()
   mail: string;
+
+  /**
+   * ID Испол задачи
+   */
+  @IsNumber()
+  id_ispol_zadach: number;
+
+  /**
+   * ID Задачи
+   */
+  @IsNumber()
+  id_zadach: number;
 }
 export class IncomingCourtBailiffMailState {
   /**
@@ -393,6 +429,18 @@ export class IncomingCourtBailiffMailState {
    */
   @IsString()
   check_vsisk_name: string;
+
+  /**
+   * ID Испол задачи
+   */
+  @IsNumber()
+  id_ispol_zadach: number;
+
+  /**
+   * ID Задачи
+   */
+  @IsNumber()
+  id_zadach: number;
 }
 export class ArhiveIncomingMailState extends IncomingMailState {
   /**

@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { GridColumns } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingMailState } from '../../../Types/dataIncoming';
@@ -62,5 +63,30 @@ const IncomingMailColumns = (
     editable: isAllow('collector'),
   },
   { field: 'check_vsisk_name', headerName: 'Кем проверено' },
+  {
+    field: 'task',
+    headerName: 'Задача',
+    width: 150,
+    valueGetter: (params) => {
+      if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
+        const userID = params.row.id_ispol_zadach;
+        const ID = params.row.id_zadach;
+        return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`;
+      }
+      return '';
+    },
+    renderCell: (params) =>
+      params.value && (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={params.value}
+          target="_blank"
+        >
+          Открыть задачу
+        </Button>
+      ),
+  },
 ];
 export default IncomingMailColumns;

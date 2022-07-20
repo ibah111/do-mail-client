@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { GridColumns } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveIncomingGovernmentMailState } from '../../../Types/dataIncoming';
@@ -22,7 +23,7 @@ const ArhiveIncomingGovernmentMailColumns = (
   },
   { field: 'reestr', headerName: ' Реестр', type: 'string' },
   {
-    field: 'doc_name',
+    field: 'doc_name_arhive',
     headerName: ' Название документа',
     type: 'string',
     editable: isAllow('editor', 'arhive'),
@@ -77,6 +78,31 @@ const ArhiveIncomingGovernmentMailColumns = (
   {
     field: 'kto_obrabotal_arhive',
     headerName: ' Кто обработал архив',
+  },
+  {
+    field: 'task',
+    headerName: 'Задача',
+    width: 150,
+    valueGetter: (params) => {
+      if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
+        const userID = params.row.id_ispol_zadach;
+        const ID = params.row.id_zadach;
+        return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`;
+      }
+      return '';
+    },
+    renderCell: (params) =>
+      params.value && (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={params.value}
+          target="_blank"
+        >
+          Открыть задачу
+        </Button>
+      ),
   },
 ];
 export default ArhiveIncomingGovernmentMailColumns;

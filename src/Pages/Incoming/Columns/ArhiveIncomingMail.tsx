@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { GridColumns } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveIncomingMailState } from '../../../Types/dataIncoming';
@@ -34,9 +35,11 @@ const ArhiveIncomingMailColumns = (
   { field: 'otprav', headerName: 'Отправитель', editable: isAllow('editor') },
   { field: 'reestr', headerName: 'Реестр' },
   {
-    field: 'doc_name',
+    field: 'doc_name_arhive',
     headerName: 'Название документа',
     editable: isAllow('editor', 'arhive'),
+    valueGetter: (params) =>
+      params.value ? params.value : params.row.doc_name,
   },
   {
     field: 'st_pnkt',
@@ -72,6 +75,31 @@ const ArhiveIncomingMailColumns = (
   {
     field: 'kto_obrabotal_arhive',
     headerName: ' Кто обработал архив',
+  },
+  {
+    field: 'task',
+    headerName: 'Задача',
+    width: 150,
+    valueGetter: (params) => {
+      if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
+        const userID = params.row.id_ispol_zadach;
+        const ID = params.row.id_zadach;
+        return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`;
+      }
+      return '';
+    },
+    renderCell: (params) =>
+      params.value && (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={params.value}
+          target="_blank"
+        >
+          Открыть задачу
+        </Button>
+      ),
   },
 ];
 export default ArhiveIncomingMailColumns;

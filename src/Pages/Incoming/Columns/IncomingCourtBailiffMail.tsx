@@ -1,11 +1,12 @@
+import { Button } from '@mui/material';
 import { GridColumns } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
-import { IncomingCourtMailState } from '../../../Types/dataIncoming';
+import { IncomingCourtBailiffMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
-const IncomingCourtMailColumns = (
+const IncomingCourtBailiffMailColumns = (
   isAllow: AllowFunction,
-): GridColumns<IncomingCourtMailState> => [
+): GridColumns<IncomingCourtBailiffMailState> => [
   { field: 'id', headerName: ' ID записи', type: 'number' },
   {
     field: 'date_post',
@@ -29,7 +30,11 @@ const IncomingCourtMailColumns = (
   },
   { field: 'gd', headerName: ' ГД - Гражданское дело', type: 'string' },
   { field: 'fio_dol', headerName: ' ФИО должника', type: 'string' },
-  { field: 'ispol_zadach', headerName: ' Исполнитель задачи', type: 'string' },
+  {
+    field: 'ispol_zadach',
+    headerName: ' Исполнитель задачи',
+    type: 'string',
+  },
   { field: 'vsisk', headerName: ' ФИО взыскателя', type: 'string' },
   { field: 'kogda_otdano', headerName: ' Когда обработано', type: 'date' },
   { field: 'kto_obrabotal', headerName: ' Кто обработал', type: 'string' },
@@ -41,16 +46,29 @@ const IncomingCourtMailColumns = (
   },
   { field: 'check_vsisk_name', headerName: ' Кем проверено', type: 'string' },
   {
-    field: 'adres',
-    headerName: ' Откуда',
-    type: 'string',
-    editable: isAllow('editor'),
-  },
-  {
-    field: 'mail',
-    headerName: ' На какую почту',
-    type: 'string',
-    editable: isAllow('editor'),
+    field: 'task',
+    headerName: 'Задача',
+    width: 150,
+    valueGetter: (params) => {
+      if (params.row.id_zadach !== undefined && params.row.id_zadach !== null) {
+        const userID = params.row.id_ispol_zadach;
+        const ID = params.row.id_zadach;
+        return `https://chat.nbkfinance.ru/company/personal/user/${userID}/tasks/task/view/${ID}/`;
+      }
+      return '';
+    },
+    renderCell: (params) =>
+      params.value && (
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          href={params.value}
+          target="_blank"
+        >
+          Открыть задачу
+        </Button>
+      ),
   },
 ];
-export default IncomingCourtMailColumns;
+export default IncomingCourtBailiffMailColumns;
