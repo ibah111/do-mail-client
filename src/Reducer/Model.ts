@@ -26,8 +26,14 @@ export const startModelState: Modeler = {
 };
 const startModelsState: ArhiveState = {
   [ArhiveType.NO]: startModelState,
-  [ArhiveType.ARHIVE]: startModelState,
-  [ArhiveType.ARHIVE_LAW_EXEC]: startModelState,
+  [ArhiveType.ARHIVE]: {
+    ...startModelState,
+    sortModel: [{ field: 'data_obrabotki_arhive', sort: 'asc' }],
+  },
+  [ArhiveType.ARHIVE_LAW_EXEC]: {
+    ...startModelState,
+    sortModel: [{ field: 'data_obrabotki_arhive', sort: 'asc' }],
+  },
 };
 const initialState: ModelState = {
   [MailType.INCOMING_MAIL]: startModelsState,
