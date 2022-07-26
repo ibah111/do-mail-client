@@ -20,7 +20,7 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid-premium';
 import React from 'react';
-const listRange = [25, 50, 100];
+const listRange = [25, 50, 100, 125, 150, 175, 200];
 export default function CustomPagination() {
   const [open, setOpen] = React.useState(false);
   const apiRef = useGridApiContext();

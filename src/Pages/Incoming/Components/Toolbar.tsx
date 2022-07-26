@@ -2,6 +2,7 @@ import {
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
+  GridToolbarExport,
   GridToolbarFilterButton,
 } from '@mui/x-data-grid-premium';
 import getAllow from '../../../hooks/getAllow';
@@ -27,7 +28,9 @@ export default function Toolbar() {
       <ReloadButton />
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
+
       <GridToolbarDensitySelector />
+      <GridToolbarExport />
       <ChangerMailType />
       {arhive && (
         <>
