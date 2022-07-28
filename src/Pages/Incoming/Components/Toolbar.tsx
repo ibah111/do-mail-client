@@ -13,10 +13,12 @@ import BoxArhive from './BoxArhive';
 import ChangerMailType from './ChangerMailType';
 import RemoveArhive from './RemoveArhive';
 import ReloadButton from './ReloadButton';
+import Remove from './Remove';
 
 export default function Toolbar() {
   const isAllow = getAllow();
   const arhive = isAllow('arhive');
+  const deleter = isAllow('deleter');
   const ArhiveType = useAppSelector((state) => state.Stater.ArhiveType);
   const lengthSelect = useAppSelector(
     (state) =>
@@ -42,6 +44,7 @@ export default function Toolbar() {
               <RemoveArhive />
             </>
           )}
+          {deleter && <Remove />}
         </>
       )}
     </GridToolbarContainer>
