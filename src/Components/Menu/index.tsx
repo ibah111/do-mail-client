@@ -11,6 +11,7 @@ const usePages = (isAllow: AllowFunction): Pages => [
   { name: 'Главная', path: '/', allow: true },
   { name: 'Входящая почта', path: '/incoming', allow: true },
   { name: 'Админ', path: '/admin', allow: isAllow('admin') },
+  { name: 'Удаление', path: '/remove', allow: isAllow('deleter') },
 ];
 export default function Menu() {
   const location = useLocation();
