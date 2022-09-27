@@ -1,4 +1,3 @@
-import { Grid } from '@mui/material';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Loader from './Components/Loader';
@@ -11,71 +10,64 @@ export default function Router() {
   return (
     <BrowserRouter basename="/apps/mail">
       <Menu />
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <React.Suspense
-                fallback={
-                  <>
-                    <Loader />
-                  </>
-                }
-              >
-                <Main />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/incoming"
-            element={
-              <React.Suspense
-                fallback={
-                  <>
-                    <Loader />
-                  </>
-                }
-              >
-                <Incoming />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <React.Suspense
-                fallback={
-                  <>
-                    <Loader />
-                  </>
-                }
-              >
-                <Admin />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/remove"
-            element={
-              <React.Suspense
-                fallback={
-                  <>
-                    <Loader />
-                  </>
-                }
-              >
-                <Remove />
-              </React.Suspense>
-            }
-          />
-        </Routes>
-      </Grid>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
+              <Main />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/incoming"
+          element={
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
+              <Incoming />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
+              <Admin />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/remove"
+          element={
+            <React.Suspense
+              fallback={
+                <>
+                  <Loader />
+                </>
+              }
+            >
+              <Remove />
+            </React.Suspense>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }

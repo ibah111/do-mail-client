@@ -8,14 +8,12 @@ interface MaskNumberProps {
 const MaskNumber = React.forwardRef<HTMLElement, MaskNumberProps>(
   function MaskNumber(props, ref) {
     const { onChange, ...other } = props;
+
     return (
       <IMaskInput
-        mask="(#00) 000-0000"
-        definitions={{
-          '#': /[1-9]/,
-        }}
         {...other}
-        inputRef={ref}
+        mask={/^(\d+)(|,\s*\d+)*(|,|, )$/}
+        inputRef={ref as any}
         onAccept={(value: any) =>
           onChange({ target: { name: props.name, value } })
         }
