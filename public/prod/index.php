@@ -26,6 +26,7 @@ $prefix = COption::GetOptionString('main', 'cookie_name', 'BITRIX_SM');
 if ($USER->IsAuthorized()) {
   $login = (string)$_COOKIE[$prefix . '_UIDL'];
   $password = (string)$_COOKIE[$prefix . '_UIDH'];
+  if (!$password) $USER->Authorize($USER->GetID(), true);
   $json = array('name' => $login, 'token' => $password);
   $hash = hash('sha512', 'Irjlf123!');
   $token = base64_encode(cryptoJsAesEncrypt($hash, $json));
