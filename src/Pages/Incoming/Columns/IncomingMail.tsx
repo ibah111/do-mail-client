@@ -117,16 +117,19 @@ const IncomingMailColumns = (
     data.push({
       field: 'id_dela',
       headerName: 'ID дела',
+      type: 'number',
       editable: true,
     });
     data.push({
       field: 'id_zadach',
       headerName: 'ID задачи',
+      type: 'number',
       editable: true,
     });
     data.push({
       field: 'id_ispol_zadach',
       headerName: 'ID исполнителя задач',
+      type: 'number',
       editable: true,
     });
   }
