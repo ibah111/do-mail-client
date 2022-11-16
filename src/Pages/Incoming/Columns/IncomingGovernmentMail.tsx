@@ -4,6 +4,10 @@ import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingGovernmentMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
+const currencyFormatter = new Intl.NumberFormat('ru-Ru', {
+  useGrouping: false,
+});
+
 const IncomingGovernmentMailColumns = (
   isAllow: AllowFunction,
 ): GridColumns<IncomingGovernmentMailState> => {
@@ -121,6 +125,7 @@ const IncomingGovernmentMailColumns = (
       headerName: 'ID дела',
       type: 'number',
       editable: true,
+      valueFormatter: (x) => currencyFormatter.format(x.value),
     });
     data.push({
       field: 'id_zadach',
