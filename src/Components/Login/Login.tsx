@@ -2,7 +2,7 @@ import React from 'react';
 import { NotLoged } from './NotLoged';
 import PropTypes from 'prop-types';
 import server from '../../utils/server';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { getToken } from '../../utils/getToken';
 import { AuthUserSuccess } from '../../Schemas/Auth';
 import { useAppDispatch, useAppSelector } from '../../Reducer';
@@ -17,8 +17,8 @@ const connect = async (
       token,
     });
     callback(response.data);
-  } catch (e: unknown) {
-    if (e instanceof AxiosError) {
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
       const data = e.response?.data;
       if (data.Result === 'error') {
         setError(data?.Message);
