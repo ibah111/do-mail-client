@@ -15,11 +15,14 @@ import license from './utils/crack';
 import { SnackbarProvider } from 'notistack';
 import ErrorHandler from './Components/ErrorHandler';
 import { tz } from 'moment-timezone';
+import { HealthProvider } from '@tools/health-status-react-component';
+import server from './utils/server';
 license();
 tz.setDefault('GMT');
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+const url = server();
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
@@ -29,9 +32,11 @@ root.render(
           <SnackbarProvider maxSnack={3}>
             <ErrorHandler />
             <Connect>
-              <Login>
-                <Router />
-              </Login>
+              <HealthProvider url={url} bottom={40}>
+                <Login>
+                  <Router />
+                </Login>
+              </HealthProvider>
             </Connect>
           </SnackbarProvider>
         </Provider>
