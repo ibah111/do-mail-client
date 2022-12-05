@@ -5,20 +5,13 @@ export interface Role {
   id: number;
   name: string;
   title: string;
-  Users_Roles: User_Role[];
-}
-interface User_Role {
-  id: number;
-  user_id: number;
-  User: User;
-  role_id: number;
-  Role: Role;
+  Users: User[];
 }
 export interface User {
   id: number;
   id_bitrix: number;
   login: string;
-  Users_Roles: User_Role[];
+  Roles: Role[];
 }
 export interface ResultRole {
   roles: Role[];

@@ -25,9 +25,7 @@ export default function Role() {
       headerName: 'Роли',
       width: 250,
       valueGetter(params) {
-        return params.row.Users_Roles.map((value) => value.Role.title).join(
-          ', ',
-        );
+        return params.row.Roles.map((value) => value.title).join(', ');
       },
     },
     {
