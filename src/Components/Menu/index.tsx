@@ -1,12 +1,12 @@
+import { useAbility } from '@casl/react';
 import { Box, Button, Collapse, Grid } from '@mui/material';
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AbilityContext, Can } from '../../Context/Ability';
 import { usePages } from '../../utils/pages';
 
 export default function Menu() {
   const location = useLocation();
-  const ability = React.useContext(AbilityContext);
+  const ability = useAbility(AbilityContext);
   const pages = usePages(ability);
   return (
     <>

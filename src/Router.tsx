@@ -1,3 +1,4 @@
+import { useAbility } from '@casl/react';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Loader from './Components/Loader';
@@ -5,7 +6,7 @@ import Menu from './Components/Menu';
 import { AbilityContext, Can } from './Context/Ability';
 import { usePages } from './utils/pages';
 export default function Router() {
-  const ability = React.useContext(AbilityContext);
+  const ability = useAbility(AbilityContext);
   const pages = usePages(ability);
   return (
     <BrowserRouter basename="/apps/mail">
