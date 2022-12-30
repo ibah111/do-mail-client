@@ -5,7 +5,6 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
 } from '@mui/x-data-grid-premium';
-import getAllow from '../../../hooks/getAllow';
 import { useAppSelector } from '../../../Reducer';
 import AddArhive from './AddArhive';
 import ChangerArhiveType from './ChangerArhiveType';
@@ -14,11 +13,14 @@ import ChangerMailType from './ChangerMailType';
 import RemoveArhive from './RemoveArhive';
 import ReloadButton from './ReloadButton';
 import Remove from './Remove';
-
+import { Can } from '../../../Context/Ability';
+import { Action, Subject } from '../../../casl/casl.factory';
+import { subject } from '@casl/ability';
+const SubjectArhive = subject(Subject.DataIncoming, {
+  arhive: true,
+  arhive_id: true,
+}) as unknown as Subject.DataIncoming;
 export default function Toolbar() {
-  const isAllow = getAllow();
-  const arhive = isAllow('arhive');
-  const deleter = isAllow('deleter');
   const ArhiveType = useAppSelector((state) => state.Stater.ArhiveType);
   const lengthSelect = useAppSelector(
     (state) =>
@@ -34,19 +36,27 @@ export default function Toolbar() {
       <GridToolbarDensitySelector />
       <GridToolbarExport />
       <ChangerMailType />
-      {arhive && (
+      <Can I={Action.Read} a={SubjectArhive}>
         <>
           <ChangerArhiveType />
-          {lengthSelect > 0 && <AddArhive />}
+          <Can I={Action.Create} a={SubjectArhive}>
+            {lengthSelect > 0 && <AddArhive />}
+          </Can>
           {ArhiveType > 0 && lengthSelect > 0 && (
             <>
-              <BoxArhive />
-              <RemoveArhive />
+              <Can I={Action.Permit} a={SubjectArhive}>
+                <BoxArhive />
+              </Can>
+              <Can I={Action.Delete} a={SubjectArhive}>
+                <RemoveArhive />
+              </Can>
             </>
           )}
-          {deleter && <Remove />}
         </>
-      )}
+      </Can>
+      <Can I={Action.Delete} a={Subject.DataIncoming}>
+        <Remove />
+      </Can>
     </GridToolbarContainer>
   );
 }

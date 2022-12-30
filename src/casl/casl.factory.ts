@@ -1,4 +1,9 @@
-import { AbilityBuilder, createMongoAbility, PureAbility } from '@casl/ability';
+import {
+  AbilityBuilder,
+  createMongoAbility,
+  InferSubjects,
+  PureAbility,
+} from '@casl/ability';
 import { AuthUserSuccess } from '../Schemas/Auth';
 export enum Action {
   Manage = 'manage',
@@ -6,13 +11,16 @@ export enum Action {
   Read = 'read',
   Update = 'update',
   Permit = 'permit',
-  Arhive = 'Arhive',
   Delete = 'delete',
 }
 export enum Subject {
   Main = 'Main',
   Role = 'Role',
   DataIncoming = 'DataIncoming',
+  IncomingMail = 'IncomingMail',
+  IncomingGovernmentMail = 'IncomingGovernmentMail',
+  IncomingCourtMail = 'IncomingCourtMail',
+  IncomingCourtBailiffMail = 'IncomingCourtBailiffMail',
 }
 type Subjects = Subject | 'all';
 export type AppAbility = PureAbility<[Action, Subjects]>;
@@ -22,13 +30,30 @@ export function createForUser(user?: AuthUserSuccess) {
   );
   if (user) {
     const roles = user.roles;
-    if (roles.includes('admin')) {
-      can(Action.Manage, 'all');
-    }
+    can(Action.Read, Subject.DataIncoming);
+    can(Action.Read, Subject.Main);
+    cannot(Action.Read, Subject.DataIncoming, {
+      arhive: true,
+    });
+    cannot(Action.Read, Subject.DataIncoming, {
+      arhive_id: true,
+    });
     if (roles.includes('deleter')) {
       can(Action.Delete, Subject.DataIncoming);
+      cannot(Action.Delete, Subject.DataIncoming, {
+        arhive: true,
+      });
+      cannot(Action.Delete, Subject.DataIncoming, {
+        arhive_id: true,
+      });
     }
-    can(Action.Read, Subject.Main);
+    if (roles.includes('arhive')) {
+      can(Action.Read, Subject.DataIncoming, { arhive: true });
+      //can(Action.Read, Subject.DataIncoming, { arhive_id: true });
+    }
+    if (roles.includes('admin')) {
+      //can(Action.Manage, 'all');
+    }
   }
   return build();
 }
