@@ -7,6 +7,8 @@ import { getToken } from '../../utils/getToken';
 import { AuthUserSuccess } from '../../Schemas/Auth';
 import { useAppDispatch, useAppSelector } from '../../Reducer';
 import { setUser } from '../../Reducer/User';
+import { AbilityContext } from '../../Context/Ability';
+import { AppAbility, createForUser } from '../../casl/casl.factory';
 const connect = async (
   token: string,
   callback: (value: AuthUserSuccess) => void,
@@ -33,6 +35,7 @@ interface LoginProps {
 }
 export function Login({ children }: LoginProps) {
   const loged = useAppSelector((state) => state.User.login_result);
+  const [ability, setAbility] = React.useState<AppAbility>(createForUser());
   const dispatch = useAppDispatch();
   const [message, setMessage] = React.useState<string | null>(null);
   React.useEffect(() => {
@@ -41,14 +44,25 @@ export function Login({ children }: LoginProps) {
       connect(
         token.token,
         (value) => {
+          setAbility(createForUser(value));
           dispatch(setUser(value));
         },
         (message) => setMessage(message),
       );
+    } else {
+      setAbility(createForUser());
     }
   }, [loged]);
   return (
-    <>{loged ? children : <NotLoged message={message ? message : ''} />}</>
+    <>
+      {loged ? (
+        <AbilityContext.Provider value={ability}>
+          {children}
+        </AbilityContext.Provider>
+      ) : (
+        <NotLoged message={message ? message : ''} />
+      )}
+    </>
   );
 }
 Login.propTypes = {

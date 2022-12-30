@@ -1,21 +1,13 @@
 import { Box, Button, Collapse, Grid } from '@mui/material';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import getAllow, { AllowFunction } from '../../hooks/getAllow';
-interface Page {
-  name: string;
-  path: string;
-  allow: boolean;
-}
-type Pages = Page[];
-const usePages = (isAllow: AllowFunction): Pages => [
-  { name: 'Главная', path: '/', allow: true },
-  { name: 'Входящая почта', path: '/incoming', allow: true },
-  { name: 'Админ', path: '/admin', allow: isAllow('admin') },
-  { name: 'Удаление', path: '/remove', allow: isAllow('deleter') },
-];
+import { AbilityContext, Can } from '../../Context/Ability';
+import { usePages } from '../../utils/pages';
+
 export default function Menu() {
   const location = useLocation();
-  const pages = usePages(getAllow());
+  const ability = React.useContext(AbilityContext);
+  const pages = usePages(ability);
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -25,29 +17,27 @@ export default function Menu() {
           justifyContent="center"
           alignItems="center"
         >
-          {pages.map(
-            (page, index) =>
-              page.allow && (
-                <Collapse
-                  unmountOnExit
-                  mountOnEnter
-                  orientation="horizontal"
-                  key={index}
-                  in={location.pathname !== page.path}
-                >
-                  <Grid xs="auto" item>
-                    <Button
-                      sx={{ whiteSpace: 'nowrap' }}
-                      component={Link}
-                      to={page.path}
-                      variant="text"
-                    >
-                      {page.name}
-                    </Button>
-                  </Grid>
-                </Collapse>
-              ),
-          )}
+          {pages.map((page, index) => (
+            <Can key={index} I={page.right} a={page.subject}>
+              <Collapse
+                unmountOnExit
+                mountOnEnter
+                orientation="horizontal"
+                in={location.pathname !== page.path}
+              >
+                <Grid xs="auto" item>
+                  <Button
+                    sx={{ whiteSpace: 'nowrap' }}
+                    component={Link}
+                    to={page.path}
+                    variant="text"
+                  >
+                    {page.name}
+                  </Button>
+                </Grid>
+              </Collapse>
+            </Can>
+          ))}
         </Grid>
       </Box>
     </>

@@ -1506,6 +1506,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@casl/ability@npm:^6.3.3":
+  version: 6.3.3
+  resolution: "@casl/ability@npm:6.3.3"
+  dependencies:
+    "@ucast/mongo2js": ^1.3.0
+  checksum: b260e3352109eed3f34f446c5fd81d24393ddad44a2eb78936b70ba6c4974ef1aacf71eb576f336c36287daa7125f02e55bb8706fe8a505c6c48a96dd3ab99c2
+  languageName: node
+  linkType: hard
+
+"@casl/react@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@casl/react@npm:3.1.0"
+  peerDependencies:
+    "@casl/ability": ^3.0.0 || ^4.0.0 || ^5.1.0 || ^6.0.0
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 8730e39ffbee1f7de131525b5f4c08a935f6985705948d28f676856d45bc22ed62d0797849b16ba6958174d0d5e7317e4453d2d39c91807bc720700e4ce74c5b
+  languageName: node
+  linkType: hard
+
+"@contact/models@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "@contact/models@npm:0.2.3::__archiveUrl=https%3A%2F%2Fgit.usb.ru%2Fapi%2Fv4%2Fprojects%2F69%2Fpackages%2Fnpm%2F%40contact%2Fmodels%2F-%2F%40contact%2Fmodels-0.2.3.tgz"
+  dependencies:
+    reflect-metadata: ^0.1.13
+  peerDependencies:
+    "@sql-tools/sequelize": ^6.21.3
+    "@sql-tools/sequelize-typescript": ^2.1.4
+  checksum: 664643368c5e05ac6b550c6ed215cd378b491951ec4057122f30844783384973316acbf4665ddc402d61cc77bb34d4972d965a74b657b28b531462a75ca652ba
+  languageName: node
+  linkType: hard
+
 "@csstools/normalize.css@npm:*":
   version: 12.0.0
   resolution: "@csstools/normalize.css@npm:12.0.0"
@@ -3646,6 +3677,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ucast/core@npm:^1.0.0, @ucast/core@npm:^1.4.1, @ucast/core@npm:^1.6.1":
+  version: 1.10.1
+  resolution: "@ucast/core@npm:1.10.1"
+  checksum: 38335916421ddf44b5e37b2914ff5c7d73d1137eccbe345ad35f204e311a94e229d51dcd66dc258ac25f49c54c1f1e97534ee957e73e78a83d97fea9c3f25547
+  languageName: node
+  linkType: hard
+
+"@ucast/js@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "@ucast/js@npm:3.0.2"
+  dependencies:
+    "@ucast/core": ^1.0.0
+  checksum: d7c6baea3dc4900ff09f5191679dfc37e96cc9bef54541af55e530535eacaf6d85169cc6d5df8db0afaf4874fe92ca744793204a2d88d66d2823deb24b692f30
+  languageName: node
+  linkType: hard
+
+"@ucast/mongo2js@npm:^1.3.0":
+  version: 1.3.3
+  resolution: "@ucast/mongo2js@npm:1.3.3"
+  dependencies:
+    "@ucast/core": ^1.6.1
+    "@ucast/js": ^3.0.0
+    "@ucast/mongo": ^2.4.0
+  checksum: 10f15ac82c498974ece52e03f6ae10fd6c9948fc28de936072bf867cec4f5543c9945b3ad214f0f57da9a34158b1c0fad59fca495ed2bda571d1148187b36159
+  languageName: node
+  linkType: hard
+
+"@ucast/mongo@npm:^2.4.0":
+  version: 2.4.2
+  resolution: "@ucast/mongo@npm:2.4.2"
+  dependencies:
+    "@ucast/core": ^1.4.1
+  checksum: 27dddf9d24fcbe18bab5bbcb050b43116150afd3fad1e5359eb9b381095c0c5655934dcaf05adc25f247fe8eee285541a190020b8c3ca1b85ba63f5f046ec8a4
+  languageName: node
+  linkType: hard
+
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
   resolution: "@webassemblyjs/ast@npm:1.11.1"
@@ -4980,6 +5047,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "client-remaster@workspace:."
   dependencies:
+    "@casl/ability": ^6.3.3
+    "@casl/react": ^3.1.0
+    "@contact/models": ^0.2.3
     "@date-io/moment": ^2.16.1
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
