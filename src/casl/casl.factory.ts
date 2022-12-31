@@ -58,7 +58,7 @@ export function createForUser(user?: AuthUserSuccess) {
     }
     AllRights(can, cannot);
     if (roles.includes('admin')) {
-      //can(Action.Manage, 'all');
+      can(Action.Manage, 'all');
     }
   }
   return build();
