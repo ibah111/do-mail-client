@@ -13,12 +13,12 @@ interface IArhive {
   condition: IDataIncoming;
 }
 const arhives: IArhive[] = [
-  { name: 'Нет', value: 0, condition: {} },
-  { name: 'Документы', value: 1, condition: { arhive: true } },
+  { name: 'Нет', value: 0, condition: { arhive: [ArhiveType.NO] } },
+  { name: 'Документы', value: 1, condition: { arhive: [ArhiveType.ARHIVE] } },
   {
     name: 'Исполнительные документы',
     value: 2,
-    condition: { arhive_id: true },
+    condition: { arhive: [ArhiveType.ARHIVE_LAW_EXEC] },
   },
 ];
 export default function ChangerArhiveType() {

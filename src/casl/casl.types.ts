@@ -1,4 +1,6 @@
+import { ArhiveType, MailType } from '../Types/dataIncoming';
+
 export interface IDataIncoming {
-  arhive?: boolean;
-  arhive_id?: boolean;
+  arhive?: ArhiveType[];
+  mode?: MailType[];
 }

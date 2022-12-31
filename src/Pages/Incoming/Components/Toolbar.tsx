@@ -16,12 +16,9 @@ import Remove from './Remove';
 import { Can } from '../../../Context/Ability';
 import { Action, Subject } from '../../../casl/casl.factory';
 import { subject } from '@casl/ability';
-const SubjectArhive = subject(Subject.DataIncoming, {
-  arhive: true,
-  arhive_id: true,
-});
+import { ArhiveType } from '../../../Types/dataIncoming';
 export default function Toolbar() {
-  const ArhiveType = useAppSelector((state) => state.Stater.ArhiveType);
+  const ArhiveTypeSelect = useAppSelector((state) => state.Stater.ArhiveType);
   const lengthSelect = useAppSelector(
     (state) =>
       state.Model[state.Stater.MailType][state.Stater.ArhiveType].selectionModel
@@ -36,18 +33,38 @@ export default function Toolbar() {
       <GridToolbarDensitySelector />
       <GridToolbarExport />
       <ChangerMailType />
-      <Can I={Action.Read} this={SubjectArhive}>
+      <Can
+        I={Action.Read}
+        this={subject(Subject.DataIncoming, {
+          arhive: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
+        })}
+      >
         <>
           <ChangerArhiveType />
-          <Can I={Action.Create} this={SubjectArhive}>
+          <Can
+            I={Action.Create}
+            this={subject(Subject.DataIncoming, {
+              arhive: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
+            })}
+          >
             {lengthSelect > 0 && <AddArhive />}
           </Can>
-          {ArhiveType > 0 && lengthSelect > 0 && (
+          {ArhiveTypeSelect > 0 && lengthSelect > 0 && (
             <>
-              <Can I={Action.Permit} this={SubjectArhive}>
+              <Can
+                I={Action.Permit}
+                this={subject(Subject.DataIncoming, {
+                  arhive: [ArhiveTypeSelect],
+                })}
+              >
                 <BoxArhive />
               </Can>
-              <Can I={Action.Delete} this={SubjectArhive}>
+              <Can
+                I={Action.Delete}
+                this={subject(Subject.DataIncoming, {
+                  arhive: [ArhiveTypeSelect],
+                })}
+              >
                 <RemoveArhive />
               </Can>
             </>
