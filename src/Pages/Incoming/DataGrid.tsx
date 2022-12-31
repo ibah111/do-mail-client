@@ -3,6 +3,7 @@ import useGrid from './Hooks/useGrid';
 import Toolbar from './Components/Toolbar';
 import CustomPagination from '../../Components/CustomPagination';
 import React from 'react';
+import DetailData from './Components/DetailData';
 export default function DataGrid() {
   const {
     loading,
@@ -38,6 +39,10 @@ export default function DataGrid() {
         onSelectionModelChange={setSelectionModel}
         onSortModelChange={setSortModel}
         selectionModel={state.selectionModel}
+        getDetailPanelContent={({ row }) =>
+          row.Docs?.length && <DetailData docs={row.Docs} />
+        }
+        getDetailPanelHeight={() => 'auto'}
         checkboxSelection={true}
         disableSelectionOnClick={true}
         columnVisibilityModel={state.columnVisibilityModel}

@@ -6,7 +6,7 @@ import { IDataIncoming } from '../../../../casl/casl.types';
 import { AbilityContext } from '../../../../Context/Ability';
 import { useAppDispatch, useAppSelector } from '../../../../Reducer';
 import { setArhive } from '../../../../Reducer/Stater';
-import { ArhiveType, MailType } from '../../../../Types/dataIncoming';
+import { ArhiveType } from '../../../../Types/dataIncoming';
 interface IArhive {
   name: string;
   value: number;

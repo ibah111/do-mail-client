@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
+import { Doc } from '../Schemas/Doc';
 import { findAndCount } from './findAndCount';
 
 export class IncomingMailState {
@@ -130,6 +131,12 @@ export class IncomingMailState {
    */
   @IsNumber()
   id_zadach: number;
+
+  /**
+   * Прикрепленные документы
+   */
+  @Type(() => Doc)
+  Docs: Doc[];
 }
 
 export class IncomingGovernmentMailState {
@@ -243,6 +250,12 @@ export class IncomingGovernmentMailState {
    */
   @IsNumber()
   id_zadach: number;
+
+  /**
+   * Прикрепленные документы
+   */
+  @Type(() => Doc)
+  Docs: Doc[];
 }
 export class IncomingCourtMailState {
   /**
@@ -348,6 +361,12 @@ export class IncomingCourtMailState {
    */
   @IsNumber()
   id_zadach: number;
+
+  /**
+   * Прикрепленные документы
+   */
+  @Type(() => Doc)
+  Docs: Doc[];
 }
 export class IncomingCourtBailiffMailState {
   /**
@@ -441,6 +460,12 @@ export class IncomingCourtBailiffMailState {
    */
   @IsNumber()
   id_zadach: number;
+
+  /**
+   * Прикрепленные документы
+   */
+  @Type(() => Doc)
+  Docs: Doc[];
 }
 export class ArhiveIncomingMailState extends IncomingMailState {
   /**
