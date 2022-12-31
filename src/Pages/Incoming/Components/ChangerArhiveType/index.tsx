@@ -6,7 +6,7 @@ import { IDataIncoming } from '../../../../casl/casl.types';
 import { AbilityContext } from '../../../../Context/Ability';
 import { useAppDispatch, useAppSelector } from '../../../../Reducer';
 import { setArhive } from '../../../../Reducer/Stater';
-import { ArhiveType } from '../../../../Types/dataIncoming';
+import { ArhiveType, MailType } from '../../../../Types/dataIncoming';
 interface IArhive {
   name: string;
   value: number;
@@ -14,15 +14,22 @@ interface IArhive {
 }
 const arhives: IArhive[] = [
   { name: 'Нет', value: 0, condition: { arhive: [ArhiveType.NO] } },
-  { name: 'Документы', value: 1, condition: { arhive: [ArhiveType.ARHIVE] } },
+  {
+    name: 'Документы',
+    value: 1,
+    condition: { arhive: [ArhiveType.ARHIVE] },
+  },
   {
     name: 'Исполнительные документы',
     value: 2,
-    condition: { arhive: [ArhiveType.ARHIVE_LAW_EXEC] },
+    condition: {
+      arhive: [ArhiveType.ARHIVE_LAW_EXEC],
+    },
   },
 ];
 export default function ChangerArhiveType() {
   const arhive = useAppSelector((state) => state.Stater.ArhiveType);
+  const mode = useAppSelector((state) => state.Stater.MailType);
   const dispatch = useAppDispatch();
   const ability = useAbility(AbilityContext);
   return (
@@ -42,7 +49,10 @@ export default function ChangerArhiveType() {
             .filter((item) =>
               ability.can(
                 Action.Read,
-                subject(Subject.DataIncoming, item.condition),
+                subject(Subject.DataIncoming, {
+                  mode: [mode],
+                  ...item.condition,
+                }),
               ),
             )
             .map((value) => (

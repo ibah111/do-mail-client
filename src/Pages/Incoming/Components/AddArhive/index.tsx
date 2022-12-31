@@ -4,9 +4,11 @@ import React from 'react';
 import addArhive from '../../../../api/addArhive';
 import { Action, Subject } from '../../../../casl/casl.factory';
 import { Can } from '../../../../Context/Ability';
-import { ArhiveType } from '../../../../Types/dataIncoming';
-
-export default function AddArhive() {
+import { ArhiveType, MailType } from '../../../../Types/dataIncoming';
+interface AddArhiveProps {
+  mail: MailType;
+}
+export default function AddArhive({ mail }: AddArhiveProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,6 +35,7 @@ export default function AddArhive() {
         <Can
           I={Action.Create}
           this={subject(Subject.DataIncoming, {
+            mode: [mail],
             arhive: [ArhiveType.ARHIVE],
           })}
         >
@@ -41,6 +44,7 @@ export default function AddArhive() {
         <Can
           I={Action.Create}
           this={subject(Subject.DataIncoming, {
+            mode: [mail],
             arhive: [ArhiveType.ARHIVE_LAW_EXEC],
           })}
         >

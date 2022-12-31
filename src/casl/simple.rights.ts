@@ -8,17 +8,25 @@ export default function SimpleRights(
 ) {
   can(Action.Read, Subject.DataIncoming);
   can(Action.Read, Subject.Main);
-  cannot(Action.Read, Subject.DataIncoming, {
-    arhive: { $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC] },
-  });
-  cannot(Action.Read, Subject.DataIncoming, {
-    mode: {
-      $in: [
-        MailType.INCOMING_MAIL,
-        MailType.INCOMING_GOVERNMENT_MAIL,
-        MailType.INCOMING_COURT_MAIL,
-        MailType.INCOMING_COURT_BAILIFF_MAIL,
-      ],
+  cannot(
+    [Action.Read, Action.Create, Action.Delete, Action.Permit],
+    Subject.DataIncoming,
+    {
+      arhive: { $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC] },
     },
-  });
+  );
+  cannot(
+    [Action.Read, Action.Create, Action.Delete, Action.Permit],
+    Subject.DataIncoming,
+    {
+      mode: {
+        $in: [
+          MailType.INCOMING_MAIL,
+          MailType.INCOMING_GOVERNMENT_MAIL,
+          MailType.INCOMING_COURT_MAIL,
+          MailType.INCOMING_COURT_BAILIFF_MAIL,
+        ],
+      },
+    },
+  );
 }

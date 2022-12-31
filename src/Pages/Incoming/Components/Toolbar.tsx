@@ -19,6 +19,7 @@ import { subject } from '@casl/ability';
 import { ArhiveType } from '../../../Types/dataIncoming';
 export default function Toolbar() {
   const ArhiveTypeSelect = useAppSelector((state) => state.Stater.ArhiveType);
+  const MailTypeSelect = useAppSelector((state) => state.Stater.MailType);
   const lengthSelect = useAppSelector(
     (state) =>
       state.Model[state.Stater.MailType][state.Stater.ArhiveType].selectionModel
@@ -36,6 +37,7 @@ export default function Toolbar() {
       <Can
         I={Action.Read}
         this={subject(Subject.DataIncoming, {
+          mode: [MailTypeSelect],
           arhive: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
         })}
       >
@@ -44,16 +46,18 @@ export default function Toolbar() {
           <Can
             I={Action.Create}
             this={subject(Subject.DataIncoming, {
+              mode: [MailTypeSelect],
               arhive: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
             })}
           >
-            {lengthSelect > 0 && <AddArhive />}
+            {lengthSelect > 0 && <AddArhive mail={MailTypeSelect} />}
           </Can>
           {ArhiveTypeSelect > 0 && lengthSelect > 0 && (
             <>
               <Can
                 I={Action.Permit}
                 this={subject(Subject.DataIncoming, {
+                  mode: [MailTypeSelect],
                   arhive: [ArhiveTypeSelect],
                 })}
               >
@@ -62,6 +66,7 @@ export default function Toolbar() {
               <Can
                 I={Action.Delete}
                 this={subject(Subject.DataIncoming, {
+                  mode: [MailTypeSelect],
                   arhive: [ArhiveTypeSelect],
                 })}
               >

@@ -5,9 +5,10 @@ import {
   PureAbility,
 } from '@casl/ability';
 import { AuthUserSuccess } from '../Schemas/Auth';
-import { ArhiveType } from '../Types/dataIncoming';
+import { ArhiveType, MailType } from '../Types/dataIncoming';
 import { IDataIncoming } from './casl.types';
 import SimpleRights from './simple.rights';
+import AllRights from './all.rights';
 export enum Action {
   Manage = 'manage',
   Create = 'create',
@@ -37,27 +38,25 @@ export function createForUser(user?: AuthUserSuccess) {
       });
     }
     if (roles.includes('arhive')) {
-      can(Action.Read, Subject.DataIncoming, {
-        arhive: {
-          $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
+      can(
+        [Action.Read, Action.Delete, Action.Create, Action.Permit],
+        Subject.DataIncoming,
+        {
+          arhive: {
+            $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
+          },
+          mode: {
+            $in: [
+              MailType.INCOMING_MAIL,
+              MailType.INCOMING_GOVERNMENT_MAIL,
+              MailType.INCOMING_COURT_MAIL,
+              MailType.INCOMING_COURT_BAILIFF_MAIL,
+            ],
+          },
         },
-      });
-      can(Action.Delete, Subject.DataIncoming, {
-        arhive: {
-          $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
-        },
-      });
-      can(Action.Create, Subject.DataIncoming, {
-        arhive: {
-          $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
-        },
-      });
-      can(Action.Permit, Subject.DataIncoming, {
-        arhive: {
-          $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC],
-        },
-      });
+      );
     }
+    AllRights(can, cannot);
     if (roles.includes('admin')) {
       //can(Action.Manage, 'all');
     }
