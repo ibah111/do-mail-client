@@ -5,6 +5,7 @@ import {
   PureAbility,
 } from '@casl/ability';
 import { AuthUserSuccess } from '../Schemas/Auth';
+import { IDataIncoming } from './casl.types';
 export enum Action {
   Manage = 'manage',
   Create = 'create',
@@ -22,7 +23,7 @@ export enum Subject {
   IncomingCourtMail = 'IncomingCourtMail',
   IncomingCourtBailiffMail = 'IncomingCourtBailiffMail',
 }
-type Subjects = Subject | 'all';
+type Subjects = Subject | InferSubjects<IDataIncoming> | 'all';
 export type AppAbility = PureAbility<[Action, Subjects]>;
 export function createForUser(user?: AuthUserSuccess) {
   const { can, cannot, build } = new AbilityBuilder<AppAbility>(
@@ -49,7 +50,7 @@ export function createForUser(user?: AuthUserSuccess) {
     }
     if (roles.includes('arhive')) {
       can(Action.Read, Subject.DataIncoming, { arhive: true });
-      //can(Action.Read, Subject.DataIncoming, { arhive_id: true });
+      can(Action.Read, Subject.DataIncoming, { arhive_id: true });
     }
     if (roles.includes('admin')) {
       //can(Action.Manage, 'all');

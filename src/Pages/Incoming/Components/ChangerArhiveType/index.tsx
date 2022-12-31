@@ -2,14 +2,15 @@ import { subject } from '@casl/ability';
 import { useAbility } from '@casl/react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { Action, Subject } from '../../../../casl/casl.factory';
-import { AbilityContext, Can } from '../../../../Context/Ability';
+import { IDataIncoming } from '../../../../casl/casl.types';
+import { AbilityContext } from '../../../../Context/Ability';
 import { useAppDispatch, useAppSelector } from '../../../../Reducer';
 import { setArhive } from '../../../../Reducer/Stater';
 import { ArhiveType } from '../../../../Types/dataIncoming';
 interface IArhive {
   name: string;
   value: number;
-  condition: { arhive?: boolean; arhive_id?: boolean };
+  condition: IDataIncoming;
 }
 const arhives: IArhive[] = [
   { name: 'Нет', value: 0, condition: {} },
@@ -41,10 +42,7 @@ export default function ChangerArhiveType() {
             .filter((item) =>
               ability.can(
                 Action.Read,
-                subject(
-                  Subject.DataIncoming,
-                  item.condition,
-                ) as unknown as Subject.DataIncoming,
+                subject(Subject.DataIncoming, item.condition),
               ),
             )
             .map((value) => (

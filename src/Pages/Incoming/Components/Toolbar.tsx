@@ -19,7 +19,7 @@ import { subject } from '@casl/ability';
 const SubjectArhive = subject(Subject.DataIncoming, {
   arhive: true,
   arhive_id: true,
-}) as unknown as Subject.DataIncoming;
+});
 export default function Toolbar() {
   const ArhiveType = useAppSelector((state) => state.Stater.ArhiveType);
   const lengthSelect = useAppSelector(
@@ -36,18 +36,18 @@ export default function Toolbar() {
       <GridToolbarDensitySelector />
       <GridToolbarExport />
       <ChangerMailType />
-      <Can I={Action.Read} a={SubjectArhive}>
+      <Can I={Action.Read} this={SubjectArhive}>
         <>
           <ChangerArhiveType />
-          <Can I={Action.Create} a={SubjectArhive}>
+          <Can I={Action.Create} this={SubjectArhive}>
             {lengthSelect > 0 && <AddArhive />}
           </Can>
           {ArhiveType > 0 && lengthSelect > 0 && (
             <>
-              <Can I={Action.Permit} a={SubjectArhive}>
+              <Can I={Action.Permit} this={SubjectArhive}>
                 <BoxArhive />
               </Can>
-              <Can I={Action.Delete} a={SubjectArhive}>
+              <Can I={Action.Delete} this={SubjectArhive}>
                 <RemoveArhive />
               </Can>
             </>
