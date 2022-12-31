@@ -7,6 +7,7 @@ import {
 import { AuthUserSuccess } from '../Schemas/Auth';
 import { ArhiveType } from '../Types/dataIncoming';
 import { IDataIncoming } from './casl.types';
+import SimpleRights from './simple.rights';
 export enum Action {
   Manage = 'manage',
   Create = 'create',
@@ -19,10 +20,6 @@ export enum Subject {
   Main = 'Main',
   Role = 'Role',
   DataIncoming = 'DataIncoming',
-  IncomingMail = 'IncomingMail',
-  IncomingGovernmentMail = 'IncomingGovernmentMail',
-  IncomingCourtMail = 'IncomingCourtMail',
-  IncomingCourtBailiffMail = 'IncomingCourtBailiffMail',
 }
 type Subjects = Subject | InferSubjects<IDataIncoming> | 'all';
 export type AppAbility = PureAbility<[Action, Subjects]>;
@@ -32,11 +29,7 @@ export function createForUser(user?: AuthUserSuccess) {
   );
   if (user) {
     const roles = user.roles;
-    can(Action.Read, Subject.DataIncoming);
-    can(Action.Read, Subject.Main);
-    cannot(Action.Read, Subject.DataIncoming, {
-      arhive: { $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC] },
-    });
+    SimpleRights(can, cannot);
     if (roles.includes('deleter')) {
       can(Action.Delete, Subject.DataIncoming);
       cannot(Action.Delete, Subject.DataIncoming, {
