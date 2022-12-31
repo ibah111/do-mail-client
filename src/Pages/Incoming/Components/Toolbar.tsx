@@ -76,7 +76,10 @@ export default function Toolbar() {
           )}
         </>
       </Can>
-      <Can I={Action.Delete} a={Subject.DataIncoming}>
+      <Can
+        I={Action.Delete}
+        this={subject(Subject.DataIncoming, { mode: [MailTypeSelect] })}
+      >
         <Remove />
       </Can>
     </GridToolbarContainer>

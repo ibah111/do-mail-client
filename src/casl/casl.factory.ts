@@ -32,9 +32,16 @@ export function createForUser(user?: AuthUserSuccess) {
     const roles = user.roles;
     SimpleRights(can, cannot);
     if (roles.includes('deleter')) {
-      can(Action.Delete, Subject.DataIncoming);
-      cannot(Action.Delete, Subject.DataIncoming, {
-        arhive: { $in: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC] },
+      can(Action.Delete, Subject.DataIncoming, {
+        arhive: { $nin: [ArhiveType.ARHIVE, ArhiveType.ARHIVE_LAW_EXEC] },
+        mode: {
+          $in: [
+            MailType.INCOMING_MAIL,
+            MailType.INCOMING_GOVERNMENT_MAIL,
+            MailType.INCOMING_COURT_MAIL,
+            MailType.INCOMING_COURT_BAILIFF_MAIL,
+          ],
+        },
       });
     }
     if (roles.includes('arhive')) {
