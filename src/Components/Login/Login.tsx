@@ -49,8 +49,6 @@ export function Login({ children }: LoginProps) {
         },
         (message) => setMessage(message),
       );
-    } else {
-      setAbility(createForUser());
     }
   }, [loged]);
   return (
