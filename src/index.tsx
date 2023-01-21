@@ -9,14 +9,13 @@ import Router from './Router';
 import 'moment/locale/ru';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-import theme from './lib/theme';
-import { CssBaseline, ThemeProvider } from '@mui/material';
 import license from './utils/crack';
 import { SnackbarProvider } from 'notistack';
 import ErrorHandler from './Components/ErrorHandler';
 import { tz } from 'moment-timezone';
 import { HealthProvider } from '@tools/health-status-react-component';
 import server from './utils/server';
+import ThemeProvider from './Providers/ThemeProvider';
 license();
 tz.setDefault('GMT');
 const root = ReactDOM.createRoot(
@@ -25,8 +24,7 @@ const root = ReactDOM.createRoot(
 const url = server();
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ThemeProvider>
       <LocalizationProvider adapterLocale={'ru'} dateAdapter={AdapterMoment}>
         <Provider store={store}>
           <SnackbarProvider maxSnack={3}>

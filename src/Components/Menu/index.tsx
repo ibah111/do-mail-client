@@ -3,6 +3,7 @@ import { Box, Button, Collapse, Grid } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { AbilityContext, Can } from '../../Context/Ability';
 import { usePages } from '../../utils/pages';
+import DarkButton from '../DarkButton';
 
 export default function Menu() {
   const location = useLocation();
@@ -38,6 +39,16 @@ export default function Menu() {
               </Collapse>
             </Can>
           ))}
+          <Collapse
+            unmountOnExit
+            mountOnEnter
+            orientation="horizontal"
+            in={true}
+          >
+            <Grid xs="auto" item>
+              <DarkButton />
+            </Grid>
+          </Collapse>
         </Grid>
       </Box>
     </>
