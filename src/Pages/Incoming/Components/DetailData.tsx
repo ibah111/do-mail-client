@@ -7,6 +7,7 @@ const columns: GridColumns<Doc> = [
     field: 'name',
     type: 'string',
     headerName: 'Название документа',
+    width: 300,
     valueGetter: (params) => params.row.DocAttach?.name,
   },
 ];
