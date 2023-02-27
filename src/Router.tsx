@@ -5,13 +5,15 @@ import { Action } from './casl/casl.factory';
 import Loader from './Components/Loader';
 import Menu from './Components/Menu';
 import { AbilityContext, Can } from './Context/Ability';
+import { useAppSelector } from './Reducer';
 import { usePages } from './utils/pages';
 export default function Router() {
   const ability = useAbility(AbilityContext);
   const pages = usePages(ability);
+  const visible = useAppSelector((state) => state.Stater.menuVisible);
   return (
     <BrowserRouter basename="/apps/mail">
-      <Menu />
+      {visible && <Menu />}
       <Routes>
         {pages.map((page, index) => (
           <Route

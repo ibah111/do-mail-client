@@ -5,12 +5,14 @@ export interface StaterState {
   MailType: MailType;
   ArhiveType: ArhiveType;
   reload: boolean;
+  menuVisible: boolean;
 }
 const initialState: StaterState = {
   loading: true,
   MailType: MailType.INCOMING_MAIL,
   ArhiveType: 0,
   reload: true,
+  menuVisible: true,
 };
 const StaterSlice = createSlice({
   name: 'Stater',
@@ -28,8 +30,12 @@ const StaterSlice = createSlice({
     setReload(state, action: PayloadAction<boolean>) {
       state.reload = action.payload;
     },
+
+    setMenuVisible(state, action: PayloadAction<boolean>) {
+      state.menuVisible = action.payload;
+    },
   },
 });
-export const { changeMode, setLoading, setArhive, setReload } =
+export const { changeMode, setLoading, setArhive, setReload, setMenuVisible } =
   StaterSlice.actions;
 export default StaterSlice.reducer;
