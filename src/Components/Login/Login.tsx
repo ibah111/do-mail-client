@@ -2,19 +2,20 @@ import React from 'react';
 import { NotLoged } from './NotLoged';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { getToken } from '../../utils/getToken';
 import { AuthUserSuccess } from '../../Schemas/Auth';
 import { useAppDispatch, useAppSelector } from '../../Reducer';
 import { setUser } from '../../Reducer/User';
 import { AbilityContext } from '../../Context/Ability';
 import { AppAbility, createForUser } from '../../casl/casl.factory';
 import requests from '../../utils/requests';
+import getToken from '../../api/getToken';
 const connect = async (
-  token: string,
   callback: (value: AuthUserSuccess) => void,
   setError: (value: string | null) => void,
 ) => {
   try {
+    const token = await getToken();
+    requests.defaults.headers['token'] = token;
     const response = await requests.post<AuthUserSuccess>('/login');
     callback(response.data);
   } catch (e) {
@@ -38,9 +39,7 @@ export function Login({ children }: LoginProps) {
   const [message, setMessage] = React.useState<string | null>(null);
   React.useEffect(() => {
     if (!loged) {
-      const token = getToken();
       connect(
-        token.token,
         (value) => {
           setAbility(createForUser(value));
           dispatch(setUser(value));
