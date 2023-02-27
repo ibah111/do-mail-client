@@ -1,7 +1,6 @@
 import React from 'react';
 import { NotLoged } from './NotLoged';
 import PropTypes from 'prop-types';
-import server from '../../utils/server';
 import axios from 'axios';
 import { getToken } from '../../utils/getToken';
 import { AuthUserSuccess } from '../../Schemas/Auth';
@@ -9,15 +8,14 @@ import { useAppDispatch, useAppSelector } from '../../Reducer';
 import { setUser } from '../../Reducer/User';
 import { AbilityContext } from '../../Context/Ability';
 import { AppAbility, createForUser } from '../../casl/casl.factory';
+import requests from '../../utils/requests';
 const connect = async (
   token: string,
   callback: (value: AuthUserSuccess) => void,
   setError: (value: string | null) => void,
 ) => {
   try {
-    const response = await axios.post<AuthUserSuccess>(server() + '/login', {
-      token,
-    });
+    const response = await requests.post<AuthUserSuccess>('/login');
     callback(response.data);
   } catch (e) {
     if (axios.isAxiosError(e)) {

@@ -1,9 +1,6 @@
-import axios from 'axios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
+import requests from '../utils/requests';
 export default async function removeRole(user_id: number, role_id: number) {
-  const Action = await axios.post<boolean>(server() + '/role/remove_role', {
-    ...getToken(),
+  const Action = await requests.post<boolean>('/role/remove_role', {
     user_id,
     role_id,
   });

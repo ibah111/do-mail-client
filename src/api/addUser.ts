@@ -1,9 +1,6 @@
-import axios from 'axios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
+import requests from '../utils/requests';
 export default async function addUser(login: string) {
-  const Action = await axios.post<boolean>(server() + '/role/add_user', {
-    ...getToken(),
+  const Action = await requests.post<boolean>('/role/add_user', {
     login,
   });
   return Action.data;

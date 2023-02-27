@@ -1,10 +1,8 @@
-import axios from 'axios';
 import moment from 'moment';
 import { store } from '../Reducer';
 import { callSuccess } from '../Reducer/Message';
 import getErrorAxios from '../utils/getErrorAxios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
+import requests from '../utils/requests';
 
 export default async function editCell(
   id: number,
@@ -18,8 +16,7 @@ export default async function editCell(
   const MailType = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
   try {
-    const response = await axios.post<boolean>(`${server()}/edit`, {
-      ...getToken(),
+    const response = await requests.post<boolean>('/edit', {
       id,
       name,
       value,

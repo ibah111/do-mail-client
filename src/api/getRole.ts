@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
+import requests from '../utils/requests';
 export interface Role {
   id: number;
   name: string;
@@ -18,9 +16,6 @@ export interface ResultRole {
   users: User[];
 }
 export default async function getRole() {
-  const Rights = await axios.post<ResultRole>(
-    server() + '/role/get',
-    getToken(),
-  );
+  const Rights = await requests.post<ResultRole>('/role/get');
   return Rights.data;
 }

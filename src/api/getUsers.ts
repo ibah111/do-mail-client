@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { getToken } from '../utils/getToken';
+import requests from '../utils/requests';
 import server from '../utils/server';
 
 export interface User {
@@ -10,9 +9,6 @@ export interface User {
   id: number;
 }
 export const getUsers = async () => {
-  const Users = await axios.post<User[]>(
-    server() + '/rating/users',
-    getToken(),
-  );
+  const Users = await requests.post<User[]>(server() + '/rating/users');
   return Users.data;
 };

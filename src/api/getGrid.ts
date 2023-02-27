@@ -1,9 +1,7 @@
-import axios from 'axios';
 import { store } from '../Reducer';
 import { ArhiveType, DataIncomingState, MailType } from '../Types/dataIncoming';
 import getErrorAxios from '../utils/getErrorAxios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
+import requests from '../utils/requests';
 
 export default async function getGrid<
   T extends MailType,
@@ -13,15 +11,11 @@ export default async function getGrid<
   const ArhiveType = store.getState().Stater.ArhiveType;
   const state = store.getState().Model[MailType][ArhiveType];
   try {
-    const response = await axios.post<DataIncomingState[T][K]>(
-      `${server()}/data`,
-      {
-        ...getToken(),
-        ...state,
-        MailType,
-        ArhiveType,
-      },
-    );
+    const response = await requests.post<DataIncomingState[T][K]>('/data', {
+      ...state,
+      MailType,
+      ArhiveType,
+    });
     return response.data;
   } catch (e) {
     throw getErrorAxios(e);

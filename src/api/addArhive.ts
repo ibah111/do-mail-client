@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { store } from '../Reducer';
 import { callError, callSuccess, callWarning } from '../Reducer/Message';
 import getErrorAxios from '../utils/getErrorAxios';
-import { getToken } from '../utils/getToken';
-import server from '../utils/server';
 import { setData } from '../Reducer/Model';
 import { ArhiveType } from '../Types/dataIncoming';
+import requests from '../utils/requests';
 
 export default async function addArhive(
   ArhiveType: ArhiveType,
@@ -14,14 +12,10 @@ export default async function addArhive(
   const currentArhiveType = store.getState().Stater.ArhiveType;
   const state = store.getState().Model[MailType][currentArhiveType];
   try {
-    const response = await axios.post<{ success: number }>(
-      `${server()}/arhive/add`,
-      {
-        ...getToken(),
-        select: state.selectionModel,
-        ArhiveType,
-      },
-    );
+    const response = await requests.post<{ success: number }>('/arhive/add', {
+      select: state.selectionModel,
+      ArhiveType,
+    });
     const result = response.data;
     if (result) {
       if (state.selectionModel.length === result.success)
