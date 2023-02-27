@@ -8,8 +8,9 @@ const Remove = React.lazy(() => import('../Pages/Remove'));
 export interface Page {
   name: string;
   path: string;
-  right: Action;
-  subject: Subject;
+  right?: Action;
+  subject?: Subject;
+  hidden?: boolean;
   element: React.LazyExoticComponent<() => JSX.Element>;
 }
 type Pages = Page[];
