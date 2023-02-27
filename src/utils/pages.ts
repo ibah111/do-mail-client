@@ -4,6 +4,7 @@ const Main = React.lazy(() => import('../Pages/Main'));
 const Incoming = React.lazy(() => import('../Pages/Incoming'));
 const Admin = React.lazy(() => import('../Pages/Admin'));
 const Remove = React.lazy(() => import('../Pages/Remove'));
+const OAuth = React.lazy(() => import('../Pages/Oauth'));
 
 export interface Page {
   name: string;
@@ -42,5 +43,11 @@ export const usePages = (ability: AppAbility): Pages => [
     right: Action.Delete,
     subject: Subject.DataIncoming,
     element: Remove,
+  },
+  {
+    name: 'Авторизация',
+    path: '/oauth',
+    hidden: true,
+    element: OAuth,
   },
 ];
