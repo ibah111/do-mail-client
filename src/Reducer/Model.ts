@@ -43,6 +43,7 @@ const initialState: ModelState = {
   [MailType.INCOMING_GOVERNMENT_MAIL]: startModelsState,
   [MailType.INCOMING_COURT_MAIL]: startModelsState,
   [MailType.INCOMING_COURT_BAILIFF_MAIL]: startModelsState,
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: startModelsState,
 };
 const ModelSlice = createSlice({
   name: 'Model',

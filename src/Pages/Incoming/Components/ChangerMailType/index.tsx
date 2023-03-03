@@ -44,6 +44,10 @@ export default function ChangerMailType() {
         <CustomButton value={MailType.INCOMING_COURT_BAILIFF_MAIL}>
           Электронная почта (ФССП)
         </CustomButton>
+
+        <CustomButton value={MailType.INCOMING_COURT_BAILIFF_MAIL2}>
+          Интернет-приемная
+        </CustomButton>
       </Can>
     </>
   );

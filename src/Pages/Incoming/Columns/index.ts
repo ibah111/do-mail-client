@@ -46,6 +46,11 @@ export const allColumns: ColumnsMailState = {
     [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailColumns,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns,
   },
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
+    [ArhiveType.NO]: IncomingCourtBailiffMailColumns,
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailColumns,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns,
+  },
 };
 export default function getColumns<T extends MailType, K extends ArhiveType>(
   typ: T,

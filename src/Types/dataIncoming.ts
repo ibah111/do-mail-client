@@ -558,6 +558,7 @@ export enum MailType {
   INCOMING_GOVERNMENT_MAIL = 'IncomingGovernmentMail',
   INCOMING_COURT_MAIL = 'IncomingCourtMail',
   INCOMING_COURT_BAILIFF_MAIL = 'IncomingCourtBailiffMail',
+  INCOMING_COURT_BAILIFF_MAIL2 = 'IncomingCourtBailiffMail2',
 }
 
 export class DataIncomingState {
@@ -593,6 +594,11 @@ export class DataIncomingState {
     [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
     [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
   };
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
+    [ArhiveType.NO]: findAndCount<IncomingCourtBailiffMailState>;
+    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
+    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
+  };
 }
 export class DataIncomingType {
   /**
@@ -623,6 +629,14 @@ export class DataIncomingType {
    * МЕЙЛ(ФССП)
    */
   [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
+    [ArhiveType.NO]: IncomingCourtBailiffMailState;
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState;
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState;
+  };
+  /**
+   * ИНТЕРНЕТ ПРИЕМНАЯ
+   */
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
     [ArhiveType.NO]: IncomingCourtBailiffMailState;
     [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState;
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState;

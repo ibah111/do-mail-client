@@ -25,6 +25,11 @@ const initialState: DataIncomingState = {
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+  },
 };
 const DataIncomingSlice = createSlice({
   name: 'DataIncoming',

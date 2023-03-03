@@ -38,6 +38,11 @@ export const allTransformations: TransformationState = {
     [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState,
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState,
   },
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
+    [ArhiveType.NO]: IncomingCourtBailiffMailState,
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState,
+  },
 };
 export default function getColumns<T extends MailType, K extends ArhiveType>(
   typ: T,
