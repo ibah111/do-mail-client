@@ -6,7 +6,7 @@ import { Connect } from './Components/Connect';
 import { Login } from './Components/Login';
 import { store } from './Reducer';
 import Router from './Router';
-import 'moment/locale/ru';
+import 'moment/dist/locale/ru';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import license from './utils/crack';
