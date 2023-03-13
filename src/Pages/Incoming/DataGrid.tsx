@@ -44,9 +44,9 @@ export default function DataGrid() {
         disableRowSelectionOnClick={true}
         columnVisibilityModel={state.columnVisibilityModel}
         onColumnVisibilityModelChange={setColumnVisibilityModel}
-        components={{
-          Toolbar: Toolbar,
-          Pagination: CustomPagination,
+        slots={{
+          toolbar: Toolbar,
+          pagination: CustomPagination,
         }}
         filterMode="server"
         keepNonExistentRowsSelected

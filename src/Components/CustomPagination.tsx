@@ -12,13 +12,13 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  gridPageCountSelector,
   gridPageSelector,
   gridPageSizeSelector,
   gridRowCountSelector,
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid-premium';
+import { getPageCount } from '@mui/x-data-grid/hooks/features/pagination/gridPaginationUtils';
 import React from 'react';
 const listRange = [25, 50, 100, 125, 150, 175, 200];
 export default function CustomPagination() {
@@ -26,9 +26,12 @@ export default function CustomPagination() {
   const apiRef = useGridApiContext();
   const page = useGridSelector(apiRef, gridPageSelector);
   const [value, setValue] = React.useState(page + 1);
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   const pageSize = useGridSelector(apiRef, gridPageSizeSelector);
   const rowCount = useGridSelector(apiRef, gridRowCountSelector);
+  const pageCount = React.useMemo(
+    () => getPageCount(rowCount, pageSize),
+    [rowCount, pageSize],
+  );
   React.useEffect(() => {
     setValue(page + 1);
   }, [page]);
