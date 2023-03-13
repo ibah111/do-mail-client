@@ -14,7 +14,7 @@ export default function Incoming() {
   }, [arhive, typData]);
   React.useEffect(() => {
     dispatch(setReload(true));
-  }, [state.filterModel, state.page, state.pageSize, state.sortModel]);
+  }, [state.filterModel, state.paginationModel, state.sortModel]);
   React.useEffect(() => {
     if (reload) {
       dispatch(setReload(false));
@@ -28,10 +28,8 @@ export default function Incoming() {
   return (
     <>
       <Paper>
-        <div style={{ display: 'flex', height: '95vh' }}>
-          <div style={{ flexGrow: 1 }}>
-            <DataGrid />
-          </div>
+        <div style={{ height: '95vh', width: '100%' }}>
+          <DataGrid />
         </div>
       </Paper>
     </>

@@ -10,12 +10,11 @@ export default function DataGrid() {
     columns,
     data,
     state,
-    setPage,
-    setPageSize,
+    setPaginationModel,
     setFilterModel,
     setSelectionModel,
     setSortModel,
-    onCellEditCommit,
+    onCellEditStop,
     setColumnVisibilityModel,
   } = useGrid();
   return (
@@ -29,22 +28,20 @@ export default function DataGrid() {
         paginationMode="server"
         sortModel={state.sortModel}
         sortingMode="server"
-        pageSize={state.pageSize}
-        page={state.page}
-        onCellEditCommit={onCellEditCommit}
-        onPageSizeChange={setPageSize}
+        paginationModel={state.paginationModel}
+        onCellEditStop={onCellEditStop}
+        onPaginationModelChange={setPaginationModel}
         filterModel={state.filterModel}
         onFilterModelChange={setFilterModel}
-        onPageChange={setPage}
-        onSelectionModelChange={setSelectionModel}
+        onRowSelectionModelChange={setSelectionModel}
         onSortModelChange={setSortModel}
-        selectionModel={state.selectionModel}
+        rowSelectionModel={state.selectionModel}
         getDetailPanelContent={({ row }) =>
           row.Docs?.length && <DetailData docs={row.Docs} />
         }
         getDetailPanelHeight={() => 'auto'}
         checkboxSelection={true}
-        disableSelectionOnClick={true}
+        disableRowSelectionOnClick={true}
         columnVisibilityModel={state.columnVisibilityModel}
         onColumnVisibilityModelChange={setColumnVisibilityModel}
         components={{

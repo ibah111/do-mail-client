@@ -15,7 +15,7 @@ import {
   gridPageCountSelector,
   gridPageSelector,
   gridPageSizeSelector,
-  gridPaginationSelector,
+  gridRowCountSelector,
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid-premium';
@@ -28,7 +28,7 @@ export default function CustomPagination() {
   const [value, setValue] = React.useState(page + 1);
   const pageCount = useGridSelector(apiRef, gridPageCountSelector);
   const pageSize = useGridSelector(apiRef, gridPageSizeSelector);
-  const state = useGridSelector(apiRef, gridPaginationSelector);
+  const rowCount = useGridSelector(apiRef, gridRowCountSelector);
   React.useEffect(() => {
     setValue(page + 1);
   }, [page]);
@@ -65,7 +65,7 @@ export default function CustomPagination() {
           ))}
         </Select>
         <Typography sx={{ mx: 2, ml: 4 }}>Всего:</Typography>
-        <Typography sx={{ mr: 2 }}>{state.rowCount}</Typography>
+        <Typography sx={{ mr: 2 }}>{rowCount}</Typography>
         <Pagination
           color="primary"
           count={pageCount}

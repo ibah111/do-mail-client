@@ -1,5 +1,5 @@
 import { Box, IconButton } from '@mui/material';
-import { DataGridPremium, GridColumns } from '@mui/x-data-grid-premium';
+import { DataGridPremium, GridColDef } from '@mui/x-data-grid-premium';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import React from 'react';
 import UserAdd from './UserAdd';
@@ -17,7 +17,7 @@ export default function Role() {
       setRights(res);
     });
   };
-  const columns: GridColumns<User> = [
+  const columns: GridColDef<User>[] = [
     { field: 'id' },
     { field: 'login', headerName: 'Логин', width: 250 },
     {

@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
-import { GridColumns } from '@mui/x-data-grid-premium';
+import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingCourtMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
 const IncomingCourtMailColumns = (isAllow: AllowFunction) => {
-  const data: GridColumns<IncomingCourtMailState> = [
+  const data: GridColDef<IncomingCourtMailState>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
       field: 'date_post',

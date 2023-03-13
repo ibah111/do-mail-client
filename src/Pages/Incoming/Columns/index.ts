@@ -1,4 +1,4 @@
-import { GridColumns } from '@mui/x-data-grid-premium';
+import { GridColDef } from '@mui/x-data-grid-premium';
 import getAllow, { AllowFunction } from '../../../hooks/getAllow';
 import {
   ArhiveType,
@@ -15,9 +15,9 @@ import IncomingCourtBailiffMailColumns2 from './IncomingCourtBailiffMail2';
 import IncomingCourtMailColumns from './IncomingCourtMail';
 import IncomingGovernmentMailColumns from './IncomingGovernmentMail';
 import IncomingMailColumns from './IncomingMail';
-type GridColumnMail<T extends MailType, K extends ArhiveType> = GridColumns<
+type GridColumnMail<T extends MailType, K extends ArhiveType> = GridColDef<
   DataIncomingType[T][K]
->;
+>[];
 type ColumnFunction<T extends MailType, K extends ArhiveType> = (
   isAllow: AllowFunction,
 ) => GridColumnMail<T, K>;

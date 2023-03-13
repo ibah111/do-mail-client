@@ -1,13 +1,13 @@
 import { Button } from '@mui/material';
-import { GridColumns } from '@mui/x-data-grid-premium';
+import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
 const IncomingMailColumns = (
   isAllow: AllowFunction,
-): GridColumns<IncomingMailState> => {
-  const data: GridColumns<IncomingMailState> = [
+): GridColDef<IncomingMailState>[] => {
+  const data: GridColDef<IncomingMailState>[] = [
     { field: 'id', headerName: 'ID', type: 'number' },
     {
       field: 'date_post',

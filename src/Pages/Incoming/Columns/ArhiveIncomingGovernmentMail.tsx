@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
-import { GridColumns } from '@mui/x-data-grid-premium';
+import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveIncomingGovernmentMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
 const ArhiveIncomingGovernmentMailColumns = (isAllow: AllowFunction) => {
-  const data: GridColumns<ArhiveIncomingGovernmentMailState> = [
+  const data: GridColDef<ArhiveIncomingGovernmentMailState>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
       field: 'date_post',

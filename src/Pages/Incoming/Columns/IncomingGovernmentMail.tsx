@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { GridColumns } from '@mui/x-data-grid-premium';
+import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingGovernmentMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
@@ -10,8 +10,8 @@ const currencyFormatter = new Intl.NumberFormat('ru-Ru', {
 
 const IncomingGovernmentMailColumns = (
   isAllow: AllowFunction,
-): GridColumns<IncomingGovernmentMailState> => {
-  const data: GridColumns<IncomingGovernmentMailState> = [
+): GridColDef<IncomingGovernmentMailState>[] => {
+  const data: GridColDef<IncomingGovernmentMailState>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
       field: 'date_post',

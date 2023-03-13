@@ -1,7 +1,8 @@
 import {
   GridColumnVisibilityModel,
   GridFilterModel,
-  GridSelectionModel,
+  GridPaginationModel,
+  GridRowSelectionModel,
   GridSortModel,
 } from '@mui/x-data-grid-premium';
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
@@ -9,9 +10,8 @@ import { ArhiveType, MailType } from '../Types/dataIncoming';
 
 export interface Modeler {
   filterModel: GridFilterModel;
-  page: number;
-  pageSize: number;
-  selectionModel: GridSelectionModel;
+  paginationModel: GridPaginationModel;
+  selectionModel: GridRowSelectionModel;
   sortModel: GridSortModel;
   columnVisibilityModel: GridColumnVisibilityModel;
 }
@@ -21,11 +21,13 @@ type ModelState = {
 };
 export const startModelState: Modeler = {
   filterModel: { items: [] },
-  page: 0,
-  pageSize: 25,
   selectionModel: [],
   sortModel: [],
   columnVisibilityModel: {},
+  paginationModel: {
+    page: 0,
+    pageSize: 25,
+  },
 };
 const startModelsState: ArhiveState = {
   [ArhiveType.NO]: startModelState,

@@ -1,6 +1,6 @@
-import { DataGridPremium, GridColumns } from '@mui/x-data-grid-premium';
+import { DataGridPremium, GridColDef } from '@mui/x-data-grid-premium';
 import { Doc } from '../../../Schemas/Doc';
-const columns: GridColumns<Doc> = [
+const columns: GridColDef<Doc>[] = [
   { field: 'id', type: 'number', headerName: 'ID' },
   { field: 'doc_id', type: 'number', headerName: 'ID документа в контакте' },
   {

@@ -1,9 +1,10 @@
 import {
-  GridCellEditCommitParams,
-  GridColumns,
+  GridCellEditStopParams,
+  GridColDef,
   GridColumnVisibilityModel,
   GridFilterModel,
-  GridSelectionModel,
+  GridPaginationModel,
+  GridRowSelectionModel,
   GridSortModel,
 } from '@mui/x-data-grid-premium';
 import { plainToInstance } from 'class-transformer';
@@ -24,19 +25,18 @@ import getTransformations from '../Transformation';
 export interface Grider<T extends MailType, K extends ArhiveType> {
   data: DataIncomingState[T][K];
   state: Modeler;
-  columns: GridColumns<DataIncomingType[T][K]>;
+  columns: GridColDef<DataIncomingType[T][K]>[];
   typData: T;
   loading: boolean;
   arhive: K;
   setLoaded: (value: boolean) => void;
   setMail: (value: DataIncomingState[T][K]) => void;
-  setPage: (value: number) => void;
-  setPageSize: (value: number) => void;
+  setPaginationModel: (value: GridPaginationModel) => void;
   setFilterModel: (value: GridFilterModel) => void;
   setSortModel: (value: GridSortModel) => void;
-  setSelectionModel: (value: GridSelectionModel) => void;
+  setSelectionModel: (value: GridRowSelectionModel) => void;
   setColumnVisibilityModel: (value: GridColumnVisibilityModel) => void;
-  onCellEditCommit: (value: GridCellEditCommitParams) => void;
+  onCellEditStop: (value: GridCellEditStopParams) => void;
 }
 export default function useGrid<
   T extends MailType,
@@ -55,15 +55,13 @@ export default function useGrid<
   const setLoaded = (value: boolean) => dispatch(setLoading(!value));
   const setMailer = (value: DataIncomingState[T][K]) =>
     dispatch(setMail([typData, arhive, value]));
-  const setPage = (value: number) =>
-    dispatch(setData([typData, arhive, 'page', value]));
-  const setPageSize = (value: number) =>
-    dispatch(setData([typData, arhive, 'pageSize', value]));
+  const setPaginationModel = (value: GridPaginationModel) =>
+    dispatch(setData([typData, arhive, 'paginationModel', value]));
   const setFilterModel = (value: GridFilterModel) =>
     dispatch(setData([typData, arhive, 'filterModel', value]));
   const setSortModel = (value: GridSortModel) =>
     dispatch(setData([typData, arhive, 'sortModel', value]));
-  const setSelectionModel = (value: GridSelectionModel) =>
+  const setSelectionModel = (value: GridRowSelectionModel) =>
     dispatch(setData([typData, arhive, 'selectionModel', value]));
   const setColumnVisibilityModel = (value: GridColumnVisibilityModel) =>
     dispatch(setData([typData, arhive, 'columnVisibilityModel', value]));
@@ -84,14 +82,13 @@ export default function useGrid<
     setLoaded,
     columns: getColumns(typData, arhive),
     state: state ? state : startModelState,
-    setPage,
+    setPaginationModel,
     setMail: setMailer,
-    setPageSize,
     setFilterModel,
     setSortModel,
     setSelectionModel,
     setColumnVisibilityModel,
-    onCellEditCommit: (params: GridCellEditCommitParams) =>
+    onCellEditStop: (params: GridCellEditStopParams) =>
       editCell(Number(params.id), params.field, params.value),
   };
 }
