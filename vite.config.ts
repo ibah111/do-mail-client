@@ -19,6 +19,7 @@ const prepare = async () => {
 prepare();
 export default defineConfig({
   plugins: [react(), legacy(), checker({ typescript: true })],
+  build: { outDir: 'build' },
   server: { port: 3000 },
   base: '/apps/mail',
 });
