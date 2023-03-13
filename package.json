@@ -69,5 +69,5 @@
       "react-app/jest"
     ]
   },
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@3.4.1"
 }
