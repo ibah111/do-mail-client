@@ -6,10 +6,12 @@ import {
   MailType,
 } from '../../../Types/dataIncoming';
 import ArhiveIncomingCourtBailiffMailColumns from './ArhiveIncomingCourtBailiffMail';
+import ArhiveIncomingCourtBailiffMailColumns2 from './ArhiveIncomingCourtBailiffMail2';
 import ArhiveIncomingCourtMailColumns from './ArhiveIncomingCourtMail';
 import ArhiveIncomingGovernmentMailColumns from './ArhiveIncomingGovernmentMail';
 import ArhiveIncomingMailColumns from './ArhiveIncomingMail';
 import IncomingCourtBailiffMailColumns from './IncomingCourtBailiffMail';
+import IncomingCourtBailiffMailColumns2 from './IncomingCourtBailiffMail2';
 import IncomingCourtMailColumns from './IncomingCourtMail';
 import IncomingGovernmentMailColumns from './IncomingGovernmentMail';
 import IncomingMailColumns from './IncomingMail';
@@ -47,9 +49,9 @@ export const allColumns: ColumnsMailState = {
     [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns,
   },
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
-    [ArhiveType.NO]: IncomingCourtBailiffMailColumns,
-    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailColumns,
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns,
+    [ArhiveType.NO]: IncomingCourtBailiffMailColumns2,
+    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailColumns2,
+    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailColumns2,
   },
 };
 export default function getColumns<T extends MailType, K extends ArhiveType>(
