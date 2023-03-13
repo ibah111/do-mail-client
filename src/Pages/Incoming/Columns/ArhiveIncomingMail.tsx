@@ -72,7 +72,12 @@ const ArhiveIncomingMailColumns = (isAllow: AllowFunction) => {
     },
     { field: 'kogda_otdano', headerName: 'Когда обработано', type: 'date' },
     { field: 'kto_obrabotal', headerName: 'Кто обработал' },
-    { field: 'nal_skan', headerName: 'Скан', type: 'boolean' },
+    {
+      field: 'nal_skan',
+      headerName: 'Скан',
+      type: 'boolean',
+      editable: isAllow('editor'),
+    },
     {
       field: 'check_vsisk',
       headerName: 'Проверено взыскателем',
