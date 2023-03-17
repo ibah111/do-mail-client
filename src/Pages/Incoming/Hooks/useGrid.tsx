@@ -1,5 +1,4 @@
 import {
-  GridCellEditStopParams,
   GridColDef,
   GridColumnVisibilityModel,
   GridFilterModel,
@@ -8,6 +7,7 @@ import {
   GridSortModel,
 } from '@mui/x-data-grid-premium';
 import { plainToInstance } from 'class-transformer';
+import { updatedDiff } from 'deep-object-diff';
 import React from 'react';
 import editCell from '../../../api/editCell';
 import { useAppDispatch, useAppSelector } from '../../../Reducer';
@@ -36,7 +36,10 @@ export interface Grider<T extends MailType, K extends ArhiveType> {
   setSortModel: (value: GridSortModel) => void;
   setSelectionModel: (value: GridRowSelectionModel) => void;
   setColumnVisibilityModel: (value: GridColumnVisibilityModel) => void;
-  onCellEditStop: (value: GridCellEditStopParams) => void;
+  processRowUpdate: (
+    row: DataIncomingType[T][K],
+    old: DataIncomingType[T][K],
+  ) => DataIncomingType[T][K];
 }
 export default function useGrid<
   T extends MailType,
@@ -88,7 +91,13 @@ export default function useGrid<
     setSortModel,
     setSelectionModel,
     setColumnVisibilityModel,
-    onCellEditStop: (params: GridCellEditStopParams) =>
-      editCell(Number(params.id), params.field, params.value),
+    processRowUpdate: (row, old) => {
+      const changed = updatedDiff(old, row);
+      for (const key of Object.keys(changed)) {
+        //@ts-ignore
+        editCell(Number(row.id), key, changed[key]);
+      }
+      return row;
+    },
   };
 }

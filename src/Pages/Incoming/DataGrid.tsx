@@ -4,6 +4,7 @@ import Toolbar from './Components/Toolbar';
 import CustomPagination from '../../Components/CustomPagination';
 import React from 'react';
 import DetailData from './Components/DetailData';
+import _ from 'lodash';
 export default function DataGrid() {
   const {
     loading,
@@ -14,7 +15,7 @@ export default function DataGrid() {
     setFilterModel,
     setSelectionModel,
     setSortModel,
-    onCellEditStop,
+    processRowUpdate,
     setColumnVisibilityModel,
   } = useGrid();
   return (
@@ -29,8 +30,8 @@ export default function DataGrid() {
         sortModel={state.sortModel}
         sortingMode="server"
         paginationModel={state.paginationModel}
-        onCellEditStop={onCellEditStop}
         onPaginationModelChange={setPaginationModel}
+        processRowUpdate={processRowUpdate}
         filterModel={state.filterModel}
         onFilterModelChange={setFilterModel}
         onRowSelectionModelChange={setSelectionModel}
