@@ -7,8 +7,11 @@ export interface Role {
 }
 export interface User {
   id: number;
-  id_bitrix: number;
+  bitrix_id: number;
   login: string;
+  f?: string;
+  i?: string;
+  o?: string;
   Roles: Role[];
 }
 export interface ResultRole {

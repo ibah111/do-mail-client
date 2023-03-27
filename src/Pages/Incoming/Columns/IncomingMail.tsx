@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
+import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomplete';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { IncomingMailState } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
@@ -75,7 +76,11 @@ const IncomingMailColumns = (
       headerName: 'Когда обработано',
       type: 'date',
     },
-    { field: 'kto_obrabotal', headerName: 'Кто обработал' },
+    {
+      field: 'id_kto_obrabotal',
+      headerName: 'Кто обработал',
+      ...SearchAutocomplete,
+    },
     {
       field: 'nal_skan',
       headerName: 'Скан',

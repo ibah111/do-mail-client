@@ -68,6 +68,10 @@ export default function useGrid<
     dispatch(setData([typData, arhive, 'selectionModel', value]));
   const setColumnVisibilityModel = (value: GridColumnVisibilityModel) =>
     dispatch(setData([typData, arhive, 'columnVisibilityModel', value]));
+  const columns = React.useMemo(
+    () => getColumns(typData, arhive),
+    [typData, arhive],
+  );
   React.useEffect(() => {
     setResult({
       rows: plainToInstance(
@@ -83,7 +87,7 @@ export default function useGrid<
     loading,
     arhive,
     setLoaded,
-    columns: getColumns(typData, arhive),
+    columns,
     state: state ? state : startModelState,
     setPaginationModel,
     setMail: setMailer,
