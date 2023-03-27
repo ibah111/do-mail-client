@@ -11,7 +11,9 @@ export default async function editCell(
 ): Promise<boolean> {
   let value = String(data);
   if (data instanceof Date) {
-    value = moment(data).toISOString();
+    value = moment(data)
+      .add(-1 * data.getTimezoneOffset(), 'minutes')
+      .toISOString();
   }
   const MailType = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;

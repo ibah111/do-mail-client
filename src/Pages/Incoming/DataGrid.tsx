@@ -2,7 +2,6 @@ import { DataGridPremium } from '@mui/x-data-grid-premium';
 import useGrid from './Hooks/useGrid';
 import Toolbar from './Components/Toolbar';
 import CustomPagination from '../../Components/CustomPagination';
-import React from 'react';
 import DetailData from './Components/DetailData';
 import _ from 'lodash';
 export default function DataGrid() {

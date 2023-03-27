@@ -12,12 +12,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers-pro';
 import license from './utils/crack';
 import { SnackbarProvider } from 'notistack';
 import ErrorHandler from './Components/ErrorHandler';
-import { tz } from 'moment-timezone';
+import 'moment-timezone';
 import { HealthProvider } from '@tools/health-status-react-component';
 import server from './utils/server';
 import ThemeProvider from './Providers/ThemeProvider';
+import moment from 'moment';
 license();
-tz.setDefault('GMT');
+moment.tz.setDefault('GMT');
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
