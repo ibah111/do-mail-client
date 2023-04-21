@@ -22,6 +22,7 @@ import {
 } from '../../../Types/dataIncoming';
 import getColumns from '../Columns';
 import getTransformations from '../Transformation';
+import { filterOperatorsString } from '../Components/Filter/filterOperators';
 export interface Grider<T extends MailType, K extends ArhiveType> {
   data: DataIncomingState[T][K];
   state: Modeler;
@@ -68,9 +69,18 @@ export default function useGrid<
     dispatch(setData([typData, arhive, 'selectionModel', value]));
   const setColumnVisibilityModel = (value: GridColumnVisibilityModel) =>
     dispatch(setData([typData, arhive, 'columnVisibilityModel', value]));
-  const columns = React.useMemo(
+  const preloadColumns = React.useMemo(
     () => getColumns(typData, arhive),
     [typData, arhive],
+  );
+  const columns = React.useMemo(
+    () =>
+      preloadColumns.map((col) =>
+        col.type === 'string' || col.type === undefined
+          ? { ...col, filterOperators: filterOperatorsString }
+          : col,
+      ),
+    [preloadColumns],
   );
   React.useEffect(() => {
     setResult({
