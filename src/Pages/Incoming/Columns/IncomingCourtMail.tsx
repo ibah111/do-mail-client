@@ -1,11 +1,18 @@
 import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
-import { IncomingCourtMailState } from '../../../Types/dataIncoming';
+import {
+  ArhiveType,
+  DataIncomingType,
+  IncomingCourtMailState,
+} from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
-const IncomingCourtMailColumns = (isAllow: AllowFunction) => {
-  const data: GridColDef<IncomingCourtMailState>[] = [
+export default function IncomingCourtMailColumns<
+  K extends DataIncomingType['IncomingCourtMail'][T],
+  T extends ArhiveType,
+>(isAllow: AllowFunction, arhive?: T): GridColDef<K>[] {
+  const data: GridColDef<K>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
       field: 'date_post',
@@ -106,6 +113,23 @@ const IncomingCourtMailColumns = (isAllow: AllowFunction) => {
         ),
     },
   ];
+  if (arhive && arhive > 0) {
+    data.push({
+      field: 'korob_arhive',
+      headerName: ' Короб архива',
+      type: 'number',
+      editable: isAllow('editor', 'arhive'),
+    });
+    data.push({
+      field: 'data_obrabotki_arhive',
+      headerName: ' Дата обработки архива',
+      type: 'date',
+    });
+    data.push({
+      field: 'kto_obrabotal_arhive',
+      headerName: ' Кто обработал архив',
+    });
+  }
   if (isAllow('editor')) {
     data.push({
       field: 'id_dela',
@@ -127,5 +151,4 @@ const IncomingCourtMailColumns = (isAllow: AllowFunction) => {
     });
   }
   return data;
-};
-export default IncomingCourtMailColumns;
+}

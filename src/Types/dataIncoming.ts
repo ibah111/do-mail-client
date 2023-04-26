@@ -1,8 +1,34 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Doc } from '../Schemas/Doc';
 import { findAndCount } from './findAndCount';
-
+export class User {
+  f: string;
+  i: string;
+  o: string;
+}
+export class Arhive {
+  @IsNumber()
+  id: number;
+  @IsNumber()
+  result_id: number;
+  @IsOptional()
+  @IsNumber()
+  korob?: number;
+  @IsNumber()
+  user: number;
+  @Type(() => User)
+  User: User;
+  @IsDate()
+  @Type(() => Date)
+  createdAt: Date;
+}
 export class IncomingMailState {
   /**
    * ID записи
@@ -137,6 +163,8 @@ export class IncomingMailState {
    */
   @Type(() => Doc)
   Docs: Doc[];
+  @Type(() => Arhive)
+  Arhives?: Arhive[];
 }
 
 export class IncomingGovernmentMailState {
@@ -256,6 +284,8 @@ export class IncomingGovernmentMailState {
    */
   @Type(() => Doc)
   Docs: Doc[];
+  @Type(() => Arhive)
+  Arhive?: Arhive[];
 }
 export class IncomingCourtMailState {
   /**
@@ -367,6 +397,8 @@ export class IncomingCourtMailState {
    */
   @Type(() => Doc)
   Docs: Doc[];
+  @Type(() => Arhive)
+  Arhive?: Arhive[];
 }
 export class IncomingCourtBailiffMailState {
   /**
@@ -466,86 +498,8 @@ export class IncomingCourtBailiffMailState {
    */
   @Type(() => Doc)
   Docs: Doc[];
-}
-export class ArhiveIncomingMailState extends IncomingMailState {
-  /**
-   * Короб архива
-   */
-  @IsNumber()
-  korob_arhive: number;
-
-  /**
-   * Дата обработки архива
-   */
-  @IsDate()
-  @Type(() => Date)
-  data_obrabotki_arhive: Date;
-
-  /**
-   * Кто обработал архив
-   */
-  @IsString()
-  kto_obrabotal_arhive: string;
-}
-export class ArhiveIncomingGovernmentMailState extends IncomingGovernmentMailState {
-  /**
-   * Короб архива
-   */
-  @IsNumber()
-  korob_arhive: number;
-
-  /**
-   * Дата обработки архива
-   */
-  @IsDate()
-  @Type(() => Date)
-  data_obrabotki_arhive: Date;
-
-  /**
-   * Кто обработал архив
-   */
-  @IsString()
-  kto_obrabotal_arhive: string;
-}
-export class ArhiveIncomingCourtMailState extends IncomingCourtMailState {
-  /**
-   * Короб архива
-   */
-  @IsNumber()
-  korob_arhive: number;
-
-  /**
-   * Дата обработки архива
-   */
-  @IsDate()
-  @Type(() => Date)
-  data_obrabotki_arhive: Date;
-
-  /**
-   * Кто обработал архив
-   */
-  @IsString()
-  kto_obrabotal_arhive: string;
-}
-export class ArhiveIncomingCourtBailiffMailState extends IncomingCourtBailiffMailState {
-  /**
-   * Короб архива
-   */
-  @IsNumber()
-  korob_arhive: number;
-
-  /**
-   * Дата обработки архива
-   */
-  @IsDate()
-  @Type(() => Date)
-  data_obrabotki_arhive: Date;
-
-  /**
-   * Кто обработал архив
-   */
-  @IsString()
-  kto_obrabotal_arhive: string;
+  @Type(() => Arhive)
+  Arhive?: Arhive[];
 }
 
 export enum ArhiveType {
@@ -561,84 +515,59 @@ export enum MailType {
   INCOMING_COURT_BAILIFF_MAIL2 = 'IncomingCourtBailiffMail2',
 }
 
+export type ArhiveIncomingState<T> = {
+  [ArhiveType.NO]: T;
+  [ArhiveType.ARHIVE]: T;
+  [ArhiveType.ARHIVE_LAW_EXEC]: T;
+};
 export class DataIncomingState {
   /**
    * Входящая почта
    */
-  [MailType.INCOMING_MAIL]: {
-    [ArhiveType.NO]: findAndCount<IncomingMailState>;
-    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingMailState>;
-    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingMailState>;
-  };
+  [MailType.INCOMING_MAIL]: ArhiveIncomingState<
+    findAndCount<IncomingMailState>
+  >;
   /**
    * Госпочта
    */
-  [MailType.INCOMING_GOVERNMENT_MAIL]: {
-    [ArhiveType.NO]: findAndCount<IncomingGovernmentMailState>;
-    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingGovernmentMailState>;
-    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingGovernmentMailState>;
-  };
+  [MailType.INCOMING_GOVERNMENT_MAIL]: ArhiveIncomingState<
+    findAndCount<IncomingGovernmentMailState>
+  >;
   /**
    * МЕЙЛ(СУД)
    */
-  [MailType.INCOMING_COURT_MAIL]: {
-    [ArhiveType.NO]: findAndCount<IncomingCourtMailState>;
-    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtMailState>;
-    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtMailState>;
-  };
+  [MailType.INCOMING_COURT_MAIL]: ArhiveIncomingState<
+    findAndCount<IncomingCourtMailState>
+  >;
   /**
    * МЕЙЛ(ФССП)
    */
-  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
-    [ArhiveType.NO]: findAndCount<IncomingCourtBailiffMailState>;
-    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
-    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
-  };
-  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
-    [ArhiveType.NO]: findAndCount<IncomingCourtBailiffMailState>;
-    [ArhiveType.ARHIVE]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
-    [ArhiveType.ARHIVE_LAW_EXEC]: findAndCount<ArhiveIncomingCourtBailiffMailState>;
-  };
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: ArhiveIncomingState<
+    findAndCount<IncomingCourtBailiffMailState>
+  >;
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: ArhiveIncomingState<
+    findAndCount<IncomingCourtBailiffMailState>
+  >;
 }
 export class DataIncomingType {
   /**
    * Входящая почта
    */
-  [MailType.INCOMING_MAIL]: {
-    [ArhiveType.NO]: IncomingMailState;
-    [ArhiveType.ARHIVE]: ArhiveIncomingMailState;
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingMailState;
-  };
+  [MailType.INCOMING_MAIL]: ArhiveIncomingState<IncomingMailState>;
   /**
    * Госпочта
    */
-  [MailType.INCOMING_GOVERNMENT_MAIL]: {
-    [ArhiveType.NO]: IncomingGovernmentMailState;
-    [ArhiveType.ARHIVE]: ArhiveIncomingGovernmentMailState;
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingGovernmentMailState;
-  };
+  [MailType.INCOMING_GOVERNMENT_MAIL]: ArhiveIncomingState<IncomingGovernmentMailState>;
   /**
    * МЕЙЛ(СУД)
    */
-  [MailType.INCOMING_COURT_MAIL]: {
-    [ArhiveType.NO]: IncomingCourtMailState;
-    [ArhiveType.ARHIVE]: ArhiveIncomingCourtMailState;
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtMailState;
-  };
+  [MailType.INCOMING_COURT_MAIL]: ArhiveIncomingState<IncomingCourtMailState>;
   /**
    * МЕЙЛ(ФССП)
    */
-  [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
-    [ArhiveType.NO]: IncomingCourtBailiffMailState;
-    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState;
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState;
-  };
+  [MailType.INCOMING_COURT_BAILIFF_MAIL]: ArhiveIncomingState<IncomingCourtBailiffMailState>;
   /**
    * ИНТЕРНЕТ ПРИЕМНАЯ
    */
-  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
-    [ArhiveType.NO]: IncomingCourtBailiffMailState;
-    [ArhiveType.ARHIVE]: ArhiveIncomingCourtBailiffMailState;
-    [ArhiveType.ARHIVE_LAW_EXEC]: ArhiveIncomingCourtBailiffMailState;
-  };
+  [MailType.INCOMING_COURT_BAILIFF_MAIL2]: ArhiveIncomingState<IncomingCourtBailiffMailState>;
 }

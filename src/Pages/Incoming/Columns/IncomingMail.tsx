@@ -2,13 +2,14 @@ import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
 import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomplete';
 import { AllowFunction } from '../../../hooks/getAllow';
-import { IncomingMailState } from '../../../Types/dataIncoming';
+import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
 
-const IncomingMailColumns = (
-  isAllow: AllowFunction,
-): GridColDef<IncomingMailState>[] => {
-  const data: GridColDef<IncomingMailState>[] = [
+export default function IncomingMailColumns<
+  K extends DataIncomingType['IncomingMail'][T],
+  T extends ArhiveType,
+>(isAllow: AllowFunction, arhive?: T): GridColDef<K>[] {
+  const data: GridColDef<K>[] = [
     { field: 'id', headerName: 'ID', type: 'number' },
     {
       field: 'date_post',
@@ -123,6 +124,23 @@ const IncomingMailColumns = (
         ),
     },
   ];
+  if (arhive && arhive > 0) {
+    data.push({
+      field: 'Arhive.korob',
+      headerName: 'Короб архива',
+      type: 'number',
+      editable: isAllow('arhive'),
+    });
+    data.push({
+      field: 'Arhive.createdAt',
+      headerName: 'Дата обработки архива',
+      type: 'date',
+    });
+    data.push({
+      field: 'Arhive.User',
+      headerName: 'Кто обработал архив',
+    });
+  }
   if (isAllow('editor')) {
     data.push({
       field: 'id_dela',
@@ -144,5 +162,4 @@ const IncomingMailColumns = (
     });
   }
   return data;
-};
-export default IncomingMailColumns;
+}
