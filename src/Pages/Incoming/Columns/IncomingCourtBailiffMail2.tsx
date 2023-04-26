@@ -3,6 +3,8 @@ import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
+import addColumnArhive from './addColumnArhive';
+import addColumnEditor from './addColumnEditor';
 
 export default function IncomingCourtBailiffMailColumns2<
   K extends DataIncomingType['IncomingCourtBailiffMail2'][T],
@@ -97,42 +99,7 @@ export default function IncomingCourtBailiffMailColumns2<
         ),
     },
   ];
-  if (arhive && arhive > 0) {
-    data.push({
-      field: 'korob_arhive',
-      headerName: ' Короб архива',
-      type: 'number',
-      editable: isAllow('editor', 'arhive'),
-    });
-    data.push({
-      field: 'data_obrabotki_arhive',
-      headerName: ' Дата обработки архива',
-      type: 'date',
-    });
-    data.push({
-      field: 'kto_obrabotal_arhive',
-      headerName: ' Кто обработал архив',
-    });
-  }
-  if (isAllow('editor')) {
-    data.push({
-      field: 'id_dela',
-      headerName: 'ID дела',
-      type: 'number',
-      editable: true,
-    });
-    data.push({
-      field: 'id_zadach',
-      headerName: 'ID задачи',
-      type: 'number',
-      editable: true,
-    });
-    data.push({
-      field: 'id_ispol_zadach',
-      headerName: 'ID исполнителя задач',
-      type: 'number',
-      editable: true,
-    });
-  }
+  addColumnArhive(data, isAllow, arhive);
+  addColumnEditor(data, isAllow);
   return data;
 }

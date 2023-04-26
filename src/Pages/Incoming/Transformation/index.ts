@@ -33,9 +33,9 @@ export const allTransformations: TransformationState = {
     IncomingCourtBailiffMailState,
   ),
 };
-export default function getColumns<T extends MailType, K extends ArhiveType>(
-  typ: T,
-  arhive: K,
-) {
+export default function getTransformations<
+  T extends MailType,
+  K extends ArhiveType,
+>(typ: T, arhive: K) {
   return allTransformations[typ][arhive];
 }

@@ -3,6 +3,8 @@ import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
+import addColumnArhive from './addColumnArhive';
+import addColumnEditor from './addColumnEditor';
 
 const currencyFormatter = new Intl.NumberFormat('ru-Ru', {
   useGrouping: false,
@@ -120,43 +122,7 @@ export default function IncomingGovernmentMailColumns<
         ),
     },
   ];
-  if (arhive && arhive > 0) {
-    data.push({
-      field: 'korob_arhive',
-      headerName: ' Короб архива',
-      type: 'number',
-      editable: isAllow('editor', 'arhive'),
-    });
-    data.push({
-      field: 'data_obrabotki_arhive',
-      headerName: ' Дата обработки архива',
-      type: 'date',
-    });
-    data.push({
-      field: 'kto_obrabotal_arhive',
-      headerName: ' Кто обработал архив',
-    });
-  }
-  if (isAllow('editor')) {
-    data.push({
-      field: 'id_dela',
-      headerName: 'ID дела',
-      type: 'number',
-      editable: true,
-      valueFormatter: (x) => currencyFormatter.format(x.value),
-    });
-    data.push({
-      field: 'id_zadach',
-      headerName: 'ID задачи',
-      type: 'number',
-      editable: true,
-    });
-    data.push({
-      field: 'id_ispol_zadach',
-      headerName: 'ID исполнителя задач',
-      type: 'number',
-      editable: true,
-    });
-  }
+  addColumnArhive(data, isAllow, arhive);
+  addColumnEditor(data, isAllow);
   return data;
 }

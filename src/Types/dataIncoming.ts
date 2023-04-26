@@ -285,7 +285,7 @@ export class IncomingGovernmentMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
-  Arhive?: Arhive[];
+  Arhives?: Arhive[];
 }
 export class IncomingCourtMailState {
   /**
@@ -398,7 +398,7 @@ export class IncomingCourtMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
-  Arhive?: Arhive[];
+  Arhives?: Arhive[];
 }
 export class IncomingCourtBailiffMailState {
   /**
@@ -499,7 +499,7 @@ export class IncomingCourtBailiffMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
-  Arhive?: Arhive[];
+  Arhives?: Arhive[];
 }
 
 export enum ArhiveType {
