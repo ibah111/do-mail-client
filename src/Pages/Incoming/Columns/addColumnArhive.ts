@@ -17,6 +17,9 @@ export default function addColumnArhive<
       type: 'number',
       editable: isAllow('arhive'),
       valueGetter: (params) => {
+        if (params.row.Arhive) {
+          return params.row.Arhive.korob;
+        }
         if (params.row.Arhives)
           for (const item of params.row.Arhives) {
             return item.korob;
@@ -28,6 +31,9 @@ export default function addColumnArhive<
       headerName: 'Дата обработки архива',
       type: 'date',
       valueGetter: (params) => {
+        if (params.row.Arhive) {
+          return params.row.Arhive.createdAt;
+        }
         if (params.row.Arhives)
           for (const item of params.row.Arhives) {
             return item.createdAt;
@@ -38,6 +44,10 @@ export default function addColumnArhive<
       field: 'Arhive.User',
       headerName: 'Кто обработал архив',
       valueGetter: (params) => {
+        if (params.row.Arhive) {
+          const User = params.row.Arhive.User;
+          return generateName(User.f, User.i, User.o);
+        }
         if (params.row.Arhives)
           for (const item of params.row.Arhives) {
             const User = item.User;

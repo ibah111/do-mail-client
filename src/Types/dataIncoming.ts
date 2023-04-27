@@ -164,6 +164,8 @@ export class IncomingMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
+  Arhive?: Arhive;
+  @Type(() => Arhive)
   Arhives?: Arhive[];
 }
 
@@ -285,6 +287,8 @@ export class IncomingGovernmentMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
+  Arhive?: Arhive;
+  @Type(() => Arhive)
   Arhives?: Arhive[];
 }
 export class IncomingCourtMailState {
@@ -398,6 +402,8 @@ export class IncomingCourtMailState {
   @Type(() => Doc)
   Docs: Doc[];
   @Type(() => Arhive)
+  Arhive?: Arhive;
+  @Type(() => Arhive)
   Arhives?: Arhive[];
 }
 export class IncomingCourtBailiffMailState {
@@ -498,6 +504,8 @@ export class IncomingCourtBailiffMailState {
    */
   @Type(() => Doc)
   Docs: Doc[];
+  @Type(() => Arhive)
+  Arhive?: Arhive;
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }
