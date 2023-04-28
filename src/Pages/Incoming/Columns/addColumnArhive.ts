@@ -1,4 +1,5 @@
 import { GridColDef } from '@mui/x-data-grid-premium';
+import searchUser from '../../../api/searchUser';
 import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomplete';
 import { AllowFunction } from '../../../hooks/getAllow';
 import {
@@ -44,7 +45,11 @@ export default function addColumnArhive<
     data.push({
       field: 'Arhive.user',
       headerName: 'Кто обработал архив',
-      ...SearchAutocomplete,
+      ...SearchAutocomplete(
+        searchUser,
+        (value) => value?.bitrix_id,
+        (value) => generateName(value.f, value.i, value.o),
+      ),
       valueFormatter: (params) => {
         if (!params.id) return;
         const row = params.api.getRow(params.id) as K;

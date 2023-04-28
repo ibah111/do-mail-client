@@ -1,5 +1,7 @@
 import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
+import searchUser from '../../../api/searchUser';
+import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomplete';
 import { AllowFunction } from '../../../hooks/getAllow';
 import {
   ArhiveType,
@@ -7,6 +9,7 @@ import {
   IncomingCourtMailState,
 } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
+import { generateName } from '../../../utils/generateName';
 import addColumnArhive from './addColumnArhive';
 import addColumnEditor from './addColumnEditor';
 
@@ -67,6 +70,22 @@ export default function IncomingCourtMailColumns<
     },
     { field: 'kogda_otdano', headerName: ' Когда обработано', type: 'date' },
     { field: 'kto_obrabotal', headerName: ' Кто обработал', type: 'string' },
+    {
+      field: 'id_kto_obrabotal',
+      headerName: 'Кто обработал',
+      ...SearchAutocomplete(
+        searchUser,
+        (value) => value?.contact_id,
+        (value) => generateName(value.f, value.i, value.o),
+      ),
+      valueFormatter: (params) => {
+        if (!params.id) return;
+        const row = params.api.getRow(params.id) as K;
+        const User = row.User;
+        if (User) return generateName(User.f, User.i, User.o);
+        return `${row.kto_obrabotal} (удален)`;
+      },
+    },
     {
       field: 'check_vsisk',
       headerName: ' Проверено взыскателем',

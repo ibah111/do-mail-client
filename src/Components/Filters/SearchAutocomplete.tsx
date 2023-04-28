@@ -3,34 +3,30 @@ import {
   GridColTypeDef,
   GridFilterInputValueProps,
 } from '@mui/x-data-grid-premium';
-import {
-  AutocompleteProps,
-  Autocomplete,
-  TextField,
-  Box,
-  CircularProgress,
-} from '@mui/material';
+import { AutocompleteProps, Autocomplete, TextField } from '@mui/material';
 import React from 'react';
 import { useAsyncMemo } from '../../utils/asyncMemo';
-import searchUser from '../../api/searchUser';
-import { User } from '../../api/getRole';
-import { generateName } from '../../utils/generateName';
-export function SearchAutocompleteInputFilter(
-  props: GridFilterInputValueProps,
+interface SearchAutocompleteProps<T> {
+  getter: (current: string) => T[] | Promise<T[]>;
+  valueParse: (value: T | null) => any;
+  getLabel: (value: T) => string;
+}
+export function SearchAutocompleteInputFilter<T>(
+  props: GridFilterInputValueProps & SearchAutocompleteProps<T>,
 ) {
-  const { item, applyValue } = props;
+  const { item, applyValue, valueParse, getter, getLabel } = props;
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const handleFilterChange: AutocompleteProps<
-    User,
+    T,
     false,
     false,
     false
   >['onChange'] = (_, value) => {
-    applyValue({ ...item, value: value?.contact_id });
+    applyValue({ ...item, value: valueParse(value) });
   };
   const [current, setCurrent] = React.useState('');
-  const selects = useAsyncMemo(() => searchUser(current), [current]);
+  const selects = useAsyncMemo(() => getter(current), [current]);
   return (
     <Autocomplete
       options={selects ? selects : []}
@@ -41,7 +37,7 @@ export function SearchAutocompleteInputFilter(
       onInputChange={(_, value) => {
         setCurrent(value);
       }}
-      getOptionLabel={(option) => generateName(option.f, option.i, option.o)}
+      getOptionLabel={getLabel}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
       renderInput={(params) => (
@@ -56,10 +52,24 @@ export function SearchAutocompleteInputFilter(
   );
 }
 const operator = getGridNumericOperators().find((item) => item.value === '=')!;
-export const SearchAutocomplete: GridColTypeDef = {
-  extendType: 'number',
-  type: 'number',
-  filterOperators: [
-    { ...operator, InputComponent: SearchAutocompleteInputFilter },
-  ],
-};
+export function SearchAutocomplete<T>(
+  getter: (current: string) => T[] | Promise<T[]>,
+  valueParse: (value: T | null) => any,
+  getLabel: (value: T) => string,
+) {
+  return {
+    extendType: 'number',
+    type: 'number',
+    filterOperators: [
+      {
+        ...operator,
+        InputComponent: SearchAutocompleteInputFilter,
+        InputComponentProps: {
+          getter,
+          valueParse,
+          getLabel,
+        } as SearchAutocompleteProps<T>,
+      },
+    ],
+  } as GridColTypeDef;
+}

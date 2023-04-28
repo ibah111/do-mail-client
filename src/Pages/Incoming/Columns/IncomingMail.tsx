@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
+import searchUser from '../../../api/searchUser';
 import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomplete';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
@@ -83,7 +84,11 @@ export default function IncomingMailColumns<
     {
       field: 'id_kto_obrabotal',
       headerName: 'Кто обработал',
-      ...SearchAutocomplete,
+      ...SearchAutocomplete(
+        searchUser,
+        (value) => value?.contact_id,
+        (value) => generateName(value.f, value.i, value.o),
+      ),
       valueFormatter: (params) => {
         if (!params.id) return;
         const row = params.api.getRow(params.id) as K;
