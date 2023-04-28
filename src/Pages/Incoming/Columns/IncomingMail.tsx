@@ -4,6 +4,7 @@ import { SearchAutocomplete } from '../../../Components/Filters/SearchAutocomple
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 import { checkDateGrid } from '../../../utils/checkDate';
+import { generateName } from '../../../utils/generateName';
 import addColumnArhive from './addColumnArhive';
 import addColumnEditor from './addColumnEditor';
 
@@ -83,6 +84,13 @@ export default function IncomingMailColumns<
       field: 'id_kto_obrabotal',
       headerName: 'Кто обработал',
       ...SearchAutocomplete,
+      valueFormatter: (params) => {
+        if (!params.id) return;
+        const row = params.api.getRow(params.id) as K;
+        const User = row.User;
+        if (User) return generateName(User.f, User.i, User.o);
+        return `${row.kto_obrabotal} (удален)`;
+      },
     },
     {
       field: 'nal_skan',

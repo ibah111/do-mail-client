@@ -27,7 +27,7 @@ export function SearchAutocompleteInputFilter(
     false,
     false
   >['onChange'] = (_, value) => {
-    applyValue({ ...item, value: value?.bitrix_id });
+    applyValue({ ...item, value: value?.contact_id });
   };
   const [current, setCurrent] = React.useState('');
   const selects = useAsyncMemo(() => searchUser(current), [current]);
@@ -58,6 +58,7 @@ export function SearchAutocompleteInputFilter(
 const operator = getGridNumericOperators().find((item) => item.value === '=')!;
 export const SearchAutocomplete: GridColTypeDef = {
   extendType: 'number',
+  type: 'number',
   filterOperators: [
     { ...operator, InputComponent: SearchAutocompleteInputFilter },
   ],

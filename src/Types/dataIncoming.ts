@@ -162,9 +162,14 @@ export class IncomingMailState {
    * Прикрепленные документы
    */
   @Type(() => Doc)
-  Docs: Doc[];
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
   @Type(() => Arhive)
   Arhive?: Arhive;
+
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }
@@ -285,9 +290,14 @@ export class IncomingGovernmentMailState {
    * Прикрепленные документы
    */
   @Type(() => Doc)
-  Docs: Doc[];
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
   @Type(() => Arhive)
   Arhive?: Arhive;
+
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }
@@ -400,9 +410,14 @@ export class IncomingCourtMailState {
    * Прикрепленные документы
    */
   @Type(() => Doc)
-  Docs: Doc[];
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
   @Type(() => Arhive)
   Arhive?: Arhive;
+
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }
@@ -503,9 +518,14 @@ export class IncomingCourtBailiffMailState {
    * Прикрепленные документы
    */
   @Type(() => Doc)
-  Docs: Doc[];
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
   @Type(() => Arhive)
   Arhive?: Arhive;
+
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }

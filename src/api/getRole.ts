@@ -8,6 +8,7 @@ export interface Role {
 export interface User {
   id: number;
   bitrix_id: number;
+  contact_id: number;
   login: string;
   f?: string;
   i?: string;
