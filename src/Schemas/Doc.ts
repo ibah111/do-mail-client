@@ -9,7 +9,7 @@ export class Doc {
   /**
    * ID почта
    */
-  result_id: number;
+  incoming_id: number;
 
   /**
    * ID документа

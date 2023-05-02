@@ -17,7 +17,7 @@ export class Arhive {
   @IsNumber()
   id: number;
   @IsNumber()
-  result_id: number;
+  incoming_id: number;
   @IsOptional()
   @IsNumber()
   korob?: number;
