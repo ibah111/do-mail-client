@@ -6,13 +6,13 @@ import {
 import { AutocompleteProps, Autocomplete, TextField } from '@mui/material';
 import React from 'react';
 import { useAsyncMemo } from '../../utils/asyncMemo';
-interface SearchAutocompleteProps<T> {
+interface SearchAutocompleteProps<T, K> {
   getter: (current: string) => T[] | Promise<T[]>;
-  valueParse: (value: T | null) => any;
+  valueParse: (value: T | null) => K;
   getLabel: (value: T) => string;
 }
-export function SearchAutocompleteInputFilter<T>(
-  props: GridFilterInputValueProps & SearchAutocompleteProps<T>,
+export function SearchAutocompleteInputFilter<T, K>(
+  props: GridFilterInputValueProps & SearchAutocompleteProps<T, K>,
 ) {
   const { item, applyValue, valueParse, getter, getLabel } = props;
   const [open, setOpen] = React.useState(false);
@@ -52,9 +52,9 @@ export function SearchAutocompleteInputFilter<T>(
   );
 }
 const operator = getGridNumericOperators().find((item) => item.value === '=')!;
-export function SearchAutocomplete<T>(
+export function SearchAutocomplete<T, K>(
   getter: (current: string) => T[] | Promise<T[]>,
-  valueParse: (value: T | null) => any,
+  valueParse: (value: T | null) => K,
   getLabel: (value: T) => string,
 ) {
   return {
@@ -68,7 +68,7 @@ export function SearchAutocomplete<T>(
           getter,
           valueParse,
           getLabel,
-        } as SearchAutocompleteProps<T>,
+        } as SearchAutocompleteProps<T, K>,
       },
     ],
   } as GridColTypeDef;

@@ -57,11 +57,12 @@ export default function addColumnArhive<
           const User = row.Arhive.User;
           return generateName(User.f, User.i, User.o);
         }
-        if (row.Arhives)
-          for (const item of row.Arhives) {
-            const User = item.User;
-            return generateName(User.f, User.i, User.o);
-          }
+        if (row.Arhives) {
+          const item = row.Arhives[0];
+          if (!item) return;
+          const User = item.User;
+          return generateName(User.f, User.i, User.o);
+        }
       },
     });
   }
