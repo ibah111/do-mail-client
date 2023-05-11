@@ -33,11 +33,11 @@ const startModelsState: ArhiveState = {
   [ArhiveType.NO]: startModelState,
   [ArhiveType.ARHIVE]: {
     ...startModelState,
-    sortModel: [{ field: 'data_obrabotki_arhive', sort: 'asc' }],
+    sortModel: [{ field: 'Arhive.createdAt', sort: 'asc' }],
   },
   [ArhiveType.ARHIVE_LAW_EXEC]: {
     ...startModelState,
-    sortModel: [{ field: 'data_obrabotki_arhive', sort: 'asc' }],
+    sortModel: [{ field: 'Arhive.createdAt', sort: 'asc' }],
   },
 };
 const initialState: ModelState = {
