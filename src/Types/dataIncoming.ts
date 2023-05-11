@@ -24,6 +24,10 @@ export class Arhive {
   @IsOptional()
   @IsString()
   doc_name?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  out_worktime?: boolean;
   @IsNumber()
   user: number;
   @Type(() => User)

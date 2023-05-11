@@ -35,6 +35,27 @@ export default function addColumnArhive<
       },
     });
     data.push({
+      field: 'Arhive.out_worktime',
+      headerName: 'Архив внерабочее время',
+      type: 'boolean',
+      editable: isAllow('arhive'),
+      valueGetter: (params) => {
+        if (params.row.Arhive) {
+          return params.row.Arhive.out_worktime;
+        }
+        if (params.row.Arhives)
+          for (const item of params.row.Arhives) {
+            return item.out_worktime;
+          }
+      },
+      valueSetter: (params) => {
+        return {
+          ...params.row,
+          Arhive: { ...params.row.Arhive, out_worktime: params.value },
+        };
+      },
+    });
+    data.push({
       field: 'Arhive.createdAt',
       headerName: 'Дата обработки архива',
       type: 'date',
