@@ -21,6 +21,9 @@ export class Arhive {
   @IsOptional()
   @IsNumber()
   korob?: number;
+  @IsOptional()
+  @IsString()
+  doc_name?: number;
   @IsNumber()
   user: number;
   @Type(() => User)

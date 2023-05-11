@@ -106,10 +106,23 @@ export default function useGrid<
     setSelectionModel,
     setColumnVisibilityModel,
     processRowUpdate: (row, old) => {
-      const changed = updatedDiff(old, row);
-      for (const key of Object.keys(changed)) {
-        //@ts-ignore
-        editCell(Number(row.id), key, changed[key]);
+      const changed = updatedDiff(old, row) as DataIncomingType[T][K];
+      for (const key1 of Object.keys(changed) as (keyof typeof changed)[]) {
+        if (
+          typeof changed[key1] === 'object' &&
+          !(changed[key1] instanceof Date)
+        ) {
+          for (const key2 of Object.keys(
+            changed[key1] as object,
+          ) as (keyof (typeof changed)[typeof key1])[]) {
+            editCell(
+              Number(row.id),
+              key2 as string,
+              [changed[key1][key2]],
+              (key1 as string) + '.',
+            );
+          }
+        } else editCell(Number(row.id), key1 as string, changed[key1]);
       }
       return row;
     },

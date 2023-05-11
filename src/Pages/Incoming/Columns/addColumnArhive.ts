@@ -27,6 +27,12 @@ export default function addColumnArhive<
             return item.korob;
           }
       },
+      valueSetter: (params) => {
+        return {
+          ...params.row,
+          Arhive: { ...params.row.Arhive, korob: params.value },
+        };
+      },
     });
     data.push({
       field: 'Arhive.createdAt',
@@ -63,6 +69,12 @@ export default function addColumnArhive<
           const User = item.User;
           return generateName(User.f, User.i, User.o);
         }
+      },
+      valueSetter: (params) => {
+        return {
+          ...params.row,
+          Arhive: { ...params.row.Arhive, user: params.value },
+        };
       },
     });
   }

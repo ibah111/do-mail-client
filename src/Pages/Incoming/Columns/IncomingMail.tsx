@@ -45,6 +45,19 @@ export default function IncomingMailColumns<
       field: 'doc_name',
       headerName: 'Название документа',
       editable: isAllow('editor'),
+      valueGetter: (params) => {
+        const arhive = params.row.Arhive?.doc_name;
+        if (arhive) return arhive;
+        return params.row.doc_name;
+      },
+      valueSetter: (params) => {
+        if (arhive)
+          return {
+            ...params.row,
+            Arhive: { ...params.row.Arhive, doc_name: params.value },
+          };
+        return { ...params.row, doc_name: params.value };
+      },
     },
     {
       field: 'st_pnkt',

@@ -8,6 +8,7 @@ export default async function editCell(
   id: number,
   name: string,
   data: unknown,
+  pres?: string,
 ): Promise<boolean> {
   let value = String(data);
   if (data instanceof Date) {
@@ -20,7 +21,7 @@ export default async function editCell(
   try {
     const response = await requests.post<boolean>('/edit', {
       id,
-      name,
+      name: pres ? pres + name : name,
       value,
       MailType,
       ArhiveType,
