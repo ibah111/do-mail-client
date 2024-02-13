@@ -10,6 +10,16 @@ const columns: GridColDef<Doc>[] = [
     width: 300,
     valueGetter: (params) => params.row.DocAttach?.name,
   },
+  {
+    type: 'string',
+    field: 'barcode',
+    width: 300,
+    headerName: 'Штрихкод',
+    description: 'Данное поле указывает номер штрихкода в ScannerDocs',
+    valueGetter(params) {
+      return params.row.barcode;
+    },
+  },
 ];
 interface DetailDataProps {
   docs: Doc[];
