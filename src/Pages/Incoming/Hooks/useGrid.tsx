@@ -41,6 +41,7 @@ export interface Grider<T extends MailType, K extends ArhiveType> {
     row: DataIncomingType[T][K],
     old: DataIncomingType[T][K],
   ) => DataIncomingType[T][K];
+  refresh: VoidFunction;
 }
 export default function useGrid<
   T extends MailType,
@@ -82,7 +83,8 @@ export default function useGrid<
       ),
     [preloadColumns],
   );
-  React.useEffect(() => {
+
+  const refresh = () =>
     setResult({
       rows: plainToInstance(
         getTransformations(typData, arhive),
@@ -90,6 +92,8 @@ export default function useGrid<
       ),
       count: dataIncoming.count,
     } as DataIncomingState[T][K]);
+  React.useEffect(() => {
+    refresh();
   }, [dataIncoming]);
   return {
     typData,
@@ -126,5 +130,6 @@ export default function useGrid<
       }
       return row;
     },
+    refresh,
   };
 }
