@@ -1,4 +1,5 @@
 {
   "server": "https://apps.usb.ru:3001",
-  "oauth": "https://apps.usb.ru:3008"
+  "oauth": "https://apps.usb.ru:3008",
+  "localserver": "http://balezin.usb.ru:3001"
 }
