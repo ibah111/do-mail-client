@@ -20,6 +20,6 @@ prepare();
 export default defineConfig({
   plugins: [react(), legacy(), checker({ typescript: true })],
   build: { outDir: 'build' },
-  server: { port: 3000 },
+  server: { port: 3000, host: '0.0.0.0' },
   base: '/apps/mail',
 });
