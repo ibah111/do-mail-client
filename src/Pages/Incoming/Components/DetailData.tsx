@@ -3,13 +3,17 @@ import { Doc } from '../../../Schemas/Doc';
 import { IconButton, Tooltip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import createCode from '../../../api/ScannerDocsApi/createCode';
+import { enqueueSnackbar } from 'notistack';
 
 class NeedForApi {
   mail_id: number;
   law_id: number;
 }
 
-function docColumns({ mail_id, law_id }: NeedForApi): GridColDef<Doc>[] {
+function docColumns(
+  { mail_id, law_id }: NeedForApi,
+  refresh: VoidFunction,
+): GridColDef<Doc>[] {
   const columns: GridColDef<Doc>[] = [
     { field: 'id', type: 'number', headerName: 'ID' },
     { field: 'doc_id', type: 'number', headerName: 'ID документа в контакте' },
@@ -43,11 +47,11 @@ function docColumns({ mail_id, law_id }: NeedForApi): GridColDef<Doc>[] {
                 onClick={() =>
                   createCode({
                     contact_doc_id: params.row.doc_id,
-                    title: params.row.DocAttach!.name,
+                    title: params.row.DocAttach?.name || '',
                     law_act_id: law_id,
-                    mail_id,
+                    mail_id: mail_id,
                     doc_type: 2,
-                  })
+                  }).then(() => refresh())
                 }
               >
                 <AddIcon />
@@ -65,12 +69,19 @@ function docColumns({ mail_id, law_id }: NeedForApi): GridColDef<Doc>[] {
 
 interface DetailDataProps {
   docs: Doc[];
+  api_data: NeedForApi;
+  refresh: VoidFunction;
 }
-export default function DetailData(
-  { docs }: DetailDataProps,
-  api_data: NeedForApi,
-) {
+export default function DetailData({
+  docs,
+  api_data,
+  refresh,
+}: DetailDataProps) {
   return (
-    <DataGridPremium autoHeight columns={docColumns(api_data)} rows={docs} />
+    <DataGridPremium
+      autoHeight
+      columns={docColumns(api_data, refresh)}
+      rows={docs}
+    />
   );
 }

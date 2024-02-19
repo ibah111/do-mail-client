@@ -16,6 +16,7 @@ export default function DataGrid() {
     setSortModel,
     processRowUpdate,
     setColumnVisibilityModel,
+    refresh,
   } = useGrid();
   return (
     <>
@@ -37,7 +38,17 @@ export default function DataGrid() {
         onSortModelChange={setSortModel}
         rowSelectionModel={state.selectionModel}
         getDetailPanelContent={({ row }) =>
-          row.Docs?.length && <DetailData docs={row.Docs} />
+          row.Docs?.length && (
+            <DetailData
+              docs={row.Docs}
+              api_data={{
+                mail_id: row.id,
+                //@ts-ignore
+                law_id: row.id_dela,
+              }}
+              refresh={refresh}
+            />
+          )
         }
         getDetailPanelHeight={() => 'auto'}
         checkboxSelection={true}
