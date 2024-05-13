@@ -164,7 +164,11 @@ export class IncomingMailState {
    */
   @IsNumber()
   id_zadach: number;
-
+  /**
+   * Тип документа
+   */
+  @IsNumber()
+  doc_type: number;
   /**
    * Прикрепленные документы
    */
@@ -292,7 +296,11 @@ export class IncomingGovernmentMailState {
    */
   @IsNumber()
   id_zadach: number;
-
+  /**
+   * Тип документа
+   */
+  @IsNumber()
+  doc_type: number;
   /**
    * Прикрепленные документы
    */
@@ -412,7 +420,11 @@ export class IncomingCourtMailState {
    */
   @IsNumber()
   id_zadach: number;
-
+  /**
+   * Тип документа
+   */
+  @IsNumber()
+  doc_type: number;
   /**
    * Прикрепленные документы
    */
@@ -520,7 +532,11 @@ export class IncomingCourtBailiffMailState {
    */
   @IsNumber()
   id_zadach: number;
-
+  /**
+   * Тип документа
+   */
+  @IsNumber()
+  doc_type: number;
   /**
    * Прикрепленные документы
    */

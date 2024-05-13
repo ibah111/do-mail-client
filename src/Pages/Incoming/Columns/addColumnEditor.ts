@@ -16,6 +16,30 @@ export default function addColumnEditor<
     editable: isAllow('editor'),
   });
   data.push({
+    headerName: 'Тип дела',
+    field: 'doc_type',
+    type: 'number',
+    valueGetter(params) {
+      /**
+       * 1 - Исполнительный лист, 2 - Судебный приказ
+       */
+      const types = [
+        {
+          id: 1,
+          val: 'Исполнительный лист',
+        },
+        {
+          id: 2,
+          val: 'Судебный приказ',
+        },
+      ];
+      const value = params.row.doc_type;
+      return types.filter((item) => {
+        item.id === value;
+      });
+    },
+  });
+  data.push({
     field: 'id_zadach',
     headerName: 'ID задачи',
     type: 'number',
