@@ -26,17 +26,19 @@ export default function addColumnEditor<
       const types = [
         {
           id: 1,
-          val: 'Исполнительный лист',
+          value: 'Исполнительный лист',
         },
         {
           id: 2,
-          val: 'Судебный приказ',
+          value: 'Судебный приказ',
         },
       ];
-      const value = params.row.doc_type;
-      return types.filter((item) => {
-        item.id === value;
-      });
+
+      const doc_type_id = params.row.doc_type;
+      if (doc_type_id) {
+        const result = types.find((type) => type.id === doc_type_id);
+        if (result) return result.value;
+      }
     },
   });
   data.push({
