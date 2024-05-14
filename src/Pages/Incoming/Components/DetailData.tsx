@@ -6,6 +6,7 @@ import createCode from '../../../api/ScannerDocsApi/createCode';
 import { enqueueSnackbar } from 'notistack';
 import { useAppDispatch } from '../../../Reducer';
 import { setReload } from '../../../Reducer/Stater';
+import { DataGridEvents, DataGridEventsEnum } from '../DataGrid';
 
 class NeedForApi {
   mail_id: number;
@@ -13,11 +14,10 @@ class NeedForApi {
   doc_type: number;
 }
 
-function docColumns({
-  mail_id,
-  law_id,
-  doc_type,
-}: NeedForApi): GridColDef<Doc>[] {
+function docColumns(
+  { mail_id, law_id, doc_type }: NeedForApi,
+  DialogTrigger: EventTarget,
+): GridColDef<Doc>[] {
   const dispatch = useAppDispatch();
   const columns: GridColDef<Doc>[] = [
     { field: 'id', type: 'number', headerName: 'ID' },
@@ -49,18 +49,44 @@ function docColumns({
                 <Typography variant="h6">{'Штрихкод не присвоен'}</Typography>
                 <Tooltip title={'Присвоить штрихкод'}>
                   <IconButton
-                    onClick={() =>
-                      createCode(
-                        {
-                          contact_doc_id: params.row.doc_id,
-                          title: params.row.DocAttach?.name || '',
-                          law_act_id: law_id,
-                          mail_id: mail_id,
-                          doc_type: doc_type,
-                        },
-                        params.row.id,
-                      ).then(() => dispatch(setReload(true)))
-                    }
+                    onClick={() => {
+                      console.log('mail_id', mail_id);
+                      /**
+                       * если нет типа документа то
+                       * его нужно присвоить и только после этого
+                       */
+                      if (!doc_type) {
+                        enqueueSnackbar(
+                          'У документа нет типа, открываю диалог',
+                          {
+                            variant: 'warning',
+                            autoHideDuration: 5000,
+                          },
+                        );
+                        DialogTrigger.dispatchEvent(
+                          new DataGridEvents(
+                            DataGridEventsEnum.OpenTypeDialog,
+                            mail_id,
+                          ),
+                        );
+                      }
+                      /**
+                       * при наличии типа документа
+                       * мы можем позволить запрос
+                       * к сканер-доку
+                       */
+                      if (doc_type)
+                        return createCode(
+                          {
+                            contact_doc_id: params.row.doc_id,
+                            title: params.row.DocAttach?.name || '',
+                            law_act_id: law_id,
+                            mail_id: mail_id,
+                            doc_type: doc_type,
+                          },
+                          params.row.id,
+                        ).then(() => dispatch(setReload(true)));
+                    }}
                   >
                     <AddIcon />
                   </IconButton>
@@ -78,9 +104,18 @@ function docColumns({
 interface DetailDataProps {
   docs: Doc[];
   api_data: NeedForApi;
+  DialogTrigger: EventTarget;
 }
-export default function DetailData({ docs, api_data }: DetailDataProps) {
+export default function DetailData({
+  docs,
+  api_data,
+  DialogTrigger,
+}: DetailDataProps) {
   return (
-    <DataGridPremium autoHeight columns={docColumns(api_data)} rows={docs} />
+    <DataGridPremium
+      autoHeight
+      columns={docColumns(api_data, DialogTrigger)}
+      rows={docs}
+    />
   );
 }
