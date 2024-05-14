@@ -47,7 +47,6 @@ export default function DataGrid() {
                 law_id: row.id_dela,
                 doc_type: row.doc_type,
               }}
-              refresh={refresh}
             />
           )
         }

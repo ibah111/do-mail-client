@@ -1,9 +1,11 @@
 import { DataGridPremium, GridColDef } from '@mui/x-data-grid-premium';
 import { Doc } from '../../../Schemas/Doc';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import createCode from '../../../api/ScannerDocsApi/createCode';
 import { enqueueSnackbar } from 'notistack';
+import { useAppDispatch } from '../../../Reducer';
+import { setReload } from '../../../Reducer/Stater';
 
 class NeedForApi {
   mail_id: number;
@@ -11,10 +13,12 @@ class NeedForApi {
   doc_type: number;
 }
 
-function docColumns(
-  { mail_id, law_id, doc_type }: NeedForApi,
-  refresh: VoidFunction,
-): GridColDef<Doc>[] {
+function docColumns({
+  mail_id,
+  law_id,
+  doc_type,
+}: NeedForApi): GridColDef<Doc>[] {
+  const dispatch = useAppDispatch();
   const columns: GridColDef<Doc>[] = [
     { field: 'id', type: 'number', headerName: 'ID' },
     { field: 'doc_id', type: 'number', headerName: 'ID документа в контакте' },
@@ -31,38 +35,41 @@ function docColumns(
       width: 300,
       headerName: 'Штрихкод',
       description: 'Данное поле указывает номер штрихкода в ScannerDocs',
-      valueGetter(params) {
+      align: 'center',
+      headerAlign: 'center',
+      renderCell(params) {
         const barcode = params.row.barcode;
-        return barcode ? barcode : 'Штрихкод не присвоен';
+        const value = barcode;
+        return (
+          <>
+            {value ? (
+              value
+            ) : (
+              <>
+                <Typography variant="h6">{'Штрихкод не присвоен'}</Typography>
+                <Tooltip title={'Присвоить штрихкод'}>
+                  <IconButton
+                    onClick={() =>
+                      createCode(
+                        {
+                          contact_doc_id: params.row.doc_id,
+                          title: params.row.DocAttach?.name || '',
+                          law_act_id: law_id,
+                          mail_id: mail_id,
+                          doc_type: doc_type,
+                        },
+                        params.row.id,
+                      ).then(() => dispatch(setReload(true)))
+                    }
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )}
+          </>
+        );
       },
-    },
-    {
-      type: 'actions',
-      field: 'actions',
-      width: 150,
-      getActions: (params) => [
-        <>
-          {!params.row.barcode ? (
-            <Tooltip title={'Присвоить штрихкод'}>
-              <IconButton
-                onClick={() =>
-                  createCode({
-                    contact_doc_id: params.row.doc_id,
-                    title: params.row.DocAttach?.name || '',
-                    law_act_id: law_id,
-                    mail_id: mail_id,
-                    doc_type: doc_type,
-                  }).then(() => refresh())
-                }
-              >
-                <AddIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            'Баркод уже присовен'
-          )}
-        </>,
-      ],
     },
   ];
   return columns;
@@ -71,18 +78,9 @@ function docColumns(
 interface DetailDataProps {
   docs: Doc[];
   api_data: NeedForApi;
-  refresh: VoidFunction;
 }
-export default function DetailData({
-  docs,
-  api_data,
-  refresh,
-}: DetailDataProps) {
+export default function DetailData({ docs, api_data }: DetailDataProps) {
   return (
-    <DataGridPremium
-      autoHeight
-      columns={docColumns(api_data, refresh)}
-      rows={docs}
-    />
+    <DataGridPremium autoHeight columns={docColumns(api_data)} rows={docs} />
   );
 }
