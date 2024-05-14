@@ -8,10 +8,11 @@ import { enqueueSnackbar } from 'notistack';
 class NeedForApi {
   mail_id: number;
   law_id: number;
+  doc_type: number;
 }
 
 function docColumns(
-  { mail_id, law_id }: NeedForApi,
+  { mail_id, law_id, doc_type }: NeedForApi,
   refresh: VoidFunction,
 ): GridColDef<Doc>[] {
   const columns: GridColDef<Doc>[] = [
@@ -50,7 +51,7 @@ function docColumns(
                     title: params.row.DocAttach?.name || '',
                     law_act_id: law_id,
                     mail_id: mail_id,
-                    doc_type: 2,
+                    doc_type: doc_type,
                   }).then(() => refresh())
                 }
               >

@@ -45,6 +45,7 @@ export default function DataGrid() {
                 mail_id: row.id,
                 //@ts-ignore
                 law_id: row.id_dela,
+                doc_type: row.doc_type,
               }}
               refresh={refresh}
             />
