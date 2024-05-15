@@ -60,7 +60,7 @@ function docColumns(
                           'У документа нет типа, открываю диалог',
                           {
                             variant: 'warning',
-                            autoHideDuration: 5000,
+                            autoHideDuration: 2000,
                           },
                         );
                         DialogTrigger.dispatchEvent(

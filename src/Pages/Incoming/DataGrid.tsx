@@ -10,15 +10,22 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   FormControl,
   Grid,
+  InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
+  Tooltip,
+  Typography,
 } from '@mui/material';
 import { useAppDispatch } from '../../Reducer';
 import { setReload } from '../../Reducer/Stater';
 import UseTypeDialog from './Hooks/useTypeDialog';
 import React from 'react';
+import UpdateDocType from '../../api/UpdateDocType';
+import { enqueueSnackbar } from 'notistack';
 
 export enum DataGridEventsEnum {
   OpenTypeDialog = 'OpenTypeDialog',
@@ -44,6 +51,7 @@ export default function DataGrid() {
       value: 'Судебный приказ',
     },
   ];
+  const [type, setType] = React.useState<number>(0);
   const {
     loading,
     columns,
@@ -60,6 +68,13 @@ export default function DataGrid() {
   const { openTypeDialog, incomingId, handleCloseTypeDialog } = UseTypeDialog({
     DialogTarget,
   });
+  const handleDocTypeChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as unknown as number);
+  };
+  const condition = (): boolean => {
+    if (type) return false;
+    return true;
+  };
   return (
     <>
       <DataGridPremium
@@ -111,14 +126,24 @@ export default function DataGrid() {
           open={openTypeDialog}
           onClose={() => {
             handleCloseTypeDialog();
-            dispatch(setReload(true));
+            setType(0);
           }}
           fullWidth
         >
           <DialogTitle align="center">{`Какой тип документа у ${incomingId}`}</DialogTitle>
+          <Divider />
           <DialogContent>
             <FormControl fullWidth>
-              <Select>
+              <InputLabel id="doc-type">{'Тип документа'}</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Тип документа"
+                //@ts-ignore
+                value={type}
+                onChange={handleDocTypeChange}
+              >
+                <MenuItem>{'Не выбрано'}</MenuItem>
                 {types.map((type) => (
                   <MenuItem key={type.id} value={type.id}>
                     {type.value}
@@ -127,9 +152,34 @@ export default function DataGrid() {
               </Select>
             </FormControl>
           </DialogContent>
+          <Divider />
           <DialogActions>
-            <Button variant="contained" color="success" onClick={() => {}}>
-              {'Done'}
+            <Tooltip
+              title={<Typography>{'Изменить тип документа'}</Typography>}
+            >
+              <Button
+                disabled={condition()}
+                variant="contained"
+                color="success"
+                onClick={() =>
+                  UpdateDocType({
+                    incoming_id: incomingId,
+                    doc_type: type,
+                  }).then(() => {
+                    handleCloseTypeDialog();
+                    dispatch(setReload(true));
+                  })
+                }
+              >
+                {'Готово!'}
+              </Button>
+            </Tooltip>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => handleCloseTypeDialog()}
+            >
+              {'Отмена'}
             </Button>
           </DialogActions>
         </Dialog>
