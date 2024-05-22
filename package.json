@@ -59,7 +59,9 @@
     "vite-plugin-checker": "^0.5.6"
   },
   "scripts": {
-    "start": "vite",
+    "start": "NODE_ENV=prod vite",
+    "start:prod": "NODE_ENV=prod vite",
+    "start:dev":"NODE_ENV=dev vite",
     "build": "vite build",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix"
   },

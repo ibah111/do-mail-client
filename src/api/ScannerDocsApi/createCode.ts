@@ -10,10 +10,14 @@ class ScannerBodyRequest {
   doc_type: number;
   law_act_id: number;
 }
-export default function createCode(params: ScannerBodyRequest) {
+export default async function createCode(
+  params: ScannerBodyRequest,
+  doc_id: number,
+) {
   return requests
     .post('/123' + '/scanner', {
       ...params,
+      doc_id,
     })
     .then((res) => {
       console.log('result', res);
