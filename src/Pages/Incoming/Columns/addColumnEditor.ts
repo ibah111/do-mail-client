@@ -16,21 +16,21 @@ export default function addColumnEditor<
     editable: isAllow('editor'),
   });
   data.push({
+    editable: true,
+    description:
+      'Зависит от таблички из который автоматически были занесены данные',
     headerName: 'Тип дела',
     field: 'doc_type',
     type: 'number',
     valueGetter(params) {
-      /**
-       * 1 - Исполнительный лист, 2 - Судебный приказ
-       */
       const types = [
         {
           id: 1,
-          value: 'Исполнительный лист',
+          value: 'Судебная работа',
         },
         {
           id: 2,
-          value: 'Судебный приказ',
+          value: 'Исполнительное производство',
         },
       ];
 
