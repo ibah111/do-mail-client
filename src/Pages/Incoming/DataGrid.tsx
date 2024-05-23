@@ -25,7 +25,6 @@ import { setReload } from '../../Reducer/Stater';
 import UseTypeDialog from './Hooks/useTypeDialog';
 import React from 'react';
 import UpdateDocType from '../../api/UpdateDocType';
-import { enqueueSnackbar } from 'notistack';
 
 export enum DataGridEventsEnum {
   OpenTypeDialog = 'OpenTypeDialog',
@@ -44,11 +43,11 @@ export default function DataGrid() {
   const types = [
     {
       id: 1,
-      value: 'Исполнительный лист',
+      value: 'Судебная работа',
     },
     {
       id: 2,
-      value: 'Судебный приказ',
+      value: 'Исполнительное производство',
     },
   ];
   const [type, setType] = React.useState<number>(0);
