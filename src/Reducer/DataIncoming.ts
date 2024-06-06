@@ -30,6 +30,11 @@ const initialState: DataIncomingState = {
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
   },
+  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: {
+    [ArhiveType.NO]: startDataIncoming,
+    [ArhiveType.ARHIVE]: startDataIncoming,
+    [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+  },
 };
 const DataIncomingSlice = createSlice({
   name: 'DataIncoming',

@@ -33,7 +33,6 @@ export default function addColumnEditor<
           value: 'Исполнительное производство',
         },
       ];
-
       const doc_type_id = params.row.doc_type;
       if (doc_type_id) {
         const result = types.find((type) => type.id === doc_type_id);
