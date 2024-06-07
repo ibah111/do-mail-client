@@ -80,7 +80,7 @@ function docColumns(
                           {
                             contact_doc_id: params.row.doc_id,
                             title: params.row.DocAttach?.name || '',
-                            law_act_id: law_id,
+                            law_case_id: law_id,
                             mail_id: mail_id,
                             doc_type: doc_type,
                           },
