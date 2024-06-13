@@ -3,6 +3,7 @@ import getAllow, { AllowFunction } from '../../../hooks/getAllow';
 import {
   ArhiveType,
   DataIncomingType,
+  IncomingCreditAgreementProcessing,
   MailType,
 } from '../../../Types/dataIncoming';
 import IncomingCourtBailiffMailColumns from './IncomingCourtBailiffMail';
@@ -10,6 +11,7 @@ import IncomingCourtBailiffMailColumns2 from './IncomingCourtBailiffMail2';
 import IncomingCourtMailColumns from './IncomingCourtMail';
 import IncomingGovernmentMailColumns from './IncomingGovernmentMail';
 import IncomingMailColumns from './IncomingMail';
+import IncomingCreditProcessingColumns from './IncomingCreditAgreementColumns';
 type GridColumnMail<T extends MailType, K extends ArhiveType> = GridColDef<
   DataIncomingType[T][K]
 >[];
@@ -26,7 +28,8 @@ export const allColumns: ColumnsMailState = {
   [MailType.INCOMING_COURT_MAIL]: IncomingCourtMailColumns,
   [MailType.INCOMING_COURT_BAILIFF_MAIL]: IncomingCourtBailiffMailColumns,
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: IncomingCourtBailiffMailColumns2,
-  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: 
+  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]:
+    IncomingCreditProcessingColumns,
 };
 export default function getColumns<T extends MailType, K extends ArhiveType>(
   typ: T,

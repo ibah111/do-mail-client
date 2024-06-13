@@ -611,14 +611,16 @@ export class IncomingCreditAgreementProcessing {
    */
   @IsNumber()
   doc_type: number;
-  /**
-   * Архив
-   */
+
+  @Type(() => Doc)
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
   @Type(() => Arhive)
   Arhive?: Arhive;
-  /**
-   * Архивы
-   */
+
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }

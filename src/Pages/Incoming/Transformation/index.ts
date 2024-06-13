@@ -4,6 +4,7 @@ import {
   DataIncomingType,
   IncomingCourtBailiffMailState,
   IncomingCourtMailState,
+  IncomingCreditAgreementProcessing,
   IncomingGovernmentMailState,
   IncomingMailState,
   MailType,
@@ -31,6 +32,9 @@ export const allTransformations: TransformationState = {
   ),
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: ArhiveTransform(
     IncomingCourtBailiffMailState,
+  ),
+  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: ArhiveTransform(
+    IncomingCreditAgreementProcessing,
   ),
 };
 export default function getTransformations<
