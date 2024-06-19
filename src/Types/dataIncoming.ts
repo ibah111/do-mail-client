@@ -552,7 +552,79 @@ export class IncomingCourtBailiffMailState {
   @Type(() => Arhive)
   Arhives?: Arhive[];
 }
+/**
+ *  Обработка КД
+ */
+export class IncomingCreditAgreementProcessing {
+  /**
+   * id строки
+   */
+  @IsNumber()
+  id: number;
+  /**
+   * реестр
+   */
+  @IsString()
+  reestr: string;
+  /**
+   * имя документа
+   */
+  @IsString()
+  doc_name: string;
+  /**
+   * ФИО должника
+   */
+  @IsString()
+  fio: string;
+  /**
+   * kd
+   */
+  @IsString()
+  kd: string;
+  /**
+   * Когда обработано (сегодня)
+   */
+  @IsString()
+  kogda_otrabotano: string;
+  /**
+   * Кто обработал
+   */
+  @IsString()
+  kto_obrabotal: string;
+  /**
+   * Скан-копия КД
+   */
+  @IsString()
+  credit_agreement_scan_copy: string;
+  /**
+   * КД в наличие
+   */
+  @IsBoolean()
+  kd_nalichie: boolean;
+  /**
+   * id дела
+   */
+  @IsNumber()
+  id_dela: number;
+  /**
+   * Тип дела
+   */
+  @IsNumber()
+  doc_type: number;
 
+  @Type(() => Doc)
+  Docs?: Doc[];
+
+  @Type(() => User)
+  User?: User;
+
+  @Type(() => Arhive)
+  Arhive?: Arhive;
+
+  @Type(() => Arhive)
+  Arhives?: Arhive[];
+}
+//
 export enum ArhiveType {
   NO = 0,
   ARHIVE = 1,
@@ -564,6 +636,7 @@ export enum MailType {
   INCOMING_COURT_MAIL = 'IncomingCourtMail',
   INCOMING_COURT_BAILIFF_MAIL = 'IncomingCourtBailiffMail',
   INCOMING_COURT_BAILIFF_MAIL2 = 'IncomingCourtBailiffMail2',
+  INCOMING_CREDIT_AGREEMENT_PROCESSING = 'IncomingCreditAgreementProcessing',
 }
 
 export type ArhiveIncomingState<T> = {
@@ -599,6 +672,12 @@ export class DataIncomingState {
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: ArhiveIncomingState<
     findAndCount<IncomingCourtBailiffMailState>
   >;
+  /**
+   * Обработка КД
+   */
+  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: ArhiveIncomingState<
+    findAndCount<IncomingCreditAgreementProcessing>
+  >;
 }
 export class DataIncomingType {
   /**
@@ -621,4 +700,8 @@ export class DataIncomingType {
    * ИНТЕРНЕТ ПРИЕМНАЯ
    */
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: ArhiveIncomingState<IncomingCourtBailiffMailState>;
+  /**
+   * Обработка КД
+   */
+  [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: ArhiveIncomingState<IncomingCreditAgreementProcessing>;
 }

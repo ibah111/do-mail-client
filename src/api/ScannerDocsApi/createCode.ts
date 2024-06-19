@@ -8,7 +8,7 @@ class ScannerBodyRequest {
   contact_doc_id: number;
   mail_id: number;
   doc_type: number;
-  law_act_id: number;
+  law_case_id: number;
 }
 export default async function createCode(
   params: ScannerBodyRequest,

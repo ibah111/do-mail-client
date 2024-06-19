@@ -91,7 +91,7 @@ export default function useGrid<
         dataIncoming.rows,
       ),
       count: dataIncoming.count,
-    } as DataIncomingState[T][K]);
+    } as unknown as DataIncomingState[T][K]);
   React.useEffect(() => {
     refresh();
   }, [dataIncoming]);

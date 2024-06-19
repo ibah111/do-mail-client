@@ -5,6 +5,7 @@ const Incoming = React.lazy(() => import('../Pages/Incoming'));
 const Admin = React.lazy(() => import('../Pages/Admin'));
 const Remove = React.lazy(() => import('../Pages/Remove'));
 const OAuth = React.lazy(() => import('../Pages/Oauth'));
+const DocumentAdder = React.lazy(() => import('../Pages/DocumentAdder'));
 
 export interface Page {
   name: string;
@@ -22,6 +23,13 @@ export const usePages = (ability: AppAbility): Pages => [
     right: Action.Read,
     subject: Subject.Main,
     element: Main,
+  },
+  {
+    name: 'Внесение',
+    path: 'DocumentAdder',
+    right: Action.Read,
+    subject: Subject.DataIncoming,
+    element: DocumentAdder,
   },
   {
     name: 'Входящая почта',
