@@ -673,7 +673,7 @@ export class DataIncomingState {
     findAndCount<IncomingCourtBailiffMailState>
   >;
   /**
-   * Обработка КД
+   * ОБРАБОТКА КД
    */
   [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: ArhiveIncomingState<
     findAndCount<IncomingCreditAgreementProcessing>

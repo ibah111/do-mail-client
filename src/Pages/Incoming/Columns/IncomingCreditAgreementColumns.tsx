@@ -3,7 +3,7 @@ import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 
 export default function IncomingCreditProcessingColumns<
-  K extends DataIncomingType['IncomingCourtMail'][T],
+  K extends DataIncomingType['IncomingCreditAgreementProcessing'][T],
   T extends ArhiveType,
 >(isAllow?: AllowFunction, arhive?: T): GridColDef<K>[] {
   const data: GridColDef<K>[] = [

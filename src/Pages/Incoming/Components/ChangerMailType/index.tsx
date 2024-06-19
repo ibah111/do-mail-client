@@ -5,6 +5,8 @@ import { MailType } from '../../../../Types/dataIncoming';
 import CustomButton from './CustomButton';
 
 export default function ChangerMailType() {
+  const disabled = true;
+  const description = disabled ? 'В доработке' : '';
   return (
     <>
       <Can
@@ -47,6 +49,13 @@ export default function ChangerMailType() {
 
         <CustomButton value={MailType.INCOMING_COURT_BAILIFF_MAIL2}>
           Интернет-приемная
+        </CustomButton>
+
+        <CustomButton
+          value={MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING}
+          disabled
+        >
+          {`Обработка КД (${description})`}
         </CustomButton>
       </Can>
     </>
