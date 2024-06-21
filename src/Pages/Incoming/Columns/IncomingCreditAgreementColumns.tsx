@@ -33,24 +33,19 @@ export default function IncomingCreditProcessingColumns<
       type: 'string',
     },
     {
-      field: 'kogda_otrabotano',
-      headerName: 'Когда отработано',
-      type: 'string',
-    },
-    {
       field: 'kto_obrabotal',
       headerName: 'Кто обработал',
       type: 'string',
     },
     {
-      headerName: 'Копия кредитного договора',
-      field: 'credit_agreement_scan_copy',
-      type: 'string',
+      headerName: 'Наличие КД',
+      field: 'have_kd',
+      type: 'boolean',
     },
     {
-      headerName: 'КД наличие',
-      field: 'kd_nalichie',
-      type: 'string',
+      headerName: 'Копия кредитного договора',
+      field: 'scan_copy_kd',
+      type: 'boolean',
     },
     {
       field: 'id_dela',
@@ -61,6 +56,23 @@ export default function IncomingCreditProcessingColumns<
       field: 'doc_type',
       headerName: 'Тип документа',
       type: 'number',
+      valueGetter(params) {
+        const types = [
+          {
+            id: 1,
+            value: 'Судебная работа',
+          },
+          {
+            id: 2,
+            value: 'Исполнительное производство',
+          },
+        ];
+        const doc_type_id = params.row.doc_type;
+        if (doc_type_id) {
+          const result = types.find((type) => type.id === doc_type_id);
+          if (result) return result.value;
+        }
+      },
     },
   ];
   return data;
