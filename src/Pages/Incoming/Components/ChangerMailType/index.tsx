@@ -51,10 +51,7 @@ export default function ChangerMailType() {
           Интернет-приемная
         </CustomButton>
 
-        <CustomButton
-          value={MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING}
-          disabled
-        >
+        <CustomButton value={MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING}>
           {`Обработка КД (${description})`}
         </CustomButton>
       </Can>
