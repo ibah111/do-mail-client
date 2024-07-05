@@ -20,6 +20,16 @@ export default function IncomingCourtMailColumns<
   const data: GridColDef<K>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
+      headerName: 'Номер типа документа',
+      type: 'number',
+      field: 'type_of_document_id',
+    },
+    {
+      headerName: 'Наименование типа документа',
+      type: 'string',
+      field: 'type_of_document_name',
+    },
+    {
       field: 'date_post',
       headerName: ' Дата поступления',
       type: 'date',

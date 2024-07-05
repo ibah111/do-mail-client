@@ -12,13 +12,25 @@ import addColumnEditor from './addColumnEditor';
 const currencyFormatter = new Intl.NumberFormat('ru-Ru', {
   useGrouping: false,
 });
-
+/**
+ * ВКЛАДКА Госпочта
+ */
 export default function IncomingGovernmentMailColumns<
   K extends DataIncomingType['IncomingGovernmentMail'][T],
   T extends ArhiveType,
 >(isAllow: AllowFunction, arhive?: T): GridColDef<K>[] {
   const data: GridColDef<K>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
+    {
+      headerName: 'Номер типа документа',
+      type: 'number',
+      field: 'type_of_document_id',
+    },
+    {
+      headerName: 'Наименование типа документа',
+      type: 'string',
+      field: 'type_of_document_name',
+    },
     {
       field: 'date_post',
       headerName: ' Дата поступления',

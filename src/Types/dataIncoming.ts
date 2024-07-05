@@ -170,6 +170,16 @@ export class IncomingMailState {
   @IsNumber()
   doc_type: number;
   /**
+   *  Номер типа документа
+   */
+  @IsNumber()
+  type_of_document_id: number;
+  /**
+   *  Наименование типа документа
+   */
+  @IsString()
+  type_of_document_name: string;
+  /**
    * Прикрепленные документы
    */
   @Type(() => Doc)
@@ -302,6 +312,16 @@ export class IncomingGovernmentMailState {
   @IsNumber()
   doc_type: number;
   /**
+   *  Номер типа документа
+   */
+  @IsNumber()
+  type_of_document_id: number;
+  /**
+   *  Наименование типа документа
+   */
+  @IsString()
+  type_of_document_name: string;
+  /**
    * Прикрепленные документы
    */
   @Type(() => Doc)
@@ -426,6 +446,16 @@ export class IncomingCourtMailState {
   @IsNumber()
   doc_type: number;
   /**
+   *  Номер типа документа
+   */
+  @IsNumber()
+  type_of_document_id: number;
+  /**
+   *  Наименование типа документа
+   */
+  @IsString()
+  type_of_document_name: string;
+  /**
    * Прикрепленные документы
    */
   @Type(() => Doc)
@@ -538,6 +568,16 @@ export class IncomingCourtBailiffMailState {
   @IsNumber()
   doc_type: number;
   /**
+   *  Номер типа документа
+   */
+  @IsNumber()
+  type_of_document_id: number;
+  /**
+   *  Наименование типа документа
+   */
+  @IsString()
+  type_of_document_name: string;
+  /**
    * Прикрепленные документы
    */
   @Type(() => Doc)
@@ -611,6 +651,16 @@ export class IncomingCreditAgreementProcessing {
    */
   @IsNumber()
   doc_type: number;
+  /**
+   *  Номер типа документа
+   */
+  @IsNumber()
+  type_of_document_id: number;
+  /**
+   *  Наименование типа документа
+   */
+  @IsString()
+  type_of_document_name: string;
 
   @Type(() => Doc)
   Docs?: Doc[];

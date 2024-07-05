@@ -1,7 +1,9 @@
 import { GridColDef } from '@mui/x-data-grid-premium';
 import { AllowFunction } from '../../../hooks/getAllow';
 import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
-
+/**
+ * Обработка КД
+ */
 export default function IncomingCreditProcessingColumns<
   K extends DataIncomingType['IncomingCreditAgreementProcessing'][T],
   T extends ArhiveType,
@@ -11,6 +13,21 @@ export default function IncomingCreditProcessingColumns<
       field: 'id',
       headerName: 'ID',
       type: 'number',
+    },
+    {
+      headerName: 'Номер типа документа',
+      type: 'number',
+      field: 'type_of_document_id',
+    },
+    {
+      headerName: 'Наименование типа документа',
+      type: 'string',
+      field: 'type_of_document_name',
+    },
+    {
+      headerName: 'Кто обработал',
+      field: 'kto_obrabotal',
+      type: 'string',
     },
     {
       field: 'reestr',

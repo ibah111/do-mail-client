@@ -8,13 +8,29 @@ import { checkDateGrid } from '../../../utils/checkDate';
 import { generateName } from '../../../utils/generateName';
 import addColumnArhive from './addColumnArhive';
 import addColumnEditor from './addColumnEditor';
-
+/**
+ * Интернет приемная
+ */
 export default function IncomingCourtBailiffMailColumns2<
   K extends DataIncomingType['IncomingCourtBailiffMail2'][T],
   T extends ArhiveType,
 >(isAllow: AllowFunction, arhive?: T): GridColDef<K>[] {
   const data: GridColDef<K>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
+    {
+      field: 'dick',
+    },
+    {
+      headerName: 'Номер типа документа',
+      type: 'number',
+      field: 'type_of_document_id',
+    },
+    {
+      headerName: 'Наименование типа документа',
+      type: 'string',
+      field: 'type_of_document_name',
+    },
+
     {
       field: 'date_post',
       headerName: ' Дата поступления',
