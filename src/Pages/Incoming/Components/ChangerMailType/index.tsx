@@ -52,7 +52,7 @@ export default function ChangerMailType() {
         </CustomButton>
 
         <CustomButton value={MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING}>
-          {`Обработка КД (${description})`}
+          {`Обработка КД`}
         </CustomButton>
       </Can>
     </>
