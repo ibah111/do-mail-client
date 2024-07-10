@@ -94,7 +94,6 @@ export default function IncomingGovernmentMailColumns<
       editable: isAllow('editor'),
     },
     { field: 'kogda_otdano', headerName: ' Когда обработано', type: 'date' },
-    { field: 'kto_obrabotal', headerName: ' Кто обработал', type: 'string' },
     {
       field: 'id_kto_obrabotal',
       headerName: 'Кто обработал',

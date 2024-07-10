@@ -25,11 +25,6 @@ export default function IncomingCreditProcessingColumns<
       field: 'type_of_document_name',
     },
     {
-      headerName: 'Кто обработал',
-      field: 'kto_obrabotal',
-      type: 'string',
-    },
-    {
       field: 'reestr',
       headerName: 'Реестр',
       type: 'string',
