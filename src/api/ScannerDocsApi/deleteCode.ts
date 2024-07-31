@@ -12,10 +12,18 @@ export default async function deleteCode({
   barcode,
 }: deleteCodeInput) {
   const url = '/123/deleteBarcode';
-  return await requests.delete(url, {
-    data: {
-      incoming_id,
-      barcode,
-    },
-  });
+
+  try {
+    return await requests.delete(url, {
+      data: {
+        incoming_id,
+        barcode,
+      },
+    });
+  } catch (error) {
+    const error_message = error as string;
+    enqueueSnackbar(error_message, {
+      variant: 'error',
+    });
+  }
 }
