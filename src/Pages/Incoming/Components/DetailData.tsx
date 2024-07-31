@@ -7,6 +7,8 @@ import { enqueueSnackbar } from 'notistack';
 import { useAppDispatch } from '../../../Reducer';
 import { setReload } from '../../../Reducer/Stater';
 import { DataGridEvents, DataGridEventsEnum } from '../DataGrid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import deleteCode from '../../../api/ScannerDocsApi/deleteCode';
 
 class NeedForApi {
   mail_id: number;
@@ -43,18 +45,33 @@ function docColumns(
         return (
           <>
             {value ? (
-              value
+              <>
+                {value}
+                <>
+                  <IconButton
+                    onClick={() => {
+                      const incoming_id = params.row.incoming_id;
+                      deleteCode({
+                        barcode,
+                        incoming_id,
+                      }).then(() => {
+                        enqueueSnackbar('Штрихкод удалён', {
+                          variant: 'warning',
+                        });
+                        dispatch(setReload(true));
+                      });
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              </>
             ) : (
               <>
-                <Typography variant="h6">{'Штрихкод не присвоен'}</Typography>
+                {'Штрихкод не присвоен'}
                 <Tooltip title={'Присвоить штрихкод'}>
                   <IconButton
                     onClick={() => {
-                      console.log('mail_id', mail_id);
-                      /**
-                       * если нет типа документа то
-                       * его нужно присвоить и только после этого
-                       */
                       if (!doc_type) {
                         enqueueSnackbar(
                           'У документа нет типа, открываю диалог',
