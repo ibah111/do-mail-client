@@ -9,6 +9,7 @@ import { setReload } from '../../../Reducer/Stater';
 import { DataGridEvents, DataGridEventsEnum } from '../DataGrid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import deleteCode from '../../../api/ScannerDocsApi/deleteCode';
+import OpenDocuments from './DetailedDataComponents/OpenDocument';
 
 class NeedForApi {
   mail_id: number;
@@ -113,6 +114,17 @@ function docColumns(
           </>
         );
       },
+    },
+    {
+      headerName: 'Действия',
+      field: 'actions',
+      type: 'actions',
+      getActions: (params) => [
+        <OpenDocuments
+          id={Number(params.row.doc_id)}
+          title={params.row.DocAttach?.name || ''}
+        />,
+      ],
     },
   ];
   return columns;
