@@ -11,7 +11,12 @@ interface DialogFileProps {
 export default function DialogFile({ open, onClose, file }: DialogFileProps) {
   const data = React.useMemo(
     () =>
-      file ? new URL('documents/' + file.toString(), server()).toString() : '',
+      file
+        ? new URL(
+            'documents/' + file.toString(),
+            'https://apps.usb.ru:3006/',
+          ).toString()
+        : '',
     [file],
   );
   console.log(data);
