@@ -25,13 +25,6 @@ export const usePages = (ability: AppAbility): Pages => [
     element: Main,
   },
   {
-    name: 'Внесение',
-    path: 'DocumentAdder',
-    right: Action.Read,
-    subject: Subject.DataIncoming,
-    element: DocumentAdder,
-  },
-  {
     name: 'Входящая почта',
     path: '/incoming',
     right: Action.Read,

@@ -7,7 +7,7 @@ import { ArhiveType, DataIncomingType } from '../../../Types/dataIncoming';
 export default function IncomingCreditProcessingColumns<
   K extends DataIncomingType['IncomingCreditAgreementProcessing'][T],
   T extends ArhiveType,
->(isAllow?: AllowFunction, arhive?: T): GridColDef<K>[] {
+>(isAllow: AllowFunction, arhive?: T): GridColDef<K>[] {
   const data: GridColDef<K>[] = [
     {
       field: 'id',
@@ -53,11 +53,13 @@ export default function IncomingCreditProcessingColumns<
       headerName: 'Наличие КД',
       field: 'have_kd',
       type: 'boolean',
+      editable: isAllow('editor'),
     },
     {
       headerName: 'Копия кредитного договора',
       field: 'scan_copy_kd',
       type: 'boolean',
+      editable: isAllow('editor'),
     },
     {
       field: 'id_dela',
