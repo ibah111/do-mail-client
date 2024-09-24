@@ -52,6 +52,15 @@ export default function AddArhive({ mail }: AddArhiveProps) {
             Исполнительные документы
           </MenuItem>
         </Can>
+        <Can
+          I={Action.Create}
+          this={subject(Subject.DataIncoming, {
+            mode: [mail],
+            arhive: [ArhiveType.PTS],
+          })}
+        >
+          <MenuItem onClick={sendArhive(ArhiveType.PTS)}>ПТС</MenuItem>
+        </Can>
       </Menu>
     </>
   );
