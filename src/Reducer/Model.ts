@@ -39,6 +39,15 @@ const startModelsState: ArhiveState = {
     ...startModelState,
     sortModel: [{ field: 'Arhive.createdAt', sort: 'asc' }],
   },
+  [ArhiveType.PTS]: {
+    ...startModelState,
+    sortModel: [
+      {
+        field: 'Arhive.createdAt',
+        sort: 'asc',
+      },
+    ],
+  },
 };
 const initialState: ModelState = {
   [MailType.INCOMING_MAIL]: startModelsState,

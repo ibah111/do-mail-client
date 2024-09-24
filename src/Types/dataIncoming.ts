@@ -679,6 +679,7 @@ export enum ArhiveType {
   NO = 0,
   ARHIVE = 1,
   ARHIVE_LAW_EXEC = 2,
+  PTS = 3,
 }
 export enum MailType {
   INCOMING_MAIL = 'IncomingMail',
@@ -693,6 +694,7 @@ export type ArhiveIncomingState<T> = {
   [ArhiveType.NO]: T;
   [ArhiveType.ARHIVE]: T;
   [ArhiveType.ARHIVE_LAW_EXEC]: T;
+  [ArhiveType.PTS]: T;
 };
 export class DataIncomingState {
   /**

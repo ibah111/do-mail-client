@@ -26,6 +26,13 @@ const arhives: IArhive[] = [
       arhive: [ArhiveType.ARHIVE_LAW_EXEC],
     },
   },
+  {
+    name: 'ПТС',
+    value: 3,
+    condition: {
+      arhive: [ArhiveType.PTS],
+    },
+  },
 ];
 export default function ChangerArhiveType() {
   const arhive = useAppSelector((state) => state.Stater.ArhiveType);

@@ -9,31 +9,37 @@ const initialState: DataIncomingState = {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
   [MailType.INCOMING_GOVERNMENT_MAIL]: {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
   [MailType.INCOMING_COURT_MAIL]: {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
   [MailType.INCOMING_COURT_BAILIFF_MAIL]: {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
   [MailType.INCOMING_COURT_BAILIFF_MAIL2]: {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
   [MailType.INCOMING_CREDIT_AGREEMENT_PROCESSING]: {
     [ArhiveType.NO]: startDataIncoming,
     [ArhiveType.ARHIVE]: startDataIncoming,
     [ArhiveType.ARHIVE_LAW_EXEC]: startDataIncoming,
+    [ArhiveType.PTS]: startDataIncoming,
   },
 };
 const DataIncomingSlice = createSlice({

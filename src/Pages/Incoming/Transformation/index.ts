@@ -19,6 +19,7 @@ function ArhiveTransform<T>(data: ClassConstructor<T>) {
     [ArhiveType.NO]: data,
     [ArhiveType.ARHIVE]: data,
     [ArhiveType.ARHIVE_LAW_EXEC]: data,
+    [ArhiveType.PTS]: data,
   };
 }
 export const allTransformations: TransformationState = {
