@@ -1,3 +1,6 @@
+stage:
+  - test
+  - release
 variables:
   ADDITIONAL_CA_CERT_BUNDLE: |
     -----BEGIN CERTIFICATE-----
@@ -20,7 +23,13 @@ variables:
     6LwI49yALti54xK0QNjTBtcpq5i2n9CdrMnoXjuSqSpONoMrCYtJZGA8MvTMxgrd
     GQImPcyZJGUuEEJtYKEWAabYtJ5fDBGTJQ4i9SJPe7A794E=
     -----END CERTIFICATE-----
-test:
+test_job:
+  stage: test
+  script:
+    - yarn
+    - yarn build
+release_job:
+  stage: release
   script:
     - yarn
     - yarn build
