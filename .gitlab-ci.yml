@@ -22,9 +22,5 @@ variables:
     -----END CERTIFICATE-----
 test:
   script:
-    - cat file1.txt file2.txt | grep -q 'Hello world'
-package:
-  script: cat file1.txt file2.txt | gzip > packaged.gz
-  artifacts:
-    paths:
-      - packaged.gz
+    - yarn
+    - yarn build
