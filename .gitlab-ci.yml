@@ -1,6 +1,6 @@
-stage:
+stages:
   - test
-  - release
+  - build
 variables:
   ADDITIONAL_CA_CERT_BUNDLE: |
     -----BEGIN CERTIFICATE-----
@@ -25,11 +25,45 @@ variables:
     -----END CERTIFICATE-----
 test_job:
   stage: test
+  before_script:
+    - node -v
+    - corepack enable
+    - yarn set version berry
+    - yarn config set compressionLevel mixed
+    - yarn config set -H enableImmutableInstalls false
+    - yarn config set nodeLinker node-modules
+    - yarn config set enableStrictSsl false
+    - yarn config set enableGlobalCache false
+    - yarn config set "npmRegistries[\"//${CI_SERVER_HOST}/api/v4/packages/npm/\"].npmAlwaysAuth" true
+    - yarn config set "npmRegistries[\"//${CI_SERVER_HOST}/api/v4/packages/npm/\"].npmAuthToken" "${CI_JOB_TOKEN}"
+    - yarn config set npmScopes.contact.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
+    - yarn config set npmScopes.motivation.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
+    - yarn config set npmScopes.tools.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
   script:
     - yarn
     - yarn build
-release_job:
-  stage: release
+    - echo "Test job completed"
+build_job:
+  stage: build
+  before_script:
+    - node -v
+    - corepack enable
+    - yarn set version berry
+    - yarn config set compressionLevel mixed
+    - yarn config set -H enableImmutableInstalls false
+    - yarn config set nodeLinker node-modules
+    - yarn config set enableStrictSsl false
+    - yarn config set enableGlobalCache false
+    - yarn config set "npmRegistries[\"//${CI_SERVER_HOST}/api/v4/packages/npm/\"].npmAlwaysAuth" true
+    - yarn config set "npmRegistries[\"//${CI_SERVER_HOST}/api/v4/packages/npm/\"].npmAuthToken" "${CI_JOB_TOKEN}"
+    - yarn config set npmScopes.contact.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
+    - yarn config set npmScopes.motivation.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
+    - yarn config set npmScopes.tools.npmRegistryServer "https://${CI_SERVER_HOST}/api/v4/packages/npm/"
   script:
     - yarn
     - yarn build
+    - apt-get update -qq && apt-get install -y -qq sshpass
+    - sshpass -e scp -o stricthostkeychecking=no -r build/* $HOST_USER@$HOST_NAME:$PATH_UPLOAD
+    - echo "build job completed"
+  only:
+    - tags
