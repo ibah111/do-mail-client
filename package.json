@@ -22,6 +22,7 @@
     "@react-pdf-viewer/page-navigation": "^3.12.0",
     "@react-pdf-viewer/search": "^3.12.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "@release-it/conventional-changelog": "^8.0.2",
     "@tools/health-status-react-component": "^0.0.8",
     "@tools/rxjs-pipes": "^1.1.0",
     "@types/lodash": "^4.14.191",
@@ -43,6 +44,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "reflect-metadata": "^0.1.13",
+    "release-it": "^17.6.0",
     "rxjs": "^7.8.1",
     "socket.io-client": "^4.6.1",
     "sprintf-js": "^1.1.3",
@@ -58,6 +60,8 @@
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-legacy": "^4.0.1",
     "@vitejs/plugin-react": "^3.1.0",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -75,7 +79,10 @@
     "start:prod": "NODE_ENV=prod vite",
     "start:dev": "NODE_ENV=dev vite",
     "build": "vite build",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix"
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "release:patch": "dotenv release-it patch --",
+    "release:minor": "dotenv release-it minor --",
+    "release:major": "dotenv release-it major --"
   },
   "eslintConfig": {
     "extends": [
