@@ -8,6 +8,8 @@ import { checkDateGrid } from '../../../utils/checkDate';
 import { generateName } from '../../../utils/generateName';
 import addColumnArhive from './addColumnArhive';
 import addColumnEditor from './addColumnEditor';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 /**
  * ВКЛАДКА Входящая почта
  */
@@ -46,6 +48,36 @@ export default function IncomingMailColumns<
       headerName: 'Приставы',
       type: 'boolean',
       editable: isAllow('editor'),
+    },
+    {
+      field: 'return_reason',
+      headerName: 'Возврат',
+      align: 'center',
+      headerAlign: 'center',
+      editable: isAllow('editor'),
+      renderCell: (params) => {
+        const value = params.row.return_reason;
+        if (value) {
+          if (value.length === 0)
+            return (
+              <>
+                <CloseIcon />
+              </>
+            );
+          else
+            return (
+              <>
+                <CheckIcon />
+                {value}
+              </>
+            );
+        } else
+          return (
+            <>
+              <CloseIcon />
+            </>
+          );
+      },
     },
     {
       field: 'adr_otp',

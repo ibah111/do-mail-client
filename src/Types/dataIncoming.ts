@@ -179,6 +179,10 @@ export class IncomingMailState {
    */
   @IsString()
   type_of_document_name: string;
+
+  @IsString()
+  return_reason?: string | '';
+
   /**
    * Прикрепленные документы
    */
