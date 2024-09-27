@@ -1,5 +1,7 @@
 
 
+## [2.3.1](https://git.usb.ru/do-mail/client/compare/v2.3.0...v2.3.1) (2024-09-27)
+
 ## [2.3.0](https://git.usb.ru/do-mail/client/compare/v2.2.1...v2.3.0) (2024-09-27)
 
 
