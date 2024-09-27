@@ -63,6 +63,7 @@ build_job:
     - yarn
     - yarn build
     - apt-get update -qq && apt-get install -y -qq sshpass
+    - export SSHPASS=$HOST_PASSWORD
     - sshpass -e scp -o stricthostkeychecking=no -r build/* $HOST_USER@$HOST_NAME:$PATH_UPLOAD
     - echo "build job completed"
   only:
