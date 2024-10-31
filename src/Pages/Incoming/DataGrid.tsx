@@ -25,11 +25,16 @@ import { setReload } from '../../Reducer/Stater';
 import UseTypeDialog from './Hooks/useTypeDialog';
 import React from 'react';
 import UpdateDocType from '../../api/UpdateDocType';
+import MultiEditControl from './Components/MultiEdit/MultiEditControl';
+import MultiEdit from './Components/MultiEdit/MultiEdit';
 
 export enum DataGridEventsEnum {
   OpenTypeDialog = 'OpenTypeDialog',
+  OpenMultiEditDialog = 'OpenMultiEditDialog',
 }
-export class DataGridEvents<Value = number | string | object> extends Event {
+export class DataGridEvents<
+  Value = number | string | object | number[],
+> extends Event {
   value: Value | undefined;
   constructor(type: DataGridEventsEnum, value?: Value) {
     super(type);
@@ -63,8 +68,14 @@ export default function DataGrid() {
     processRowUpdate,
     setColumnVisibilityModel,
   } = useGrid();
-
   const { openTypeDialog, incomingId, handleCloseTypeDialog } = UseTypeDialog({
+    DialogTarget,
+  });
+  const {
+    handleClose: editHandleClose,
+    ids,
+    open: editOpen,
+  } = MultiEditControl({
     DialogTarget,
   });
   const handleDocTypeChange = (event: SelectChangeEvent) => {
@@ -116,10 +127,18 @@ export default function DataGrid() {
           toolbar: Toolbar,
           pagination: CustomPagination,
         }}
+        slotProps={{
+          toolbar: {
+            DialogTarget,
+          },
+        }}
         filterMode="server"
         keepNonExistentRowsSelected
         rows={data.rows}
       />
+      {editOpen && (
+        <MultiEdit open={editOpen} onClose={editHandleClose} ids={ids} />
+      )}
       {openTypeDialog && (
         <Dialog
           open={openTypeDialog}
