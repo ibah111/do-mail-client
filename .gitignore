@@ -25,3 +25,4 @@ yarn-error.log*
 .yarnrc.yml
 /src/utils/.version.js
 .env
+*.log
