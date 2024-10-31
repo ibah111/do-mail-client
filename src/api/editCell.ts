@@ -19,7 +19,7 @@ export default async function editCell(
   const MailType = store.getState().Stater.MailType;
   const ArhiveType = store.getState().Stater.ArhiveType;
   try {
-    const response = await requests.post<boolean>('/edit', {
+    const response = await requests.post<boolean>('/Edit/EditIncoming', {
       id,
       name: pres ? pres + name : name,
       value,
