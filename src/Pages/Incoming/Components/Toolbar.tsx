@@ -17,7 +17,15 @@ import { Can } from '../../../Context/Ability';
 import { Action, Subject } from '../../../casl/casl.factory';
 import { subject } from '@casl/ability';
 import { ArhiveType } from '../../../Types/dataIncoming';
-export default function Toolbar() {
+import MultiEdit from './MultiEdit/MultiEdit';
+import { Button } from '@mui/material';
+import { DataGridEvents, DataGridEventsEnum } from '../DataGrid';
+
+interface ToolbarInterface {
+  DialogTarget: EventTarget;
+}
+
+export default function Toolbar({ DialogTarget }: ToolbarInterface) {
   const ArhiveTypeSelect = useAppSelector((state) => state.Stater.ArhiveType);
   const MailTypeSelect = useAppSelector((state) => state.Stater.MailType);
   const lengthSelect = useAppSelector(
@@ -25,12 +33,16 @@ export default function Toolbar() {
       state.Model[state.Stater.MailType][state.Stater.ArhiveType].selectionModel
         .length,
   );
+  const ids = useAppSelector(
+    (state) =>
+      state.Model[state.Stater.MailType][state.Stater.ArhiveType]
+        .selectionModel,
+  ) as number[];
   return (
     <GridToolbarContainer>
       <ReloadButton />
       <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-
       <GridToolbarDensitySelector />
       <GridToolbarExport />
       <ChangerMailType />
@@ -76,12 +88,32 @@ export default function Toolbar() {
           )}
         </>
       </Can>
-      <Can
-        I={Action.Delete}
-        this={subject(Subject.DataIncoming, { mode: [MailTypeSelect] })}
-      >
-        <Remove />
-      </Can>
+
+      {lengthSelect > 0 && (
+        <Can
+          I={Action.Delete}
+          this={subject(Subject.DataIncoming, { mode: [MailTypeSelect] })}
+        >
+          <Button
+            color="warning"
+            variant="contained"
+            size="small"
+            onClick={() => {
+              DialogTarget.dispatchEvent(
+                new DataGridEvents(DataGridEventsEnum.OpenMultiEditDialog, ids),
+              );
+            }}
+          >
+            {'Ред.'}
+          </Button>
+          <Can
+            I={Action.Delete}
+            this={subject(Subject.DataIncoming, { mode: [MailTypeSelect] })}
+          >
+            <Remove />
+          </Can>
+        </Can>
+      )}
     </GridToolbarContainer>
   );
 }
