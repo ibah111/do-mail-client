@@ -88,7 +88,22 @@ export default function Toolbar({ DialogTarget }: ToolbarInterface) {
           )}
         </>
       </Can>
-
+      <Can
+        I={Action.Delete}
+        this={subject(Subject.DataIncoming, { mode: [MailTypeSelect] })}
+      >
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() =>
+            DialogTarget.dispatchEvent(
+              new DataGridEvents(DataGridEventsEnum.OpenCreateUnknownDialog),
+            )
+          }
+        >
+          Создать неопознанное
+        </Button>
+      </Can>
       {lengthSelect > 0 && (
         <Can
           I={Action.Delete}

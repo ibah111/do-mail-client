@@ -27,6 +27,7 @@ import IncomingCourtMailColumns from '../../Columns/IncomingCourtMail';
 import { keyBy } from 'lodash';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import { DatePicker } from '@mui/x-date-pickers-pro';
+import moment from 'moment';
 
 interface MultiEditProps {
   open: boolean;
@@ -162,7 +163,7 @@ interface NumberCustomProps {
   onChange: (args: { target: { name: string; value: string } }) => void;
   name: string;
 }
-export const NumberFormatCustom = React.forwardRef<
+const NumberFormatCustom = React.forwardRef<
   HTMLInputElement,
   NumberCustomProps
 >(function NumberFormatCustom(props, ref) {
@@ -202,7 +203,6 @@ class Interface {
 }
 
 export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
-  const [count, setCount] = React.useState<number>(1);
   const [key, setKey] = React.useState<string>('');
   const [multiEditValue, setMultiEditValue] = React.useState<
     string | number | boolean | Date | null
@@ -218,19 +218,13 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
       ? 'Номер'
       : 'Неизвестно';
 
-  const request = () => {};
-
   function SelectGroup() {
     const [valueKey, setValueKey] = React.useState('');
-    // const [newValue, set_newValue] = React.useState<
-    //   string | number | boolean | Date
-    // >();
     const handleChange = (event: SelectChangeEvent) => {
       const value = event.target.value as string;
       const key = columns.filter((item) => item.field === value)[0].type;
       setValueKey(value);
       setKey(key);
-      setMultiEditValue(null);
     };
 
     const ConditionElement = () => {
@@ -245,12 +239,14 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
           <TextField
             fullWidth
             label={label}
+            value={multiEditValue}
             onChange={(event) => onChange(event)}
           />
         );
       } else if (key === 'boolean') {
         return (
           <Checkbox
+            value={multiEditValue}
             onChange={(event) => {
               onChange(event);
             }}
@@ -271,6 +267,7 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
       } else if (key === 'date') {
         return (
           <DatePicker
+            value={moment(multiEditValue as Date)}
             onChange={(event) => onChange(event)}
             label={label}
             slotProps={{
@@ -307,6 +304,7 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
                       const selectedType = columns.filter(
                         (item) => item.field === selectedItem,
                       )[0].type;
+                      setValueKey(selectedType);
                     }}
                   >
                     {`${column.headerName} "Тип поля": ${typeString(
@@ -324,55 +322,19 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
       </>
     );
   }
-  const condition = count > 1;
   return (
     <Dialog open={open} onClose={onClose} maxWidth={'md'} fullWidth>
-      <DialogTitle align="center">{`Мульти-редактирование. Элементы на редактирование: ${count}`}</DialogTitle>
+      <DialogTitle align="center">{`Мульти-редактирование. Строк на редактирование: ${ids.length}`}</DialogTitle>
       <Divider />
       <DialogContent>
         <Grid container rowGap={1}>
-          {count > 0 &&
-            Array.from({ length: count }, () => (
-              <Grid item xs={12}>
-                <SelectGroup />
-              </Grid>
-            ))}
+          <Grid item xs={12}>
+            <SelectGroup />
+          </Grid>
         </Grid>
       </DialogContent>
       <Divider />
       <DialogActions>
-        {/* <Grid alignContent={'center'} container spacing={1}>
-          <Grid item container>
-            <Grid item>
-              <Tooltip title={'Добавить элемент на редактирование'}>
-                <IconButton
-                  size="small"
-                  onClick={() => {
-                    setCount(count + 1);
-                  }}
-                >
-                  <AddIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              {condition && (
-                <Tooltip title={'Убрать элемент на редактирование'}>
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      if (condition) {
-                        setCount(count - 1);
-                      }
-                    }}
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </Grid>
-          </Grid>
-        </Grid> */}
         {multiEditValue ? (
           <Grid>
             <Button

@@ -27,10 +27,13 @@ import React from 'react';
 import UpdateDocType from '../../api/UpdateDocType';
 import MultiEditControl from './Components/MultiEdit/MultiEditControl';
 import MultiEdit from './Components/MultiEdit/MultiEdit';
+import CreateUnknownDialog from './Components/CreateUnknown/CreateUnknownDialog';
+import CreateUnknownControl from './Components/CreateUnknown/CreateUnknownControl';
 
 export enum DataGridEventsEnum {
   OpenTypeDialog = 'OpenTypeDialog',
   OpenMultiEditDialog = 'OpenMultiEditDialog',
+  OpenCreateUnknownDialog = 'OpenCreateUnknownDialog',
 }
 export class DataGridEvents<
   Value = number | string | object | number[],
@@ -78,6 +81,12 @@ export default function DataGrid() {
   } = MultiEditControl({
     DialogTarget,
   });
+
+  const { open: createUnkownOpen, onClose: createUnknownOnClose } =
+    CreateUnknownControl({
+      DialogTarget,
+    });
+
   const handleDocTypeChange = (event: SelectChangeEvent) => {
     setType(event.target.value as unknown as number);
   };
@@ -136,6 +145,12 @@ export default function DataGrid() {
         keepNonExistentRowsSelected
         rows={data.rows}
       />
+      {createUnkownOpen && (
+        <CreateUnknownDialog
+          open={createUnkownOpen}
+          onClose={createUnknownOnClose}
+        />
+      )}
       {editOpen && (
         <MultiEdit open={editOpen} onClose={editHandleClose} ids={ids} />
       )}
