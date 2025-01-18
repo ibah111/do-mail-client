@@ -34,11 +34,6 @@ interface MultiEditProps {
   ids: number[];
 }
 
-class Element {
-  key: keyof IncomingMailState;
-  key_type: 'string' | 'number' | 'date';
-}
-
 class Cols {
   id: number;
   field: string;
@@ -209,6 +204,9 @@ class Interface {
 export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
   const [count, setCount] = React.useState<number>(1);
   const [key, setKey] = React.useState<string>('');
+  const [multiEditValue, setMultiEditValue] = React.useState<
+    string | number | boolean | Date | null
+  >();
   const typeString = (type: string) =>
     type === 'string'
       ? 'Строка'
@@ -223,24 +221,41 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
   const request = () => {};
 
   function SelectGroup() {
-    const [value, setValue] = React.useState('');
-    const [newValue, set_newValue] = React.useState<
-      string | number | boolean | Date
-    >();
+    const [valueKey, setValueKey] = React.useState('');
+    // const [newValue, set_newValue] = React.useState<
+    //   string | number | boolean | Date
+    // >();
     const handleChange = (event: SelectChangeEvent) => {
       const value = event.target.value as string;
       const key = columns.filter((item) => item.field === value)[0].type;
-      setValue(value);
+      setValueKey(value);
       setKey(key);
+      setMultiEditValue(null);
     };
 
     const ConditionElement = () => {
       const label = `Новое значение типом: "${typeString(key)}"`;
-
+      const onChange = (event: React.ChangeEvent<any> | unknown) => {
+        //@ts-ignore
+        const value = event.target.value;
+        setMultiEditValue(value);
+      };
       if (key === 'string') {
-        return <TextField fullWidth label={label} />;
+        return (
+          <TextField
+            fullWidth
+            label={label}
+            onChange={(event) => onChange(event)}
+          />
+        );
       } else if (key === 'boolean') {
-        return <Checkbox />;
+        return (
+          <Checkbox
+            onChange={(event) => {
+              onChange(event);
+            }}
+          />
+        );
       } else if (key === 'number') {
         return (
           <TextField
@@ -249,11 +264,14 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
             InputProps={{
               inputComponent: NumberFormatCustom,
             }}
+            value={multiEditValue}
+            onChange={(event) => onChange(event)}
           />
         );
       } else if (key === 'date') {
         return (
           <DatePicker
+            onChange={(event) => onChange(event)}
             label={label}
             slotProps={{
               textField: {
@@ -275,7 +293,7 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
               <Select
                 labelId="key_id"
                 id="key"
-                value={value}
+                value={valueKey}
                 label="Ключ"
                 onChange={handleChange}
               >
@@ -323,7 +341,7 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
       </DialogContent>
       <Divider />
       <DialogActions>
-        <Grid alignContent={'center'} container spacing={1}>
+        {/* <Grid alignContent={'center'} container spacing={1}>
           <Grid item container>
             <Grid item>
               <Tooltip title={'Добавить элемент на редактирование'}>
@@ -354,7 +372,22 @@ export default function MultiEdit({ open, onClose, ids }: MultiEditProps) {
               )}
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
+        {multiEditValue ? (
+          <Grid>
+            <Button
+              onClick={() => {
+                multiEdit({
+                  ids,
+                  key: key as keyof IncomingMailState,
+                  value: multiEditValue,
+                });
+              }}
+            >{`Применить изменения`}</Button>
+          </Grid>
+        ) : (
+          <></>
+        )}
       </DialogActions>
     </Dialog>
   );

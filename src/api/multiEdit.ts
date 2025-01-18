@@ -8,7 +8,7 @@ export class MultiInputEdit {
   value: any;
 }
 
-export default async function multiEdit(data: MultiInputEdit) {
+export default async function multiEdit({ ...data }: MultiInputEdit) {
   const url = '/Edit/MultiEditIncoming';
   try {
     return await requests
