@@ -18,9 +18,6 @@ export default function IncomingCourtBailiffMailColumns2<
   const data: GridColDef<K>[] = [
     { field: 'id', headerName: ' ID записи', type: 'number' },
     {
-      field: 'dick',
-    },
-    {
       headerName: 'Номер типа документа',
       type: 'number',
       field: 'type_of_document_id',
